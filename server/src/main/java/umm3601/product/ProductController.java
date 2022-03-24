@@ -168,27 +168,7 @@ public class ProductController {
    */
   public void addNewProduct(Context ctx) {
 
-    Product newProduct = ctx.bodyValidator(Product.class)
-        .check(product -> product.product_name != null && product.product_name.length() > 0,
-            "Product must have a non-empty product name")
-        .check(product -> product.description != null,
-            "Product description cannot be null")
-        .check(product -> product.brand != null && product.brand.length() > 0, "Product must have a non-empty brand")
-        // .check(product -> product.category.matches("^(admin|editor|viewer)$"), "User
-        // must have a legal user role")
-        .check(product -> product.category != null && product.category.length() > 0,
-            "Product must have a non-empty category")
-        .check(product -> product.store != null && product.store.length() > 0, "Product must have a non-empty store")
-        .check(product -> product.location != null && product.location.length() > 0,
-            "Product must have a non-empty location")
-        .check(product -> product.notes != null, "Product notes cannot be null")
-        // .check(product -> product.tags != null && product.tags.size() >= 0, "Product
-        // tags cannot be null")
-        .check(product -> product.lifespan > 0, "Products's lifespan must be greater than zero")
-        .check(product -> product.threshold > 0, "Products's threshold must be greater than zero")
-        .check(product -> product.image != null && product.image.length() > 0,
-            "Product must have a non-empty image URL")
-        .get();
+    Product newProduct = validateProduct(ctx);
 
     productCollection.insertOne(newProduct);
 
@@ -215,5 +195,46 @@ public class ProductController {
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
   }
+
+private Product validateProduct(Context ctx) {
+ return ctx.bodyValidator(Product.class)
+        .check(product -> product.product_name != null && product.product_name.length() > 0,
+            "Product must have a non-empty product name")
+        .check(product -> product.description != null,
+            "Product description cannot be null")
+        .check(product -> product.brand != null && product.brand.length() > 0, "Product must have a non-empty brand")
+        // .check(product -> product.category.matches("^(admin|editor|viewer)$"), "User
+        // must have a legal user role")
+        .check(product -> product.category != null && product.category.length() > 0,
+            "Product must have a non-empty category")
+        .check(product -> product.store != null && product.store.length() > 0, "Product must have a non-empty store")
+        .check(product -> product.location != null && product.location.length() > 0,
+            "Product must have a non-empty location")
+        .check(product -> product.notes != null, "Product notes cannot be null")
+        // .check(product -> product.tags != null && product.tags.size() >= 0, "Product
+        // tags cannot be null")
+        .check(product -> product.lifespan > 0, "Products's lifespan must be greater than zero")
+        .check(product -> product.threshold > 0, "Products's threshold must be greater than zero")
+        .check(product -> product.image != null && product.image.length() > 0,
+            "Product must have a non-empty image URL")
+        .get();
+}
+
+public void editProduct(Context ctx) {
+
+    Product newProduct = validateProduct(ctx);
+
+    String productID = ctx.pathParam("id");
+
+    productCollection.replaceOne(eq("_id", new ObjectId(productID)), newProduct);
+
+    // 201 is the HTTP code for when we successfully
+    // create a new resource (a user in this case).
+    // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+    // for a description of the various response codes.
+    ctx.status(HttpCode.CREATED);
+    ctx.json(Map.of("id", newProduct._id));
+}
+
 
 }
