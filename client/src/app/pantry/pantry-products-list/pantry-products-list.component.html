@@ -1,32 +1,62 @@
 <div fxLayout="row">
-  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-    <!-- Card at the top of page that a user enters search queries into -->
-    <!-- <mat-card class="search-card">
-    </mat-card> -->
+  <div fxLayout="row">
+    <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="allPantryItems; else productsError" style="width: 90%;">
+      <!-- All Products separated into categories and listed in dropdowns -->
+      <mat-card class="expansion-product-panels">
+        <mat-card-content>
+          <mat-accordion>
 
-    <!-- Page Break to separate List and Search cards  -->
-    <!-- <br> -->
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Bakery Goods
+                </mat-panel-title>
+                <mat-panel-description>
 
-    <div fxLayout="row wrap">
-      <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="getPantryItemsFromServer; else pantryError">
+                </mat-panel-description>
+              </mat-expansion-panel-header>
 
-        <!-- List view -->
-        <mat-card>
-          <mat-card-content>
-            <mat-nav-list class="pantry-nav-list">
-              <h3 mat-subheader>Pantry Items</h3>
-              <a mat-list-item *ngFor="let product of this.allProducts" [routerLink]="['/product', product._id]"
-                class="pantry-list-item" data-test="pantryListItem">
-                <h2 matLine class="product-list-name">{{product.product_name}}</h2>
-                <h4 matLine class="product-list-category">{{product.category}}</h4>
-                <p matLine class="product-list-body">{{product.description}}</p>
-              </a>
-            </mat-nav-list>
-          </mat-card-content>
-        </mat-card>
+                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+              <mat-table [dataSource]="bakeryProducts">
+                <!-- Position Column -->
+                <ng-container let product of bakeryProducts>
+                  <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+                </ng-container>
+              </mat-table>
+            </mat-expansion-panel>
 
-      </div>
+
+
+          </mat-accordion>
+
+          <!-- <mat-nav-list class="product-nav-list">
+            <h3 mat-subheader>Product List</h3>
+            <a mat-list-item *ngFor="let product of this.filteredProducts" [routerLink]="['/products', product._id]" class="product-list-item">
+              <h3 matLine class="product-list-name"> {{product.product_name}} </h3>
+              <p matLine class="product-list-category"> {{product.category}} </p>
+              <p matLine class="product-list-brand"> {{product.brand}} </p>
+              <mat-divider></mat-divider>
+            </a>
+          </mat-nav-list> -->
+        </mat-card-content>
+        <mat-card-actions>
+
+        </mat-card-actions>
+      </mat-card>
     </div>
+
+    <ng-template #productsError>
+      <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="product-error">
+        <mat-error>
+          There was a problem loading the products. Possibly the server is down or perhaps there are network
+          issues.
+        </mat-error>
+        <mat-error>
+          Please wait a bit and try again.
+        </mat-error>
+      </div>
+    </ng-template>
 
   </div>
 

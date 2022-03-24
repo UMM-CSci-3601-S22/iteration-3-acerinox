@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
@@ -11,7 +11,8 @@ import { PantryService } from '../pantry.service';
 })
 export class PantryProductsListComponent implements OnInit {
   // Unfiltered product list
-  public allProducts: Product[];
+  public allPantryItems: Product[];
+  public uniqueProducts: Product[];
 
   public name: string;
   public productBrand: string;
@@ -19,10 +20,21 @@ export class PantryProductsListComponent implements OnInit {
   public productStore: string;
   public productLimit: number;
   getProductsSub: Subscription;
-  getUnfilteredProductsSub: Subscription;
 
+  // Product Category lists
+  public bakeryProducts: Product[];
+  public produceProducts: Product[];
+  public meatProducts: Product[];
+  public dairyProducts: Product[];
+  public frozenProducts: Product[];
+  public cannedProducts: Product[];
+  public drinkProducts: Product[];
+  public generalProducts: Product[];
+  public seasonalProducts: Product[];
+  public miscellaneousProducts: Product[];
 
-
+  // Columns displayed
+  columnsToDisplay = ['product_name', 'purchase_date', 'position'];
   /**
    * This constructor injects both an instance of `PantryService`
    * and an instance of `MatSnackBar` into this component.
@@ -38,9 +50,14 @@ export class PantryProductsListComponent implements OnInit {
   * Get the products in the pantry from the server,
   */
   getPantryItemsFromServer() {
-    this.pantryService.getPantryItems().subscribe(returnedPantryProducts => {
+    this.unsub();
+    console.log(this.pantryService.getPantryItems());
+    this.getProductsSub = this.pantryService.getPantryItems()
+    .subscribe(returnedPantryProducts => {
+      this.allPantryItems = returnedPantryProducts;
+      //this.sortUnique();
+      this.makeCategories();
 
-      this.allProducts = returnedPantryProducts;
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -53,11 +70,61 @@ export class PantryProductsListComponent implements OnInit {
     });
   }
 
+  makeCategories() {
+    this.bakeryProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'bakery'});
+    this.produceProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'produce'});
+    this.meatProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'meat'});
+    this.dairyProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'dairy'});
+    this.frozenProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'frozen foods'});
+    this.cannedProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'canned goods'});
+    this.drinkProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'drinks'});
+    this.generalProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'general grocery'});
+    this.seasonalProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'seasonal'});
+    this.miscellaneousProducts = this.pantryService.filterPantryFromProducts(
+      this.allPantryItems, { category: 'miscellaneous'});
+  }
+
+  /* sortUnique() {
+    this.uniqueProducts = this.allPantryItems;
+    let resArr = [];
+    this.uniqueProducts.forEach(item =>
+      {let i = resArr.findIndex(x => x._id === item._id);
+      if(i <= -1){
+        resArr.push({id: item.id, name: item.name});
+      }
+    });
+  } */
+
+  // Convert ISO 8601 date-time string to localeDateString
+  convertDateToLocaleFormat(dateString: string): string {
+    const stringToDate = new Date(dateString);
+    return stringToDate.toLocaleDateString();
+  }
+
   /*
   * Starts an asynchronous operation to update the users list
   */
   ngOnInit(): void {
     this.getPantryItemsFromServer();
+  }
+
+  ngOnDestroy(): void {
+    this.unsub();
+  }
+
+  unsub(): void {
+    if (this.getProductsSub) {
+      this.getProductsSub.unsubscribe();
+    }
   }
 
 
