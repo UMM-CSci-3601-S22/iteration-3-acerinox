@@ -297,6 +297,21 @@ public class ProductControllerSpec {
   }
 
   @Test
+  public void canGetProductsByName() throws IOException {
+    mockReq.setQueryString("product_name=Bread");
+    Context ctx = mockContext("api/products");
+
+    productController.getAllProducts(ctx);
+    Product[] resultProducts = returnedProducts(ctx);
+
+    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
+    assertEquals(1, resultProducts.length); // There should be one product returned
+    for (Product product : resultProducts) {
+      assertEquals("Bread", product.product_name);
+    }
+  }
+
+  @Test
   public void canGetProductsByBrand() throws IOException {
     mockReq.setQueryString("brand=Dole");
     Context ctx = mockContext("api/products");
@@ -339,6 +354,21 @@ public class ProductControllerSpec {
     for (Product product : resultProducts) {
       assertEquals("Co-op", product.store);
     }
+  }
+
+  @Test
+  public void getProductsBySortbyDesc() throws IOException {
+
+    String path = "api/products";
+    Context ctx = mockContext(path);
+
+    mockReq.setQueryString("sortby=desc");
+
+    productController.getAllProducts(ctx);
+    Product[] resultProducts = returnedProducts(ctx);
+
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
+    assertEquals(5, resultProducts.length);
   }
 
   @Test
@@ -422,7 +452,6 @@ public class ProductControllerSpec {
     assertEquals(84, addedProduct.getInteger("threshold"));
     assertTrue(addedProduct.containsKey("image"));
   }
-
 
   @Test
   public void deleteProduct() throws IOException {

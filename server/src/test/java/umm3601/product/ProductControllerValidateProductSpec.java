@@ -351,12 +351,12 @@ public class ProductControllerValidateProductSpec {
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": null," // null category
-        + "\"store\": \"test store\","
+        + "\"store\": \"A Store\","
         + "\"location\": \"test location\","
         + "\"notes\": \"tastes like test\","
-        + "\"tags\": \"test tag\""
-        + "\"lifespan\": 100"
-        + "\"threshold\": 84"
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
         + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -376,12 +376,12 @@ public class ProductControllerValidateProductSpec {
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"\"," // empty category
-        + "\"store\": \"test store\","
+        + "\"store\": \"A Store\","
         + "\"location\": \"test location\","
         + "\"notes\": \"tastes like test\","
-        + "\"tags\": \"test tag\""
-        + "\"lifespan\": 100"
-        + "\"threshold\": 84"
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
         + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -429,6 +429,106 @@ public class ProductControllerValidateProductSpec {
         + "\"store\": \"\"," // empty store
         + "\"location\": \"test location\","
         + "\"notes\": \"tastes like test\","
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
+        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addNullProductLocation() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Test Product name\","
+        + "\"description\":\"A test product description\","
+        + "\"brand\": \"test brand\","
+        + "\"category\": \"test category\","
+        + "\"store\": \"test store\","
+        + "\"location\": null," // null location
+        + "\"notes\": \"tastes like test\","
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
+        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addEmptyProductLocation() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Test Product name\","
+        + "\"description\":\"A test product description\","
+        + "\"brand\": \"test brand\","
+        + "\"category\": \"test category\","
+        + "\"store\": \"test store\","
+        + "\"location\": \"\"," // empty location
+        + "\"notes\": \"tastes like test\","
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
+        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addNullProductNotes() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Test Product name\","
+        + "\"description\":\"A test product description\","
+        + "\"brand\": \"test brand\","
+        + "\"category\": \"test category\","
+        + "\"store\": \"test store\","
+        + "\"location\": \"test location\","
+        + "\"notes\": null," // null notes
+        + "\"tags\": [\"test tag\"],"
+        + "\"lifespan\": 100,"
+        + "\"threshold\": 84,"
+        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
+        + "}";
+    mockReq.setBodyContent(testNewProduct);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/products");
+
+    assertThrows(ValidationException.class, () -> {
+      productController.addNewProduct(ctx);
+    });
+  }
+
+  @Test
+  public void addEmptyProductNotes() throws IOException {
+    String testNewProduct = "{"
+        + "\"product_name\": \"Test Product name\","
+        + "\"description\":\"A test product description\","
+        + "\"brand\": \"test brand\","
+        + "\"category\": \"test category\","
+        + "\"store\": \"test store\","
+        + "\"location\": \"test location\","
+        + "\"notes\": \"\"," // empty notes
         + "\"tags\": [\"test tag\"],"
         + "\"lifespan\": 100,"
         + "\"threshold\": 84,"

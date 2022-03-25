@@ -95,7 +95,7 @@ public class ProductController {
     List<Bson> filters = new ArrayList<>(); // start with a blank document
 
     if (ctx.queryParamMap().containsKey(PRODUCT_NAME_KEY)) {
-      filters.add(regex(PRODUCT_NAME_KEY,  Pattern.quote(ctx.queryParam(PRODUCT_NAME_KEY)), "i"));
+      filters.add(regex(PRODUCT_NAME_KEY, Pattern.quote(ctx.queryParam(PRODUCT_NAME_KEY)), "i"));
     }
     /*
      * if (ctx.queryParamMap().containsKey(DESCRIPTION_KEY)) {
@@ -196,8 +196,8 @@ public class ProductController {
     }
   }
 
-private Product validateProduct(Context ctx) {
- return ctx.bodyValidator(Product.class)
+  private Product validateProduct(Context ctx) {
+    return ctx.bodyValidator(Product.class)
         .check(product -> product.product_name != null && product.product_name.length() > 0,
             "Product must have a non-empty product name")
         .check(product -> product.description != null,
@@ -210,17 +210,15 @@ private Product validateProduct(Context ctx) {
         .check(product -> product.store != null && product.store.length() > 0, "Product must have a non-empty store")
         .check(product -> product.location != null && product.location.length() > 0,
             "Product must have a non-empty location")
-        .check(product -> product.notes != null, "Product notes cannot be null")
+        .check(product -> product.notes != null && product.notes.length() > 0, "Product notes cannot be null")
         // .check(product -> product.tags != null && product.tags.size() >= 0, "Product
         // tags cannot be null")
         .check(product -> product.lifespan > 0, "Products's lifespan must be greater than zero")
         .check(product -> product.threshold > 0, "Products's threshold must be greater than zero")
-        .check(product -> product.image != null && product.image.length() > 0,
-            "Product must have a non-empty image URL")
         .get();
-}
+  }
 
-public void editProduct(Context ctx) {
+  public void editProduct(Context ctx) {
 
     Product newProduct = validateProduct(ctx);
 
@@ -234,7 +232,6 @@ public void editProduct(Context ctx) {
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newProduct._id));
-}
-
+  }
 
 }
