@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddProductComponent implements OnInit {
 
+  submitMode: 'ADD' | 'EDIT' = 'ADD';
+
   constructor() { }
 
   ngOnInit(): void {
