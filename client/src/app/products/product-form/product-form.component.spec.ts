@@ -81,7 +81,7 @@ describe('ProductFormComponent', () => {
     it('should fail on really long names', () => {
       productNameControl.setValue('x'.repeat(250));
       expect(productNameControl.valid).toBeFalsy();
-      expect(productNameControl.hasError('maxLength')).toBeTruthy();
+      expect(productNameControl.hasError('maxlength')).toBeTruthy();
     });
 
     it('should allow digits in the name', () => {
