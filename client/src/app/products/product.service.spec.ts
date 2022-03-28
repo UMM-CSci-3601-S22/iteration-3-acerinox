@@ -10,7 +10,7 @@ describe('ProductService', () => {
   const testProducts: Product[] = [
     {
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',
@@ -24,7 +24,7 @@ describe('ProductService', () => {
     },
     {
       _id: 'milk_id',
-      product_name: 'Whole Milk',
+      productName: 'Whole Milk',
       description: '',
       brand: 'Land O Lakes',
       category: 'dairy',
@@ -38,7 +38,7 @@ describe('ProductService', () => {
     },
     {
       _id: 'bread_id',
-      product_name: 'Wheat Bread',
+      productName: 'Wheat Bread',
       description: '',
       brand: 'Country Hearth',
       category: 'bakery',
@@ -163,10 +163,10 @@ describe('ProductService', () => {
     req.flush(targetProduct);
   });
 
-  it('filterProducts() filters by product_name', () => {
+  it('filterProducts() filters by productName', () => {
     expect(testProducts.length).toBe(3);
     const name = 'a';
-    expect(productService.filterProducts(testProducts, { product_name: name }).length).toBe(2);
+    expect(productService.filterProducts(testProducts, { productName: name }).length).toBe(2);
   });
 
   it('filterProducts() filters by brand', () => {
@@ -175,11 +175,11 @@ describe('ProductService', () => {
     expect(productService.filterProducts(testProducts, { brand: productBrand }).length).toBe(1);
   });
 
-  it('filterProducts() filters by product_name and brand', () => {
+  it('filterProducts() filters by productName and brand', () => {
     expect(testProducts.length).toBe(3);
     const productBrand = 'Country Hearth';
     const name = 'Wheat Bread';
-    expect(productService.filterProducts(testProducts, { product_name: name, brand: productBrand }).length).toBe(1);
+    expect(productService.filterProducts(testProducts, { productName: name, brand: productBrand }).length).toBe(1);
   });
 
   it('filterProducts() filters by limit', () => {

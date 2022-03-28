@@ -116,7 +116,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   public updateFilter(): void {
     this.filteredProducts = this.productService.filterProducts(
-      this.serverFilteredProducts, { product_name: this.name, brand: this.productBrand , limit: this.productLimit });
+      this.serverFilteredProducts, { productName: this.name, brand: this.productBrand , limit: this.productLimit });
       if (this.name || this.productBrand || this.productCategory || this.productStore) {
         this.activeFilters = true;
       }

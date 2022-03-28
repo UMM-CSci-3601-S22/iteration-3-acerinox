@@ -5,6 +5,37 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 
+
+const testProducts: Product[] = [
+  {
+    _id: 'banana_id',
+    productName: 'banana',
+    description: '',
+    brand: 'Dole',
+    category: 'produce',
+    store: 'Walmart',
+    location: '',
+    notes: '',
+    tags: [],
+    lifespan: 0,
+    threshold: 0,
+    image: ''
+  },
+  {
+    _id: 'milk_id',
+    productName: 'Whole Milk',
+    description: '',
+    brand: 'Land O Lakes',
+    category: 'dairy',
+    store: 'SuperValu',
+    location: '',
+    notes: '',
+    tags: [],
+    lifespan: 0,
+    threshold: 0,
+    image: ''
+  }];
+
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -115,7 +146,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.productForm.value);
     if (this.mode === 'ADD') {
       this.productService.addProduct(this.productForm.value).subscribe(newID => {
         this.snackBar.open('Added Product' + this.productForm.value.productName, null, {
@@ -129,7 +159,7 @@ export class ProductFormComponent implements OnInit {
       });
     }
     else {
-      console.log('Edit product successful');
+      alert('Edit product successful');
     }
   }
 
