@@ -4,38 +4,6 @@ import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-
-
-const testProducts: Product[] = [
-  {
-    _id: 'banana_id',
-    productName: 'banana',
-    description: '',
-    brand: 'Dole',
-    category: 'produce',
-    store: 'Walmart',
-    location: '',
-    notes: '',
-    tags: [],
-    lifespan: 0,
-    threshold: 0,
-    image: ''
-  },
-  {
-    _id: 'milk_id',
-    productName: 'Whole Milk',
-    description: '',
-    brand: 'Land O Lakes',
-    category: 'dairy',
-    store: 'SuperValu',
-    location: '',
-    notes: '',
-    tags: [],
-    lifespan: 0,
-    threshold: 0,
-    image: ''
-  }];
-
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -152,14 +120,16 @@ export class ProductFormComponent implements OnInit {
           duration: 2000,
         });
         this.router.navigate(['/products/', newID]);
+        return newID;
       }, err => {
         this.snackBar.open('Failed to add the product', 'OK', {
           duration: 5000,
         });
+        return null; // This is here for clarity's sake, though it isn't entirely necessary
       });
     }
     else {
-      alert('Edit product successful');
+      this.productService.editProduct();
     }
   }
 

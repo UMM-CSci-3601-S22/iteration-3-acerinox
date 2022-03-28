@@ -13,7 +13,7 @@ import { Product, ProductCategory } from '../app/products/product';
    static testPantryProducts: Product[] = [
     {
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',
@@ -27,7 +27,7 @@ import { Product, ProductCategory } from '../app/products/product';
     },
     {
       _id: 'milk_id',
-      product_name: 'Whole Milk',
+      productName: 'Whole Milk',
       description: '',
       brand: 'Land O Lakes',
       category: 'dairy',
@@ -41,7 +41,7 @@ import { Product, ProductCategory } from '../app/products/product';
     },
     {
       _id: 'bread_id',
-      product_name: 'Wheat Bread',
+      productName: 'Wheat Bread',
       description: '',
       brand: 'Country Hearth',
       category: 'bakery',

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Product } from '../product';
 import { ProductFormComponent } from './product-form.component';
 import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -10,8 +11,45 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockProductService } from 'src/testing/product.service.mock';
 import { ProductService } from '../product.service';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
 describe('ProductFormComponent', () => {
+
+  const testProducts: Product[] = [
+    {
+      _id: 'banana_id',
+      productName: 'banana',
+      description: '',
+      brand: 'Dole',
+      category: 'produce',
+      store: 'Walmart',
+      location: '',
+      notes: '',
+      tags: [],
+      lifespan: 0,
+      threshold: 0,
+      image: ''
+    },
+    {
+      _id: 'milk_id',
+      productName: 'Whole Milk',
+      description: '',
+      brand: 'Land O Lakes',
+      category: 'dairy',
+      store: 'SuperValu',
+      location: '',
+      notes: '',
+      tags: [],
+      lifespan: 0,
+      threshold: 0,
+      image: ''
+    }];
+
+  let productService: ProductService;
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+
   let productFormComponent: ProductFormComponent;
   let productForm: FormGroup;
   let fixture: ComponentFixture<ProductFormComponent>;
@@ -27,7 +65,8 @@ describe('ProductFormComponent', () => {
         MatSelectModule,
         MatInputModule,
         BrowserAnimationsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [ProductFormComponent],
       providers: [{ provide: ProductService, useValue: new MockProductService() }]
@@ -35,6 +74,10 @@ describe('ProductFormComponent', () => {
       .compileComponents().catch(error => {
         expect(error).toBeNull();
       });
+      httpClient = TestBed.inject(HttpClient);
+      httpTestingController = TestBed.inject(HttpTestingController);
+      //construct an instance of the service with the mock HTTP client.
+      productService = new ProductService(httpClient);
   });
 
   beforeEach(() => {
@@ -45,6 +88,11 @@ describe('ProductFormComponent', () => {
     productForm = productFormComponent.productForm;
     expect(productForm).toBeDefined();
     expect(productForm.controls).toBeDefined();
+  });
+
+  afterEach(() => {
+    //After every test, assert that there are no more pending requests.
+    httpTestingController.verify();
   });
 
   it('should create the component and form', () => {
@@ -428,6 +476,14 @@ describe('ProductFormComponent', () => {
       thresholdControl.setValue(27.5);
       expect(thresholdControl.valid).toBeFalsy();
       expect(thresholdControl.hasError('pattern')).toBeTruthy();
+    });
+  });
+
+  describe('The submitForm() method', () => {
+    it('should make a call to productService.addProduct() when mode is "ADD"', () => {
+      productFormComponent.mode = 'ADD';
+
+
     });
   });
 

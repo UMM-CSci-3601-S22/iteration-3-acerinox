@@ -28,7 +28,7 @@ export class ProductService {
   }
 
   getProductById(id: string): Observable<Product> {
-    return this.httpClient.get<Product>(this.productUrl + '/' + id);
+    return this.httpClient.get<Product>(`${this.productUrl}/${id}`);
   }
 
   // eslint-disable-next-line max-len
@@ -68,7 +68,11 @@ export class ProductService {
   }
 
   deleteProduct(id: string): Observable<Product> {
-    return this.httpClient.delete<Product>(this.productUrl + '/' + id);
+    return this.httpClient.delete<Product>(`${this.productUrl}/${id}`);
+  }
+
+  editProduct(id: string, newData: Product): Observable<Product> {
+    return this.httpClient.put<{id: string}>(`${this.productUrl}/${id}`);
   }
 
 }
