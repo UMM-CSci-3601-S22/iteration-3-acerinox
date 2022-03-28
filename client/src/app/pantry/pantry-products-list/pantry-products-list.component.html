@@ -10,6 +10,20 @@
     <div fxLayout="row wrap">
       <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="getPantryItemsFromServer; else pantryError">
 
+        <mat-card>
+          <mat-card-content>
+            <mat-nav-list class="pantry-nav-list">
+              <h3 mat-subheader>Pantry Items</h3>
+              <a mat-list-item *ngFor="let pitem of this.pantryInfo" [routerLink]="['/product', pitem._id]"
+                class="pantry-list-item" data-test="pantryListItem">
+                <h2 matLine class="product-list-name">{{pitem.purchase_date}}</h2>
+                <h4 matLine class="product-list-category">{{pitem.product}}</h4>
+                <h4 matLine class="product-list-category">{{pitem.notes}}</h4>
+              </a>
+            </mat-nav-list>
+          </mat-card-content>
+        </mat-card>
+
         <!-- List view -->
         <mat-card>
           <mat-card-content>

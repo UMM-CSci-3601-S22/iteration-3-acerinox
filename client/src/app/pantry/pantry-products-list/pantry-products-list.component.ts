@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
+import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { PantryService } from '../pantry.service';
 export class PantryProductsListComponent implements OnInit {
   // Unfiltered product list
   public allProducts: Product[];
+  public pantryInfo: PantryItem[];
 
   public name: string;
   public productBrand: string;
@@ -19,7 +21,7 @@ export class PantryProductsListComponent implements OnInit {
   public productStore: string;
   public productLimit: number;
   getProductsSub: Subscription;
-  getUnfilteredProductsSub: Subscription;
+  getPantrySub: Subscription;
 
 
 
@@ -38,9 +40,25 @@ export class PantryProductsListComponent implements OnInit {
   * Get the products in the pantry from the server,
   */
   getPantryItemsFromServer() {
+    this.unsubProduct();
+    this.unsubPantry();
     this.pantryService.getPantryItems().subscribe(returnedPantryProducts => {
 
       this.allProducts = returnedPantryProducts;
+    }, err => {
+      // If there was an error getting the users, log
+      // the problem and display a message.
+      console.error('We couldn\'t get the list of todos; the server might be down');
+      this.snackBar.open(
+        'Problem contacting the server – try again',
+        'OK',
+        // The message will disappear after 3 seconds.
+        { duration: 3000 });
+    });
+
+    this.pantryService.getPantry().subscribe(returnedPantry => {
+
+      this.pantryInfo = returnedPantry;
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -60,5 +78,16 @@ export class PantryProductsListComponent implements OnInit {
     this.getPantryItemsFromServer();
   }
 
+  unsubProduct(): void {
+    if (this.getProductsSub) {
+      this.getProductsSub.unsubscribe();
+    }
+  }
+
+  unsubPantry(): void {
+    if (this.getPantrySub) {
+      this.getPantrySub.unsubscribe();
+    }
+  }
 
 }
