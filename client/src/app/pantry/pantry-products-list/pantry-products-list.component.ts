@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
+import { map } from 'lodash';
 
 @Component({
   selector: 'app-pantry-products-list',
@@ -11,9 +12,13 @@ import { PantryService } from '../pantry.service';
   styleUrls: ['./pantry-products-list.component.scss']
 })
 export class PantryProductsListComponent implements OnInit {
-  // Unfiltered product list
+  // Unfiltered lists
   public allProducts: Product[];
   public pantryInfo: PantryItem[];
+  public comboMap = new Map();
+
+  // Unique pantry list
+  public uniquePantry: PantryItem[];
 
   public name: string;
   public productBrand: string;
@@ -59,6 +64,8 @@ export class PantryProductsListComponent implements OnInit {
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
       this.pantryInfo = returnedPantry;
+      this.createUniquePantry();
+      this.createComboMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -69,6 +76,23 @@ export class PantryProductsListComponent implements OnInit {
         // The message will disappear after 3 seconds.
         { duration: 3000 });
     });
+  }
+
+  createComboMap() {
+    //console.log(this.allProducts);
+    //console.log(this.pantryInfo);
+    this.allProducts.forEach((product, index) => {
+      const pantryItem = this.pantryInfo[index];
+      const productItem = product;
+      this.comboMap.set(productItem, pantryItem);
+      //console.log(this.comboMap.get(productItem));
+    });
+  }
+
+  createUniquePantry() {
+    const check = new Set();
+    this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
+    console.log(this.uniquePantry);
   }
 
   /*
