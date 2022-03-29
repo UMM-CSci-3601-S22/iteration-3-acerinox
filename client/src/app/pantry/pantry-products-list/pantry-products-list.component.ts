@@ -63,7 +63,11 @@ export class PantryProductsListComponent implements OnInit {
 
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
-      this.pantryInfo = returnedPantry;
+      this.pantryInfo = returnedPantry.sort((a, b) => {
+        const dateA = new Date(a.purchase_date).getTime();
+        const dateB = new Date(b.purchase_date).getTime();
+        return dateA > dateB ? 1 : -1;
+      });
       this.createUniquePantry();
       this.createComboMap();
     }, err => {
@@ -91,6 +95,7 @@ export class PantryProductsListComponent implements OnInit {
 
   createUniquePantry() {
     const check = new Set();
+    console.log(this.pantryInfo);
     this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
     console.log(this.uniquePantry);
   }
