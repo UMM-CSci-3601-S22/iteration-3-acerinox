@@ -4,14 +4,21 @@
       "$oid": "6227c728fc13ae58600005d2"
     },
     "purchase_date": "2023-01-27",
-    "notes": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet."
+    "notes": "First Item"
   },
   {
     "product": {
       "$oid": "6227c728fc13ae58600005d2"
     },
-    "purchase_date": "2023-01-27",
-    "notes": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet."
+    "purchase_date": "2020-02-09",
+    "notes": "Second Item"
+  },
+  {
+    "product": {
+      "$oid": "6227c728fc13ae58600005d2"
+    },
+    "purchase_date": "2017-02-09",
+    "notes": "Third Item"
   },
   {
     "product": {
