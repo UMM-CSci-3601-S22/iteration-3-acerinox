@@ -64,6 +64,22 @@ describe('PantryProductsListComponent', () => {
     expect(pantryProductsList).toBeTruthy();
   });
 
+  it('populates and creates the product and pantry arrays', () => {
+
+  });
+
+  it('creates a map of Product keys to PantryItem values', () => {
+
+  });
+
+  it('Creates an array of pantryitems without any duplicates', () => {
+
+  });
+
+  it('', () => {
+
+  });
+
 
 });
 

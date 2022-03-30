@@ -12,7 +12,7 @@ export class PantryService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getPantryItems(): Observable<Product[]> {
+  getPantryProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(this.pantryUrl, {
     });
   }

@@ -47,7 +47,7 @@ export class PantryProductsListComponent implements OnInit {
   getPantryItemsFromServer() {
     this.unsubProduct();
     this.unsubPantry();
-    this.pantryService.getPantryItems().subscribe(returnedPantryProducts => {
+    this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
       this.allProducts = returnedPantryProducts;
     }, err => {
@@ -83,21 +83,16 @@ export class PantryProductsListComponent implements OnInit {
   }
 
   createComboMap() {
-    //console.log(this.allProducts);
-    //console.log(this.pantryInfo);
     this.allProducts.forEach((product, index) => {
       const pantryItem = this.pantryInfo[index];
       const productItem = product;
       this.comboMap.set(productItem, pantryItem);
-      //console.log(this.comboMap.get(productItem));
     });
   }
 
   createUniquePantry() {
     const check = new Set();
-    console.log(this.pantryInfo);
     this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
-    console.log(this.uniquePantry);
   }
 
   /*
