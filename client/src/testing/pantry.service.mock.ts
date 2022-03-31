@@ -41,6 +41,20 @@ import { PantryItem } from 'src/app/pantry/pantryItem';
       image: ''
     },
     {
+      _id: 'banana_id',
+      product_name: 'banana',
+      description: '',
+      brand: 'Dole',
+      category: 'produce',
+      store: 'Walmart',
+      location: '',
+      notes: '',
+      tags: [],
+      lifespan: 0,
+      threshold: 0,
+      image: ''
+    },
+    {
       _id: 'bread_id',
       product_name: 'Wheat Bread',
       description: '',
@@ -57,56 +71,39 @@ import { PantryItem } from 'src/app/pantry/pantryItem';
    ];
 
    static testPantryItems: PantryItem[] = [
-     {
+    {
       _id: 'first_banana',
       product: 'banana_id',
       purchase_date: '30-03-2022'
      },
      {
       _id: 'sole_milk',
-      product: 'banana_id',
-      purchase_date: '30-03-2022'
+      product: 'milk_id',
+      purchase_date: '16-07-2020'
      },
      {
       _id: 'second_banana',
       product: 'banana_id',
-      purchase_date: '30-03-2022'
+      purchase_date: '31-03-2022'
      },
      {
       _id: 'sole_bread',
-      product: 'banana_id',
-      purchase_date: '30-03-2022'
+      product: 'bread_id',
+      purchase_date: '27-03-2022'
      }
    ];
-
-   getProductsSub: Subscription;
-   getPantrySub: Subscription;
 
    constructor() {
      super(null);
    }
 
    getPantryProducts(): Observable<Product[]> {
-     this.unsubProduct();
      // Just return the test products regardless of what filters are passed in
      return of(MockPantryService.testPantryProducts);
    }
 
    getPantry(): Observable<PantryItem[]> {
-     this.unsubPantry();
      return of(MockPantryService.testPantryItems);
    }
-
-   unsubProduct(): void {
-     if (this) {
-       return;
-     }
-   }
-
-   unsubPantry(): void {
-    if (true) {
-      return;
-    }
-  }
 
  }
