@@ -13,9 +13,9 @@ import { map } from 'lodash';
 })
 export class PantryProductsListComponent implements OnInit {
   // Unfiltered lists
-  public allProducts: Product[];
+  public matchingProducts: Product[];
   public pantryInfo: PantryItem[];
-  public comboMap = new Map();
+  public comboArray: Array<any>;
 
   // Unique pantry list
   public uniquePantry: PantryItem[];
@@ -49,7 +49,7 @@ export class PantryProductsListComponent implements OnInit {
     this.unsubPantry();
     this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
-      this.allProducts = returnedPantryProducts;
+      this.matchingProducts = returnedPantryProducts;
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -63,13 +63,14 @@ export class PantryProductsListComponent implements OnInit {
 
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
-      this.pantryInfo = returnedPantry.sort((a, b) => {
-        const dateA = new Date(a.purchase_date).getTime();
-        const dateB = new Date(b.purchase_date).getTime();
+      this.pantryInfo = returnedPantry;
+      this.createComboMapToArray();
+      this.pantryInfo.sort((a, b) => {
+        const dateA = a.purchase_date.toLowerCase();
+        const dateB = b.purchase_date.toLowerCase();
         return dateA > dateB ? 1 : -1;
       });
       this.createUniquePantry();
-      this.createComboMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -82,12 +83,16 @@ export class PantryProductsListComponent implements OnInit {
     });
   }
 
-  createComboMap() {
-    this.allProducts.forEach((product, index) => {
+  // Necessary? Leaving for now but not using the ComboMap for anything atm
+  createComboMapToArray() {
+    const tempMap = new Map();
+    this.matchingProducts.forEach((product, index) => {
       const pantryItem = this.pantryInfo[index];
       const productItem = product;
-      this.comboMap.set(productItem, pantryItem);
+      tempMap.set(productItem, pantryItem);
     });
+    this.comboArray = Array.from(tempMap, ([product, pantryItem]) => ({ product, pantryItem }));
+    console.log(this.comboArray);
   }
 
   createUniquePantry() {
