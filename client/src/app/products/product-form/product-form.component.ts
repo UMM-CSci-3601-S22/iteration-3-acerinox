@@ -133,7 +133,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(
-      (params) => {
+      params => {
         this.id = params.id;
         if (this.editProductSub) {
           this.editProductSub.unsubscribe();
