@@ -29,7 +29,7 @@
           <mat-card-content>
             <mat-nav-list class="pantry-nav-list">
               <h3 mat-subheader>Pantry Items</h3>
-              <a mat-list-item *ngFor="let product of this.allProducts" [routerLink]="['/product', product._id]"
+              <a mat-list-item *ngFor="let product of this.matchingProducts" [routerLink]="['/product', product._id]"
                 class="pantry-list-item" data-test="pantryListItem">
                 <h2 matLine class="product-list-name">{{product.product_name}}</h2>
                 <h4 matLine class="product-list-category">{{product.category}}</h4>
