@@ -1,15 +1,27 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryService } from '../pantry.service';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-pantry-products-list',
+  styleUrls: ['./pantry-products-list.component.scss'],
   templateUrl: './pantry-products-list.component.html',
-  styleUrls: ['./pantry-products-list.component.scss']
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])
+  ]
 })
-export class PantryProductsListComponent implements OnInit {
+export class PantryProductsListComponent implements OnInit, OnDestroy {
+
+  isTableExpanded = false;
+
   // Unfiltered product list
   public allPantryItems: Product[];
   public uniqueProducts: Product[];
@@ -34,7 +46,7 @@ export class PantryProductsListComponent implements OnInit {
   public miscellaneousProducts: Product[];
 
   // Columns displayed
-  columnsToDisplay = ['product_name', 'purchase_date', 'position'];
+  columnsToDisplay = ['amount', 'product_name', 'oldest_purchase_date', 'oldest_amount'];
   /**
    * This constructor injects both an instance of `PantryService`
    * and an instance of `MatSnackBar` into this component.

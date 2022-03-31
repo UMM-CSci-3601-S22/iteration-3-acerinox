@@ -16,29 +16,50 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
 
-                <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-              <mat-table [dataSource]="bakeryProducts">
-                <!-- Position Column -->
-                <ng-container let product of bakeryProducts>
-                  <mat-header-cell *matHeaderCellDef>  </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+              <table mat-table [dataSource]="bakeryProducts" multiTemplateDataRows>
+
+                <!-- <ng-container matColumnDef="amount" >
+                  <th mat-header-cell *matHeaderCellDef> amount </th>
+                  <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="product_name" >
+                  <th mat-header-cell *matHeaderCellDef> Name </th>
+                  <td mat-cell *matCellDef="let element"> {{element.product_name}} </td>
                 </ng-container>
-              </mat-table>
+
+                <!-- <ng-container matColumnDef="oldest_purchase_date" >
+                  <th mat-header-cell *matHeaderCellDef> Oldest Purchase Date </th>
+                  <td mat-cell *matCellDef="let element"> {{element.oldest_purchase_date}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="oldest_amount" >
+                  <th mat-header-cell *matHeaderCellDef> Oldest Product Amount </th>
+                  <td mat-cell *matCellDef="let element"> {{element.oldest_amount}} </td>
+                </ng-container> -->
+
+                <ng-container matColumnDef="expandedDetail">
+                  <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+
+                    <div class="pantry-item-detail" [@detailExpand]="element.isExpanded ? 'expanded' : 'collapsed'">
+                      <mat-list>
+                        <div mat-subheader> Test </div>
+                      </mat-list>
+                    </div>
+
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderCellDef="columnsToDisplay;sticky: true"></tr>
+                <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="pantry-element-row"
+                  [class.pantry-expanded-row]="element.isExpanded"></tr>
+
+                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="pantry-detail-row"></tr>
+              </table>
+
             </mat-expansion-panel>
-
-
-
           </mat-accordion>
 
-          <!-- <mat-nav-list class="product-nav-list">
-            <h3 mat-subheader>Product List</h3>
-            <a mat-list-item *ngFor="let product of this.filteredProducts" [routerLink]="['/products', product._id]" class="product-list-item">
-              <h3 matLine class="product-list-name"> {{product.product_name}} </h3>
-              <p matLine class="product-list-category"> {{product.category}} </p>
-              <p matLine class="product-list-brand"> {{product.brand}} </p>
-              <mat-divider></mat-divider>
-            </a>
-          </mat-nav-list> -->
         </mat-card-content>
         <mat-card-actions>
 
