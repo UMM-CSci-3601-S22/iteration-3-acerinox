@@ -26,7 +26,7 @@ import io.javalin.http.HttpCode;
 import io.javalin.http.NotFoundResponse;
 
 public class ProductController {
-  private static final String PRODUCT_NAME_KEY = "product_name";
+  private static final String PRODUCT_NAME_KEY = "productName";
   // private static final String DESCRIPTION_KEY = "description";
   private static final String BRAND_KEY = "brand";
   private static final String CATEGORY_KEY = "category";
@@ -198,7 +198,7 @@ public class ProductController {
 
   private Product validateProduct(Context ctx) {
     return ctx.bodyValidator(Product.class)
-        .check(product -> product.product_name != null && product.product_name.length() > 0,
+        .check(product -> product.productName != null && product.productName.length() > 0,
             "Product must have a non-empty product name")
         .check(product -> product.description != null,
             "Product description cannot be null")
