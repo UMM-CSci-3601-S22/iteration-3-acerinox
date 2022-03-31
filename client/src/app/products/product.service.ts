@@ -72,7 +72,7 @@ export class ProductService {
   }
 
   editProduct(productId: string, newData: Product): Observable<Product> {
-    return this.httpClient.put<Product>(`${this.productUrl}/${productId}`, newData).pipe(map(res => res));
+    return this.httpClient.put<Product>(`${this.productUrl}/edit/${productId}`, newData).pipe(map(res => res));
   }
 
 }

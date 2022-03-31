@@ -16,7 +16,6 @@ public class Product {
   // name of the field as used by MongoDB.
   @SuppressWarnings({ "MemberName" })
   public String _id;
-  @SuppressWarnings({ "MemberName" })
   public String productName;
   public String description;
   public String brand;

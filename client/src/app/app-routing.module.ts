@@ -12,8 +12,8 @@ import { EditProductComponent } from './products/edit-product/edit-product.compo
 const routes: Routes = [
   {path: '', component: PantryProductsListComponent},
   {path: 'products', component: ProductListComponent},
-  {path: 'products/new', component: AddProductComponent},
   {path: 'products/edit/:id', component: EditProductComponent},
+  {path: 'products/new', component: AddProductComponent},
   {path: 'products/:id', component: SingleProductPageComponent}
 ];
 

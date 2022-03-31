@@ -86,6 +86,9 @@ public class Server {
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products", productController::addNewProduct);
 
+    // Edit a product with a given id
+    server.put("/api/products/edit/{id}", productController::editProduct);
+
     // Add new pantry item with info from JSON body of HTTP request
     server.post("/api/pantry", pantryController::addNewPantryItem);
 
@@ -100,10 +103,13 @@ public class Server {
     // unhelpful to them. In a production system you'd almost
     // certainly want to use a logging library to log all errors
     // caught here so you'd know about them and could try to address
-    // them.        productController.editProduct(ctx);
+    // them.
 
+    /*
+    Commenting this out for development purposes (getting more helpful error messages)
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });
+    */
   }
 }

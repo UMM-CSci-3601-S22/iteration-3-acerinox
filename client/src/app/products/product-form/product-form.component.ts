@@ -68,7 +68,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       { type: 'maxlength', message: 'Product notes must be at less than 50 characters' }
     ],
     lifespan: [
-      { type: 'min', message: 'Product lifespan must be at least 1' },
+      { type: 'min', message: 'Product lifespan must be at least 0' },
       { type: 'max', message: 'Product lifespan must be at less than 1000000' },
       { type: 'pattern', message: 'Lifespan must be a whole number' }
     ],
@@ -89,42 +89,42 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   // A helper function for auto-filling the form fields that returns the existing value
   // or it just returns the empty string if it doesn't
   getProductValueOrEmptyString(key: string): string {
-    if (this.product[key] !== null) {
-      return `${this.product[key]}`;
+    if (this.product && this.product[key] !== null) {
+      return this.product[key];
     }
     return '';
   }
 
   createForms() {
     this.productForm = this.fb.group({
-      productName: new FormControl('', Validators.compose([
+      productName: new FormControl(this.getProductValueOrEmptyString('productName'), Validators.compose([
         Validators.required, Validators.minLength(1), Validators.maxLength(200),
       ])),
-      description: new FormControl('', Validators.compose([
+      description: new FormControl(this.getProductValueOrEmptyString('description'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(500),
       ])),
-      brand: new FormControl('', Validators.compose([
+      brand: new FormControl(this.getProductValueOrEmptyString('brand'), Validators.compose([
         Validators.required, Validators.minLength(1), Validators.maxLength(100),
       ])),
-      category: new FormControl('', Validators.compose([
+      category: new FormControl(this.getProductValueOrEmptyString('category'), Validators.compose([
         Validators.required,
         Validators.pattern('^(bakery|produce|meat|dairy|frozen foods|canned goods|drinks|general grocery|miscellaneous|seasonal)$')
       ])),
-      store: new FormControl('', Validators.compose([
+      store: new FormControl(this.getProductValueOrEmptyString('store'), Validators.compose([
         Validators.required, Validators.minLength(1), Validators.maxLength(100),
       ])),
-      location: new FormControl('', Validators.compose([
+      location: new FormControl(this.getProductValueOrEmptyString('location'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(100),
       ])),
-      notes: new FormControl('', Validators.compose([
+      notes: new FormControl(this.getProductValueOrEmptyString('notes'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(350),
       ])),
       tags: null
       ,
-      lifespan: new FormControl('', Validators.compose([
-        Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
+      lifespan: new FormControl(this.getProductValueOrEmptyString('lifespan'), Validators.compose([
+        Validators.min(0), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
-      threshold: new FormControl('', Validators.compose([
+      threshold: new FormControl(this.getProductValueOrEmptyString('threshold'), Validators.compose([
         Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
       image: null,
@@ -132,16 +132,18 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(
+    this.route.params.subscribe(
       params => {
         this.id = params.id;
         if (this.editProductSub) {
           this.editProductSub.unsubscribe();
         }
-        this.editProductSub = this.productService.getProductById(this.id).subscribe(product => this.product = product);
+        this.editProductSub = this.productService.getProductById(this.id).subscribe((product) => {
+          this.product = product;
+          this.createForms();
+        });
       }
     );
-    this.createForms();
   }
 
   ngOnDestroy(): void {
@@ -170,6 +172,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
     else if (this.mode === 'EDIT'){
       //Mode == EDIT
+      console.log(`Id before the edit product call: ${this.id}`);
       return this.productService.editProduct(this.id, this.productForm.value).pipe(
         map(newProduct => {
           this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
