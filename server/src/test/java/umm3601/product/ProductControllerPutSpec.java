@@ -4,16 +4,13 @@ import static com.mongodb.client.model.Filters.eq;
 import static io.javalin.plugin.json.JsonMapperKt.JSON_MAPPER_KEY;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -35,11 +32,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import io.javalin.core.JavalinConfig;
-import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
-import io.javalin.http.HttpCode;
-import io.javalin.http.NotFoundResponse;
 import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
@@ -55,9 +49,8 @@ import io.javalin.plugin.json.JavalinJackson;
 // these tests can/should be restructured so the constants (there are
 // also a lot of "magic strings" that Checkstyle doesn't actually
 // flag as a problem) make more sense.
-@SuppressWarnings({ "MagicNumber", "NoWhitespaceAfter" })
-public class ProductControllerSpec {
-
+@SuppressWarnings({ "MagicNumber", "NoWhitespaceAfter", "LineLength" })
+public class ProductControllerPutSpec {
   // Mock requests and responses that will be reset in `setupEach()`
   // and then (re)used in each of the tests.
   private MockHttpServletRequest mockReq = new MockHttpServletRequest();
@@ -97,7 +90,8 @@ public class ProductControllerSpec {
 
     mongoClient = MongoClients.create(
         MongoClientSettings.builder()
-            .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress(mongoAddr))))
+            .applyToClusterSettings(builder -> builder
+                .hosts(Arrays.asList(new ServerAddress(mongoAddr))))
             .build());
     db = mongoClient.getDatabase("test");
   }
@@ -129,11 +123,8 @@ public class ProductControllerSpec {
             .append("lifespan", 14)
             .append("image", "https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon")
             .append("notes", "I eat these with toothpaste, yum-yum.")
-            .append("tags", new ArrayList<String>() {
-              {
-                addAll(Arrays.asList(new String[] { "yellow fruit", "potassium" }));
-              }
-            })
+            .append("tags", new ArrayList<String>(Arrays
+                .asList(new String[] { "yellow fruit", "potassium" })))
             .append("lifespan", 4)
             .append("threshold", 40));
     testProducts.add(
@@ -147,11 +138,8 @@ public class ProductControllerSpec {
             .append("lifespan", 2000)
             .append("image", "https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon")
             .append("notes", "I eat these with toothpaste, yum-yum.")
-            .append("tags", new ArrayList<String>() {
-              {
-                addAll(Arrays.asList(new String[] { "canned food", "non-perishable", "beans" }));
-              }
-            })
+            .append("tags", new ArrayList<String>(Arrays.asList(new String[] {
+                "canned food", "non-perishable", "beans" })))
             .append("lifespan", 4)
             .append("threshold", 4));
     testProducts.add(
@@ -165,11 +153,8 @@ public class ProductControllerSpec {
             .append("lifespan", 14)
             .append("image", "https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon")
             .append("notes", "I eat these with toothpaste, yum-yum.")
-            .append("tags", new ArrayList<String>() {
-              {
-                addAll(Arrays.asList(new String[] { "Yeast", "contains gluten", "toast" }));
-              }
-            })
+            .append("tags", new ArrayList<String>(Arrays.asList(
+                new String[] { "Yeast", "contains gluten", "toast" })))
             .append("lifespan", 2)
             .append("threshold", 3));
     testProducts.add(
@@ -192,7 +177,8 @@ public class ProductControllerSpec {
     Document milk = new Document()
         .append("_id", milksId)
         .append("product_name", "Milk")
-        .append("description", "A dairy liquid obtained from the teat of an unsuspecting animal")
+        .append("description",
+            "A dairy liquid obtained from the teat of an unsuspecting animal")
         .append("brand", "Gerbil Goods")
         .append("category", "dairy")
         .append("store", "Co-op")
@@ -200,11 +186,8 @@ public class ProductControllerSpec {
         .append("lifespan", 14)
         .append("image", "https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon")
         .append("notes", "check on gerbils every 3 days")
-        .append("tags", new ArrayList<String>() {
-          {
-            addAll(Arrays.asList(new String[] { "dairy", "perishable", "cold storage" }));
-          }
-        })
+        .append("tags", new ArrayList<String>(
+            Arrays.asList(new String[] { "dairy", "perishable", "cold storage" })))
         .append("lifespan", 4)
         .append("threshold", 2);
 
@@ -212,15 +195,6 @@ public class ProductControllerSpec {
     productDocuments.insertOne(milk);
 
     productController = new ProductController(db);
-  }
-
-  /**
-   * Construct an instance of `Context` using `ContextUtil`, providing
-   * a mock context in Javalin. See `mockContext(String, Map)` for
-   * more details.
-   */
-  private Context mockContext(String path) {
-    return mockContext(path, Collections.emptyMap());
   }
 
   /**
@@ -248,240 +222,56 @@ public class ProductControllerSpec {
                 new JavalinConfig().maxRequestSize)));
   }
 
-  /**
-   * A little helper method that assumes that the given context
-   * body contains an array of Products, and extracts and returns
-   * that array.
-   *
-   * @param ctx the `Context` whose body is assumed to contain
-   *            an array of `Product`s.
-   * @return the array of `Product`s from the given `Context`.
-   */
-  private Product[] returnedProducts(Context ctx) {
-    String result = ctx.resultString();
-    Product[] products = javalinJackson.fromJsonString(result, Product[].class);
-    return products;
-  }
-
-  /**
-   * A little helper method that assumes that the given context
-   * body contains a *single* Product, and extracts and returns
-   * that Product.
-   *
-   * @param ctx the `Context` whose body is assumed to contain
-   *            a *single* `Product`.
-   * @return the `Product` extracted from the given `Context`.
-   */
-  private Product returnedSingleProduct(Context ctx) {
-    String result = ctx.resultString();
-    Product product = javalinJackson.fromJsonString(result, Product.class);
-    return product;
-  }
-
   @Test
-  public void canGetAllProducts() throws IOException {
-    // Create our fake Javalin context
-    String path = "api/products";
-    Context ctx = mockContext(path);
-
-    productController.getAllProducts(ctx);
-    Product[] returnedProducts = returnedProducts(ctx);
-
-    // The response status should be 200, i.e., our request.append("_id", milksId)
-    // was handled successfully (was OK). This is a named constant in
-    // the class HttpCode.
-    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
-    assertEquals(
-        db.getCollection("products").countDocuments(),
-        returnedProducts.length);
-  }
-
-  @Test
-  public void canGetProductsByName() throws IOException {
-    mockReq.setQueryString("product_name=Bread");
-    Context ctx = mockContext("api/products");
-
-    productController.getAllProducts(ctx);
-    Product[] resultProducts = returnedProducts(ctx);
-
-    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
-    assertEquals(1, resultProducts.length); // There should be one product returned
-    for (Product product : resultProducts) {
-      assertEquals("Bread", product.product_name);
-    }
-  }
-
-  @Test
-  public void canGetProductsByBrand() throws IOException {
-    mockReq.setQueryString("brand=Dole");
-    Context ctx = mockContext("api/products");
-
-    productController.getAllProducts(ctx);
-    Product[] resultProducts = returnedProducts(ctx);
-
-    assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
-    assertEquals(1, resultProducts.length); // There should be one product returned
-    for (Product product : resultProducts) {
-      assertEquals("Dole", product.brand);
-    }
-  }
-
-  @Test
-  public void getProductsByStore() throws IOException {
-    mockReq.setQueryString("store=Willies");
-    Context ctx = mockContext("api/products");
-
-    productController.getAllProducts(ctx);
-    Product[] resultProducts = returnedProducts(ctx);
-
-    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
-    assertEquals(3, resultProducts.length);
-    for (Product product : resultProducts) {
-      assertEquals("Willies", product.store);
-    }
-  }
-
-  @Test
-  public void getProductsByCategory() throws IOException {
-    mockReq.setQueryString("category=dairy");
-    Context ctx = mockContext("api/products");
-
-    productController.getAllProducts(ctx);
-    Product[] resultProducts = returnedProducts(ctx);
-
-    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
-    assertEquals(1, resultProducts.length);
-    for (Product product : resultProducts) {
-      assertEquals("Co-op", product.store);
-    }
-  }
-
-  @Test
-  public void getProductsBySortbyDesc() throws IOException {
-
-    String path = "api/products";
-    Context ctx = mockContext(path);
-
-    mockReq.setQueryString("sortby=desc");
-
-    productController.getAllProducts(ctx);
-    Product[] resultProducts = returnedProducts(ctx);
-
-    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
-    assertEquals(5, resultProducts.length);
-  }
-
-  @Test
-  public void getProductWithExistentId() throws IOException {
-    String testID = milksId.toHexString();
-    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
-
-    productController.getProductByID(ctx);
-    Product resultProduct = returnedSingleProduct(ctx);
-
-    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
-    assertEquals(milksId.toHexString(), resultProduct._id);
-    assertEquals("Milk", resultProduct.product_name);
-  }
-
-  @Test
-  public void getProductWithBadId() throws IOException {
-    Context ctx = mockContext("api/products/{id}", Map.of("id", "bad"));
-
-    assertThrows(BadRequestResponse.class, () -> {
-      productController.getProductByID(ctx);
-    });
-  }
-
-  @Test
-  public void getProductWithNonexistentId() throws IOException {
-    Context ctx = mockContext("api/products/{id}", Map.of("id", "58af3a600343927e48e87335"));
-
-    assertThrows(NotFoundResponse.class, () -> {
-      productController.getProductByID(ctx);
-    });
-  }
-
-  @Test
-  public void addProduct() throws IOException {
+  public void testEditingItem() {
+    String testId = milksId.toHexString();
 
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
-        + "\"description\":\"A test product description\","
+        + "\"_id\": \"" + testId + "\","
+        + "\"product_name\": \"Other Milk\","
+        + "\"description\":\"A dairy liquid obtained from the teat of an unsuspecting animal\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
         + "\"store\": \"test store\","
         + "\"location\": \"test location\","
         + "\"notes\": \"tastes like test\","
         + "\"tags\": [\"test tag\"],"
-        + "\"lifespan\": 100,"
+        + "\"lifespan\": 10,"
         + "\"threshold\": 84,"
         + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
         + "}";
-    System.err.println(testNewProduct);
+
     mockReq.setBodyContent(testNewProduct);
-    mockReq.setMethod("POST");
+    mockReq.setMethod("PUT");
 
-    Context ctx = mockContext("api/products");
+    Context ctx = mockContext("api/products/{id}", Map.of("id", milksId.toHexString()));
+    productController.editProduct(ctx);
 
-    productController.addNewProduct(ctx);
     String result = ctx.resultString();
     String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
 
-    // Our status should be 201, i.e., our new product was successfully
-    // created. This is a named constant in the class HttpURLConnection.
     assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
 
-    // Successfully adding the product should return the newly generated MongoDB ID
-    // for that product.
-    assertNotEquals("", id);
-    assertEquals(1, db.getCollection("products").countDocuments(eq("_id", new ObjectId(id))));
+    // Make sure that the id of the newly edited product doesn't change
+    assertEquals(milksId.toHexString(), id);
+    assertEquals(1, db.getCollection("products").countDocuments(eq("_id", milksId)));
 
     // Verify that the product was added to the database with the correct ID
     Document addedProduct = db.getCollection("products").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedProduct);
-    assertEquals("Test Product name", addedProduct.getString("product_name"));
-    assertEquals("A test product description", addedProduct.getString("description"));
+    assertEquals("Other Milk", addedProduct.getString("product_name"));
+    assertEquals("A dairy liquid obtained from the teat of an unsuspecting animal",
+        addedProduct.getString("description"));
     assertEquals("test brand", addedProduct.getString("brand"));
     assertEquals("test category", addedProduct.getString("category"));
     assertEquals("test store", addedProduct.getString("store"));
     assertEquals("test location", addedProduct.getString("location"));
     assertEquals("tastes like test", addedProduct.getString("notes"));
-    assertEquals(100, addedProduct.getInteger("lifespan"));
+    assertEquals(10, addedProduct.getInteger("lifespan"));
     assertEquals(84, addedProduct.getInteger("threshold"));
     assertTrue(addedProduct.containsKey("image"));
-  }
 
-  @Test
-  public void deleteProduct() throws IOException {
-    String testID = milksId.toHexString();
-
-    // Product exists before deletion
-    assertEquals(1, db.getCollection("products").countDocuments(eq("_id", new ObjectId(testID))));
-
-    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
-
-    productController.deleteProduct(ctx);
-
-    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
-
-    // Product is no longer in the database
-    assertEquals(0, db.getCollection("products").countDocuments(eq("_id", new ObjectId(testID))));
-  }
-
-  @Test
-  public void cannotDeleteNonexistentProduct() throws IOException {
-    String testID = "588935f57546a2daea44de7c";
-
-    // Product exists before deletion
-    assertEquals(0, db.getCollection("products").countDocuments(eq("_id", new ObjectId(testID))));
-
-    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
-
-    assertThrows(NotFoundResponse.class, () -> {
-      productController.deleteProduct(ctx);
-    });
   }
 
 }
