@@ -89,6 +89,9 @@ public class Server {
     // Add new pantry item with info from JSON body of HTTP request
     server.post("/api/pantry", pantryController::addNewPantryItem);
 
+    // Add new product with info from JSON body of HTTP request
+    server.put("/api/products/{id}", productController::addNewProduct);
+
     // This catches any uncaught exceptions thrown in the server
     // code and turns them into a 500 response ("Internal Server
     // Error Response"). In general you'll like to *never* actually
@@ -97,7 +100,8 @@ public class Server {
     // unhelpful to them. In a production system you'd almost
     // certainly want to use a logging library to log all errors
     // caught here so you'd know about them and could try to address
-    // them.
+    // them.        productController.editProduct(ctx);
+
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });

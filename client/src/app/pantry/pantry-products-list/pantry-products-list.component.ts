@@ -3,6 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
+import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -18,13 +19,14 @@ import { MatTableDataSource } from '@angular/material/table';
     ])
   ]
 })
-export class PantryProductsListComponent implements OnInit, OnDestroy {
+export class PantryProductsListComponent implements OnInit {
+  // Unfiltered lists
+  public matchingProducts: Product[];
+  public pantryInfo: PantryItem[];
+  public comboArray: Array<any>;
 
-  isTableExpanded = false;
-
-  // Unfiltered product list
-  public allPantryItems: Product[];
-  public uniqueProducts: Product[];
+  // Unique pantry list
+  public uniquePantry: PantryItem[];
 
   public name: string;
   public productBrand: string;
@@ -32,6 +34,7 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
   public productStore: string;
   public productLimit: number;
   getProductsSub: Subscription;
+  getPantrySub: Subscription;
 
   // Product Category lists
   public bakeryProducts: Product[];
@@ -62,14 +65,32 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
   * Get the products in the pantry from the server,
   */
   getPantryItemsFromServer() {
-    this.unsub();
-    console.log(this.pantryService.getPantryItems());
-    this.getProductsSub = this.pantryService.getPantryItems()
-    .subscribe(returnedPantryProducts => {
-      this.allPantryItems = returnedPantryProducts;
-      //this.sortUnique();
-      this.makeCategories();
+    this.unsubProduct();
+    this.unsubPantry();
+    this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
+      this.matchingProducts = returnedPantryProducts;
+    }, err => {
+      // If there was an error getting the users, log
+      // the problem and display a message.
+      console.error('We couldn\'t get the list of todos; the server might be down');
+      this.snackBar.open(
+        'Problem contacting the server – try again',
+        'OK',
+        // The message will disappear after 3 seconds.
+        { duration: 3000 });
+    });
+
+    this.pantryService.getPantry().subscribe(returnedPantry => {
+
+      this.pantryInfo = returnedPantry;
+      this.createComboMapToArray();
+      this.pantryInfo.sort((a, b) => {
+        const dateA = a.purchase_date.toLowerCase();
+        const dateB = b.purchase_date.toLowerCase();
+        return dateA > dateB ? 1 : -1;
+      });
+      this.createUniquePantry();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -82,44 +103,21 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  makeCategories() {
-    this.bakeryProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'bakery'});
-    this.produceProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'produce'});
-    this.meatProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'meat'});
-    this.dairyProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'dairy'});
-    this.frozenProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'frozen foods'});
-    this.cannedProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'canned goods'});
-    this.drinkProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'drinks'});
-    this.generalProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'general grocery'});
-    this.seasonalProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'seasonal'});
-    this.miscellaneousProducts = this.pantryService.filterPantryFromProducts(
-      this.allPantryItems, { category: 'miscellaneous'});
+  // Necessary? Leaving for now but not using the ComboMap for anything atm
+  createComboMapToArray() {
+    const tempMap = new Map();
+    this.matchingProducts.forEach((product, index) => {
+      const pantryItem = this.pantryInfo[index];
+      const productItem = product;
+      tempMap.set(productItem, pantryItem);
+    });
+    this.comboArray = Array.from(tempMap, ([product, pantryItem]) => ({ product, pantryItem }));
+    console.log(this.comboArray);
   }
 
-  /* sortUnique() {
-    this.uniqueProducts = this.allPantryItems;
-    let resArr = [];
-    this.uniqueProducts.forEach(item =>
-      {let i = resArr.findIndex(x => x._id === item._id);
-      if(i <= -1){
-        resArr.push({id: item.id, name: item.name});
-      }
-    });
-  } */
-
-  // Convert ISO 8601 date-time string to localeDateString
-  convertDateToLocaleFormat(dateString: string): string {
-    const stringToDate = new Date(dateString);
-    return stringToDate.toLocaleDateString();
+  createUniquePantry() {
+    const check = new Set();
+    this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
   }
 
   /*
@@ -129,15 +127,16 @@ export class PantryProductsListComponent implements OnInit, OnDestroy {
     this.getPantryItemsFromServer();
   }
 
-  ngOnDestroy(): void {
-    this.unsub();
-  }
-
-  unsub(): void {
+  unsubProduct(): void {
     if (this.getProductsSub) {
       this.getProductsSub.unsubscribe();
     }
   }
 
+  unsubPantry(): void {
+    if (this.getPantrySub) {
+      this.getPantrySub.unsubscribe();
+    }
+  }
 
 }

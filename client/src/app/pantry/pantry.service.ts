@@ -4,23 +4,24 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../products/product';
-import { ProductCategory } from '../products/product';
 import { PantryItem } from './pantryItem';
 
 @Injectable()
 export class PantryService {
   readonly pantryUrl: string = environment.apiUrl + 'pantry';
+  readonly pantryInfoUrl: string = environment.apiUrl + 'pantry/info';
 
   constructor(private httpClient: HttpClient) {}
 
-  getPantryItems(): Observable<Product[]> {
+  getPantryProducts(): Observable<Product[]> {
     return this.httpClient.get<Product[]>(this.pantryUrl, {
     });
   }
 
-  // eslint-disable-next-line max-len
-  filterPantryFromProducts(pantryItems: Product[], filters: { product_name?: string; brand?: string; limit?: number; category?: ProductCategory }): Product[] {
-    let filteredPantry = pantryItems;
+  getPantry(): Observable<PantryItem[]> {
+    return this.httpClient.get<PantryItem[]>(this.pantryInfoUrl, {
+    });
+  }
 
     // Filter by product_name
     if (filters.product_name) {
