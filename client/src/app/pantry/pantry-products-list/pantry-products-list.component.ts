@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
-import { map } from 'lodash';
 
 @Component({
   selector: 'app-pantry-products-list',
