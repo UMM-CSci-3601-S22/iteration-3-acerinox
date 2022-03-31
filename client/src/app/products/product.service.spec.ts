@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -157,7 +158,7 @@ describe('ProductService', () => {
       product => expect(product).toBe(targetProduct)
     );
 
-    const expectedUrl: string = productService.productUrl + '/' + targetId;
+    const expectedUrl = productService.productUrl + '/' + targetId;
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(targetProduct);
@@ -206,6 +207,26 @@ describe('ProductService', () => {
     expect(req.request.body).toEqual(testProducts[1]);
 
     req.flush({id: 'testid'});
+  });
+
+  it('editProduct() puts to api/products/:{id}', () => {
+    // Make a copy of the 1st element in testProducts (milk), and edit some of the fields
+
+    let editedProduct = testProducts[1];
+    editedProduct.productName = 'Skim Milk';
+    editedProduct.threshold = 10;
+
+    productService.editProduct(testProducts[1]._id, editedProduct).subscribe(
+      product => expect(product).toBe(editedProduct)
+    );
+
+    const expectedUrl = `${productService.productUrl}/${testProducts[1]._id}`;
+    const req = httpTestingController.expectOne(expectedUrl);
+
+    expect(req.request.method).toEqual('PUT');
+    expect(req.request.body).toEqual(editedProduct);
+
+    req.flush(editedProduct);
   });
 
 });

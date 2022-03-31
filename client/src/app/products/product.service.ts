@@ -71,8 +71,8 @@ export class ProductService {
     return this.httpClient.delete<Product>(`${this.productUrl}/${id}`);
   }
 
-  editProduct(id: string, newData: Product): Observable<Product> {
-    return this.httpClient.put<{id: string}>(`${this.productUrl}/${id}`);
+  editProduct(productId: string, newData: Product): Observable<Product> {
+    return this.httpClient.put<Product>(`${this.productUrl}/${productId}`, newData).pipe(map(res => res));
   }
 
 }

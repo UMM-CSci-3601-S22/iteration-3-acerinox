@@ -1,21 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
+import { catchError, map, Observable, of, Subscription } from 'rxjs';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.scss']
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnDestroy {
+
+  static editMessageSuccess = 'Edited Product';
+  static editMessageFail = 'Failed to edit product';
+  static addMessageSuccess = 'Added Product';
+  static addMessageFail = 'Failed to add product';
 
   @Input() mode: 'ADD' | 'EDIT';
 
   productForm: FormGroup;
 
   product: Product;
+
+  id: string;
+  editProductSub: Subscription;
+
+
 
   productValidationMessages = {
     productName: [
@@ -71,7 +82,18 @@ export class ProductFormComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private productService: ProductService,
     private snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute) { }
+
+
+  // A helper function for auto-filling the form fields that returns the existing value
+  // or it just returns the empty string if it doesn't
+  getProductValueOrEmptyString(key: string): string {
+    if (this.product[key] !== null) {
+      return `${this.product[key]}`;
+    }
+    return '';
+  }
 
   createForms() {
     this.productForm = this.fb.group({
@@ -110,27 +132,59 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(
+      (params) => {
+        this.id = params.id;
+        if (this.editProductSub) {
+          this.editProductSub.unsubscribe();
+        }
+        this.editProductSub = this.productService.getProductById(this.id).subscribe(product => this.product = product);
+      }
+    );
     this.createForms();
   }
 
-  submitForm() {
-    if (this.mode === 'ADD') {
-      this.productService.addProduct(this.productForm.value).subscribe(newID => {
-        this.snackBar.open('Added Product' + this.productForm.value.productName, null, {
-          duration: 2000,
-        });
-        this.router.navigate(['/products/', newID]);
-        return newID;
-      }, err => {
-        this.snackBar.open('Failed to add the product', 'OK', {
-          duration: 5000,
-        });
-        return null; // This is here for clarity's sake, though it isn't entirely necessary
-      });
-    }
-    else {
-      this.productService.editProduct();
+  ngOnDestroy(): void {
+    if (this.editProductSub) {
+      this.editProductSub.unsubscribe();
     }
   }
 
+  submitForm(): Observable<void> {
+    if (this.mode === 'ADD') {
+      return this.productService.addProduct(this.productForm.value).pipe(
+        map(newID => {
+          this.snackBar.open(`${ProductFormComponent.addMessageSuccess} ${this.productForm.value.productName}`, null, {
+            duration: 2000,
+          });
+          this.router.navigate(['/products/', newID]);
+        }),
+
+        catchError(() => {
+          this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
+            duration: 5000,
+          });
+          return of(undefined);
+        })
+      );
+    }
+    else if (this.mode === 'EDIT'){
+      //Mode == EDIT
+      return this.productService.editProduct(this.id, this.productForm.value).pipe(
+        map(newProduct => {
+          this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
+            duration: 2000,
+          });
+          this.router.navigate(['/products/', newProduct._id]);
+        }),
+
+        catchError(() => {
+          this.snackBar.open(ProductFormComponent.editMessageFail, 'OK', {
+            duration: 5000,
+          });
+          return of(undefined);
+        })
+      );
+    }
+  }
 }

@@ -1,5 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Product } from '../product';
+/* eslint-disable max-len */
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductFormComponent } from './product-form.component';
 import { FormsModule, ReactiveFormsModule, FormGroup, AbstractControl } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -13,42 +14,15 @@ import { MockProductService } from 'src/testing/product.service.mock';
 import { ProductService } from '../product.service';
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { Router, RouterModule } from '@angular/router';
 
 describe('ProductFormComponent', () => {
-
-  const testProducts: Product[] = [
-    {
-      _id: 'banana_id',
-      productName: 'banana',
-      description: '',
-      brand: 'Dole',
-      category: 'produce',
-      store: 'Walmart',
-      location: '',
-      notes: '',
-      tags: [],
-      lifespan: 0,
-      threshold: 0,
-      image: ''
-    },
-    {
-      _id: 'milk_id',
-      productName: 'Whole Milk',
-      description: '',
-      brand: 'Land O Lakes',
-      category: 'dairy',
-      store: 'SuperValu',
-      location: '',
-      notes: '',
-      tags: [],
-      lifespan: 0,
-      threshold: 0,
-      image: ''
-    }];
 
   let productService: ProductService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
+  let snackBar: MatSnackBar;
+  let router: Router;
 
   let productFormComponent: ProductFormComponent;
   let productForm: FormGroup;
@@ -66,7 +40,9 @@ describe('ProductFormComponent', () => {
         MatInputModule,
         BrowserAnimationsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        MatSnackBarModule,
+        RouterModule
       ],
       declarations: [ProductFormComponent],
       providers: [{ provide: ProductService, useValue: new MockProductService() }]
@@ -74,10 +50,11 @@ describe('ProductFormComponent', () => {
       .compileComponents().catch(error => {
         expect(error).toBeNull();
       });
-      httpClient = TestBed.inject(HttpClient);
-      httpTestingController = TestBed.inject(HttpTestingController);
-      //construct an instance of the service with the mock HTTP client.
-      productService = new ProductService(httpClient);
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    productService = TestBed.inject(ProductService);
+    snackBar = TestBed.inject(MatSnackBar);
+    router = TestBed.inject(Router);
   });
 
   beforeEach(() => {
@@ -93,6 +70,10 @@ describe('ProductFormComponent', () => {
   afterEach(() => {
     //After every test, assert that there are no more pending requests.
     httpTestingController.verify();
+  });
+
+  it('should initialize a product object based on a query parameter', () => {
+    expect(productFormComponent.product).toBeTruthy();
   });
 
   it('should create the component and form', () => {
@@ -480,11 +461,41 @@ describe('ProductFormComponent', () => {
   });
 
   describe('The submitForm() method', () => {
-    it('should make a call to productService.addProduct() when mode is "ADD"', () => {
+    it('should make a call to productService.addProduct() when mode is "ADD"', waitForAsync(() => {
       productFormComponent.mode = 'ADD';
+      const addSpy = spyOn(productService, 'addProduct').and.callThrough();
+      const openSnackbarSpy = spyOn(snackBar, 'open');
+      const navigateSpy = spyOn(router, 'navigate');
 
+      productFormComponent.submitForm().subscribe(() => {
+        expect(addSpy).toHaveBeenCalledTimes(1);
+        expect(openSnackbarSpy).toHaveBeenCalledTimes(1);
+        expect(openSnackbarSpy.calls.mostRecent().args[0].startsWith(ProductFormComponent.addMessageSuccess)).toBeTrue();
 
-    });
+        expect(navigateSpy).toHaveBeenCalledTimes(1);
+        expect(navigateSpy.calls.mostRecent().args[0]).toEqual(['/products/', MockProductService.testID]);
+      });
+    }));
   });
+
+  it('should make a call to productService.editProduct() when mode is "EDIT"', waitForAsync(() => {
+    productFormComponent.mode = 'EDIT';
+    productFormComponent.id = MockProductService.testProducts[0]._id;
+    const editSpy = spyOn(productService, 'editProduct').and.callThrough();
+    const openSnackbarSpy = spyOn(snackBar, 'open');
+    const navigateSpy = spyOn(router, 'navigate');
+
+    productFormComponent.submitForm().subscribe(() => {
+      expect(editSpy).toHaveBeenCalledTimes(1);
+      expect(editSpy).toHaveBeenCalledWith(productFormComponent.id, productForm.value);
+
+      expect(openSnackbarSpy).toHaveBeenCalledTimes(1);
+      expect(openSnackbarSpy.calls.mostRecent().args[0].startsWith(ProductFormComponent.editMessageSuccess)).toBeTrue();
+
+      expect(navigateSpy).toHaveBeenCalledTimes(1);
+      expect(navigateSpy.calls.mostRecent().args[0][0].startsWith('/products/')).toBeTrue();
+    });
+
+  }));
 
 });
