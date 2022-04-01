@@ -133,11 +133,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
       prod => {
         this.serverFilteredProducts = this.serverFilteredProducts.filter(product => product._id !== id);
         this.tempDeleted = prod;
+        this.updateFilter();
         this.initializeCategoryMap();
       }
     );
     this.tempDialog.close();
-    this.snackBar.open('Product deleted', 'OK', {
+    this.snackBar.open(`${this.tempDeleted.product_name} deleted`, 'OK', {
       duration: 5000,
     });
     return this.tempDeleted;
