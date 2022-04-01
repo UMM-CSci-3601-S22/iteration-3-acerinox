@@ -20,11 +20,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
-  public serverFilteredProducts: Product[] = [];
-  public filteredProducts: Product[] = [];
-
-  // Unfiltered product list
-  public allProducts: Product[] = [];
+  public serverFilteredProducts: Product[];
+  public filteredProducts: Product[];
 
   public name: string;
   public productBrand: string;
@@ -47,6 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     'canned goods',
     'drinks',
     'general grocery',
+    'miscellaneous',
     'seasonal',
   ];
 
@@ -58,7 +56,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public tempName: string;
   public tempDialog: any;
   public tempDeleted: Product;
-  asyncResult: any;
   constructor(private productService: ProductService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   getProductsFromServer(): void {
@@ -68,6 +65,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       store: this.productStore
     }).subscribe(returnedProducts => {
       this.serverFilteredProducts = returnedProducts;
+      this.initializeCategoryMap();
       this.updateFilter();
     }, err => {
       console.log(err);
@@ -78,13 +76,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     else {
       this.activeFilters = false;
     }
-  }
-
-  getUnfilteredProducts(): void {
-    this.getUnfilteredProductsSub = this.productService.getProducts().subscribe(returnedProducts => {
-      this.allProducts = returnedProducts;
-    });
-    console.log(this.allProducts);
   }
 
   // Sorts products based on their category
@@ -124,8 +115,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getProductsFromServer();
-    this.getUnfilteredProducts();
-    this.initializeCategoryMap();
   }
 
   ngOnDestroy(): void {
@@ -142,7 +131,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   removeProduct(id: string): Product {
     this.productService.deleteProduct(id).subscribe(
       prod => {
-        this.allProducts = this.allProducts.filter(product => product._id !== id);
+        this.serverFilteredProducts = this.serverFilteredProducts.filter(product => product._id !== id);
         this.tempDeleted = prod;
         this.initializeCategoryMap();
       }
