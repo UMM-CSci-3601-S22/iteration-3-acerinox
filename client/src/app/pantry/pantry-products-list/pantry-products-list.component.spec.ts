@@ -64,6 +64,22 @@ describe('PantryProductsListComponent', () => {
     expect(pantryProductsList).toBeTruthy();
   });
 
+  it('populates product and pantry arrays', () => {
+    expect(pantryProductsList.matchingProducts.length).toBe(4);
+    expect(pantryProductsList.pantryInfo.length).toBe(4);
+  });
+
+  it('creates a pantry array from the pantryInfo array', () => {
+    expect(pantryProductsList.uniquePantry.length).toBe(3);
+  });
+
+  it('sorts the pantryInfo array by date purchased', () => {
+    expect(pantryProductsList.pantryInfo[0].purchase_date).toBe('16-07-2020');
+  });
+
+  it('creates an array of Products to PantryItems arrays', () => {
+    expect(pantryProductsList.comboArray.length).toBe(4);
+  });
 
 });
 
