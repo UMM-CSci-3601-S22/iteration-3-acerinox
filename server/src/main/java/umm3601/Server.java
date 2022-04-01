@@ -86,14 +86,14 @@ public class Server {
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products", productController::addNewProduct);
 
-    // Edit a product with a given id
-    server.put("/api/products/edit/{id}", productController::editProduct);
-
     // Add new pantry item with info from JSON body of HTTP request
     server.post("/api/pantry", pantryController::addNewPantryItem);
 
     // Add new product with info from JSON body of HTTP request
-    server.put("/api/products/{id}", productController::addNewProduct);
+    server.post("/api/products/{id}", productController::addNewProduct);
+
+    // Edit a product with a given id
+    server.put("/api/products/{id}", productController::editProduct);
 
     // This catches any uncaught exceptions thrown in the server
     // code and turns them into a 500 response ("Internal Server

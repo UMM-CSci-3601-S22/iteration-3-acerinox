@@ -72,7 +72,8 @@ describe('ProductFormComponent', () => {
     httpTestingController.verify();
   });
 
-  it('should initialize a product object based on a query parameter', () => {
+  it('should initialize a product object based on a query parameter when the mode is EDIT', () => {
+    productFormComponent.mode = 'EDIT';
     expect(productFormComponent.product).toBeTruthy();
   });
 

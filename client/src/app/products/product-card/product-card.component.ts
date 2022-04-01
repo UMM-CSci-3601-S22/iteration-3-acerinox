@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 import { Product } from '../product';
 
 @Component({
@@ -6,7 +6,7 @@ import { Product } from '../product';
   templateUrl: './product-card.component.html',
   styleUrls: ['./product-card.component.scss']
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent implements OnInit, OnChanges {
 
   @Input() product: Product;
 
@@ -15,8 +15,12 @@ export class ProductCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.product._id);
     this.editURL = `/products/edit/${this.product._id}`;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const newProduct = changes.product.currentValue;
+    this.editURL = `/products/edit/${newProduct._id}`;
   }
 
 }

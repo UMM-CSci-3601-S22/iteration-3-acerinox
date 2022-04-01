@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { catchError, map, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, catchError, filter, map, Observable, of, Subscription } from 'rxjs';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -21,6 +21,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   productForm: FormGroup;
 
+  productObserver: BehaviorSubject<Product> = new BehaviorSubject<null>(null);
   product: Product;
 
   id: string;
@@ -119,31 +120,41 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       notes: new FormControl(this.getProductValueOrEmptyString('notes'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(350),
       ])),
-      tags: null
-      ,
+      tags: new FormControl(this.getProductValueOrEmptyString('tags'), Validators.compose([])),
       lifespan: new FormControl(this.getProductValueOrEmptyString('lifespan'), Validators.compose([
         Validators.min(0), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
       threshold: new FormControl(this.getProductValueOrEmptyString('threshold'), Validators.compose([
         Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
-      image: null,
+      image: new FormControl(this.getProductValueOrEmptyString('image'), Validators.compose([])),
     });
   }
 
-  ngOnInit(): void {
-    this.route.params.subscribe(
+  setProduct(): void {
+    if (this.mode === 'EDIT') {
+   this.route.params.subscribe(
       params => {
         this.id = params.id;
         if (this.editProductSub) {
           this.editProductSub.unsubscribe();
         }
         this.editProductSub = this.productService.getProductById(this.id).subscribe((product) => {
-          this.product = product;
-          this.createForms();
+          this.productObserver.next(product);
         });
       }
     );
+    }
+  }
+
+  ngOnInit(): void {
+    this.setProduct();
+    this.productObserver.pipe(
+      filter(val => val !== undefined)
+    ).subscribe(product => {
+      this.product = this.productObserver.value;
+      this.createForms();
+    });
   }
 
   ngOnDestroy(): void {
@@ -171,8 +182,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       );
     }
     else if (this.mode === 'EDIT'){
-      //Mode == EDIT
-      console.log(`Id before the edit product call: ${this.id}`);
       return this.productService.editProduct(this.id, this.productForm.value).pipe(
         map(newProduct => {
           this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
