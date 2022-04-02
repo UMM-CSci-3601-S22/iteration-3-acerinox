@@ -15,12 +15,16 @@ export class ProductCardComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit(): void {
-    this.editURL = `/products/edit/${this.product._id}`;
+    if (this.product){
+      this.editURL = `/products/edit/${this.product._id}`;
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     const newProduct = changes.product.currentValue;
-    this.editURL = `/products/edit/${newProduct._id}`;
+    if (newProduct){
+      this.editURL = `/products/edit/${newProduct._id}`;
+    }
   }
 
 }

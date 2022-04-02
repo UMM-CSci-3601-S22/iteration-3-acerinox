@@ -226,12 +226,16 @@ public class ProductController {
 
     productCollection.replaceOne(eq("_id", new ObjectId(productID)), newProduct);
 
+    //For some reason, the id here is null, so reset it here for the redirect on client
+    newProduct._id = productID;
+
+
     // 201 is the HTTP code for when we successfully
     // (PUT a new product)
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
-    ctx.json(Map.of("id", newProduct._id));
+    ctx.json(newProduct);
   }
 
 }

@@ -1,4 +1,4 @@
-<form [formGroup]="productForm">
+<form *ngIf="productForm" [formGroup]="productForm">
   <mat-card class="add-product-card">
       <mat-card-header>
         <mat-card-title class="add-product-title">Create a New product</mat-card-title>

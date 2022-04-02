@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { BehaviorSubject, catchError, filter, map, Observable, of, Subscription } from 'rxjs';
+
+export type FormMode = 'EDIT' | 'ADD';
 @Component({
   selector: 'app-product-form',
   templateUrl: './product-form.component.html',
@@ -17,11 +19,11 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   static addMessageSuccess = 'Added Product';
   static addMessageFail = 'Failed to add product';
 
-  @Input() mode: 'ADD' | 'EDIT';
+  @Input() mode: FormMode;
 
   productForm: FormGroup;
 
-  productObserver: BehaviorSubject<Product> = new BehaviorSubject<null>(null);
+  productObservable: BehaviorSubject<Product> = new BehaviorSubject<null>(null);
   product: Product;
 
   id: string;
@@ -90,7 +92,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
   // A helper function for auto-filling the form fields that returns the existing value
   // or it just returns the empty string if it doesn't
   getProductValueOrEmptyString(key: string): string {
-    if (this.product && this.product[key] !== null) {
+    if (this.product && this.product[key] !== null && this.product[key] !== undefined) {
       return this.product[key];
     }
     return '';
@@ -120,9 +122,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       notes: new FormControl(this.getProductValueOrEmptyString('notes'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(350),
       ])),
-      tags: new FormControl(this.getProductValueOrEmptyString('tags'), Validators.compose([])),
+      tags: new FormControl([], Validators.compose([])),
       lifespan: new FormControl(this.getProductValueOrEmptyString('lifespan'), Validators.compose([
-        Validators.min(0), Validators.max(1000000), Validators.pattern('^[0-9]+$')
+        Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
       threshold: new FormControl(this.getProductValueOrEmptyString('threshold'), Validators.compose([
         Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
@@ -133,28 +135,31 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   setProduct(): void {
     if (this.mode === 'EDIT') {
-   this.route.params.subscribe(
-      params => {
+      this.route.params.subscribe(params => {
         this.id = params.id;
         if (this.editProductSub) {
           this.editProductSub.unsubscribe();
         }
-        this.editProductSub = this.productService.getProductById(this.id).subscribe((product) => {
-          this.productObserver.next(product);
+        this.editProductSub = this.productService.getProductById(this.id).subscribe(product => {
+          this.productObservable.next(product);
         });
-      }
-    );
+      });
     }
   }
 
   ngOnInit(): void {
     this.setProduct();
-    this.productObserver.pipe(
-      filter(val => val !== undefined)
-    ).subscribe(product => {
-      this.product = this.productObserver.value;
+    if (this.mode === 'EDIT') {
+      this.productObservable.pipe(
+        filter(val => val !== undefined && val !== null)
+      ).subscribe(product => {
+        this.product = product;
+        this.createForms();
+      });
+    }
+    else {
       this.createForms();
-    });
+    }
   }
 
   ngOnDestroy(): void {
@@ -163,40 +168,60 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  submitForm(): Observable<void> {
-    if (this.mode === 'ADD') {
-      return this.productService.addProduct(this.productForm.value).pipe(
-        map(newID => {
-          this.snackBar.open(`${ProductFormComponent.addMessageSuccess} ${this.productForm.value.productName}`, null, {
-            duration: 2000,
-          });
-          this.router.navigate(['/products/', newID]);
-        }),
 
-        catchError(() => {
+  async submitForm(): Promise<void> {
+    if (this.mode === 'ADD') {
+      try {
+        const newID = await this.productService.addProduct(this.productForm.value).toPromise();
+        this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
+        this.router.navigate(['/products/', newID]);
+      } catch (e) {
+        this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
+          duration: 5000,
+        });
+      }
+    }
+    else if (this.mode === 'EDIT') {
+      try {
+        const newProduct = await this.productService.editProduct(this.id, this.productForm.value).toPromise();
+        this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
+          duration: 2000,
+        });
+        this.router.navigate(['/products/', newProduct._id]);
+      } catch (e) {
+        this.snackBar.open(ProductFormComponent.editMessageFail, 'OK');
+      }
+    }
+  }
+
+
+  /*
+    submitForm(): Subscription {
+      if (this.mode === 'ADD') {
+        return this.productService.addProduct(this.productForm.value).subscribe((newID) => {
+          this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
+          this.router.navigate(['/products/', newID]);
+        }, err => {
           this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
             duration: 5000,
           });
-          return of(undefined);
-        })
-      );
-    }
-    else if (this.mode === 'EDIT'){
-      return this.productService.editProduct(this.id, this.productForm.value).pipe(
-        map(newProduct => {
-          this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
-            duration: 2000,
-          });
-          this.router.navigate(['/products/', newProduct._id]);
-        }),
+        });
 
-        catchError(() => {
-          this.snackBar.open(ProductFormComponent.editMessageFail, 'OK', {
-            duration: 5000,
-          });
-          return of(undefined);
-        })
-      );
+      }
+      else if (this.mode === 'EDIT'){
+        return this.productService.editProduct(this.id, this.productForm.value).subscribe(
+          (newProduct) => {
+            this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
+              duration: 2000,
+            });
+            this.router.navigate(['/products/', newProduct._id]);
+          }, err => {
+            this.snackBar.open(ProductFormComponent.editMessageFail, 'OK', {
+              duration: 5000,
+            });
+          }
+        );
+      }
     }
-  }
+    */
 }

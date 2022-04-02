@@ -63,7 +63,6 @@ export class ProductService {
   }
 
   addProduct(newProduct: Product): Observable<string> {
-    console.log('addProduct() called');
     // Send post request to add a new user with the user data as the body.
     return this.httpClient.post<{id: string}>(this.productUrl, newProduct).pipe(map(res => res.id));
   }
@@ -73,7 +72,6 @@ export class ProductService {
   }
 
   editProduct(productId: string, newData: Product): Observable<Product> {
-    console.log('editProduct() called');
     return this.httpClient.put<Product>(`${this.productUrl}/${productId}`, newData).pipe(map(res => res));
   }
 
