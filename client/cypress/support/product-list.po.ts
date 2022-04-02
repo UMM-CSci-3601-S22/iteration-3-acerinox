@@ -18,11 +18,11 @@ export class ProductListPage {
   }
 
   getExpansionTitleByCategory(category: string) {
-    return cy.get('.' + category + '-expansion-panel .' + category + '-panel-title');
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel .' + category.replace(' ', '-') + '-panel-title');
   }
 
   getExpansionItemsByCategory(category: string) {
-    return cy.get('.' + category + '-expansion-panel.' + category + '-nav-list .product-list-item');
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel .' + category.replace(' ', '-') + '-nav-list .product-list-item');
   }
 
   /**
@@ -53,9 +53,15 @@ export class ProductListPage {
     return cy.get('[data-test=addProductButton]');
   }
 
-  deleteProductButtonPopUp() {
-    return cy.get('[data-test=deleteProductButton]')
-    .click()
-    .get('[data-test=deletePopUp]');
+  clickDeleteButton() {
+    return this.getFilteredProductListItems()
+    .get('.product-item-container:first .delete-container .delete-product-button')
+    .click();
+  }
+
+  clickExpansionDeleteButton(category: string) {
+    return this.getExpansionItemsByCategory(category)
+    .get('.product-item-container:first .delete-container .delete-product-button')
+    .click();
   }
 }
