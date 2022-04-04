@@ -8,6 +8,7 @@ describe('Product List', () => {
 
   beforeEach(() => {
     page.navigateTo();
+    cy.wait(2000);
   });
 
   it('Should have the correct title', () => {
@@ -18,8 +19,6 @@ describe('Product List', () => {
     // Filter for product 'Muffin'
     cy.get('#product-name-input').type('Muffin');
 
-    cy.wait(2000);
-
     // All of the product list items should have the name we are filtering by
     page.getFilteredProductListItems().each($item => {
       cy.wrap($item).find('.product-item-name').should('contain.text', 'Muffin');
@@ -29,7 +28,6 @@ describe('Product List', () => {
   it('Should type something in the Brand filter and check that it returned correct elements', () => {
     // Filter for product 'Weimann'
     cy.get('#product-brand-input').type('Weimann');
-    cy.wait(2000);
 
     // All of the product list items should have the name we are filtering by
     page.getFilteredProductListItems().each($item => {
@@ -41,11 +39,9 @@ describe('Product List', () => {
 
     // Filter for store 'Willies');
     page.selectStore('Willies');
-    cy.wait(2000);
 
     //further limit so cypress test doesn't stall out reading 100+ products
     page.selectCategory('bakery');
-    cy.wait(2000);
 
     // Some of the products should be listed
     page.getFilteredProductListItems().should('exist');
@@ -60,7 +56,6 @@ describe('Product List', () => {
 
     // Filter for category 'canned goods');
     page.selectCategory('canned goods');
-    cy.wait(2000);
 
     // Some of the products should be listed
     page.getFilteredProductListItems().should('exist');
@@ -73,7 +68,6 @@ describe('Product List', () => {
 
   it('Should click add product and go to the right URL', () => {
     page.addProductButton().click();
-    cy.wait(2000);
 
     // The URL should end with '/products/new'
     cy.url().should(url => expect(url.endsWith('/products/new')).to.be.true);
@@ -86,11 +80,11 @@ describe('Product List Expansion Panels', () => {
 
   beforeEach(() => {
     page.navigateTo();
+    cy.wait(1000);
   });
 
   it('Should check that expansion panels have the correct titles and items by categories', () => {
 
-    cy.wait(2000);
     page.getExpansionTitleByCategory('bakery').should('have.text', ' bakery ');
 
     page.getExpansionItemsByCategory('bakery').each($product => {
@@ -111,15 +105,14 @@ describe('Delete button on Products From Product List', () => {
 
   beforeEach(() => {
     page.navigateTo();
+    cy.wait(1000);
   });
 
   it('Should the delete button for the first product from the filtered list and read the dialog popup', () => {
 
-    cy.wait(2000);
     // Filter products
     page.selectCategory('general grocery');
     cy.get('#product-name-input').type('Coffee');
-    cy.wait(2000);
 
     // Check that 'Coffee - Cafe Moreno' is the first product
     page.getFilteredProductListItems().first().within(($product) => {
@@ -128,7 +121,6 @@ describe('Delete button on Products From Product List', () => {
 
     // Grab and delete first one, 'Coffee - Cafe Moreno'
     page.clickDeleteButton();
-    cy.wait(2000);
     cy.get('.mat-dialog-content')
     .should('contain.text', 'Are you sure you want to delete Coffee - Cafe Moreno? This action cannot be undone');
   });
@@ -137,7 +129,6 @@ describe('Delete button on Products From Product List', () => {
   it('Should go to a product in an expansion tab and delete', () => {
     // Filter products
     page.selectCategory('seasonal');
-    cy.wait(2000);
 
     // Check that 'Beef - Ground Lean Fresh' is the first product
     page.getExpansionItemsByCategory('seasonal').first().within(($product) => {
