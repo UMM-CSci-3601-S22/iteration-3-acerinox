@@ -105,11 +105,9 @@ public class Server {
     // caught here so you'd know about them and could try to address
     // them.
 
-    /*
-    Commenting this out for development purposes (getting more helpful error messages)
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });
-    */
+
   }
 }

@@ -133,7 +133,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addInvalidThresholdProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -158,7 +158,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyLifespanProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -183,7 +183,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullNameProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": null," // null name
+        + "\"productName\": null," // null name
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -208,7 +208,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyNameProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"\"," // empty name
+        + "\"productName\": \"\"," // empty name
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -233,7 +233,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullDescriptionProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\": null," // null description
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -258,7 +258,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyProductDescription() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\"," // empty name
+        + "\"productName\": \"Test Product name\"," // empty name
         + "\"description\":\"\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -277,6 +277,7 @@ public class ProductControllerValidateProductSpec {
 
     productController.addNewProduct(ctx);
     String result = ctx.resultString();
+    System.out.println(result);
     String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
 
     // Our status should be 201, i.e., our new product was successfully
@@ -297,7 +298,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullBrandProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": null," // null brand
         + "\"category\": \"test category\","
@@ -322,7 +323,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyBrandProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"\"," // empty brand
         + "\"category\": \"test category\","
@@ -347,7 +348,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullCategoryProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": null," // null category
@@ -372,7 +373,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyCategoryProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"\"," // empty category
@@ -397,7 +398,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullStoreProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -422,7 +423,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyStoreProduct() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -447,7 +448,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullProductLocation() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -472,7 +473,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyProductLocation() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -497,7 +498,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addNullProductNotes() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -522,7 +523,7 @@ public class ProductControllerValidateProductSpec {
   @Test
   public void addEmptyProductNotes() throws IOException {
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","

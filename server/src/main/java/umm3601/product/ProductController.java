@@ -197,6 +197,7 @@ public class ProductController {
   }
 
   private Product validateProduct(Context ctx) {
+    System.out.println(ctx.body());
     return ctx.bodyValidator(Product.class)
         .check(product -> product.productName != null && product.productName.length() > 0,
             "Product must have a non-empty product name")
@@ -228,7 +229,6 @@ public class ProductController {
 
     //For some reason, the id here is null, so reset it here for the redirect on client
     newProduct._id = productID;
-
 
     // 201 is the HTTP code for when we successfully
     // (PUT a new product)

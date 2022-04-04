@@ -6,7 +6,6 @@ import { ActivatedRouteStub } from '../../../testing/activated-route-stub';
 import { MockProductService } from 'src/testing/product.service.mock';
 import { Product } from '../product';
 import { ProductListComponent } from '../product-list/product-list.component';
-import { AddProductComponent } from '../add-product/add-product.component';
 import { ProductService } from '../product.service';
 import { SingleProductPageComponent } from './single-product-page.component';
 

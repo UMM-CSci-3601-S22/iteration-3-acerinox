@@ -194,34 +194,4 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  /*
-    submitForm(): Subscription {
-      if (this.mode === 'ADD') {
-        return this.productService.addProduct(this.productForm.value).subscribe((newID) => {
-          this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
-          this.router.navigate(['/products/', newID]);
-        }, err => {
-          this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
-            duration: 5000,
-          });
-        });
-
-      }
-      else if (this.mode === 'EDIT'){
-        return this.productService.editProduct(this.id, this.productForm.value).subscribe(
-          (newProduct) => {
-            this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
-              duration: 2000,
-            });
-            this.router.navigate(['/products/', newProduct._id]);
-          }, err => {
-            this.snackBar.open(ProductFormComponent.editMessageFail, 'OK', {
-              duration: 5000,
-            });
-          }
-        );
-      }
-    }
-    */
 }

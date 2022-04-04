@@ -114,7 +114,7 @@ public class ProductControllerPutSpec {
     List<Document> testProducts = new ArrayList<>();
     testProducts.add(
         new Document()
-            .append("product_name", "Banana")
+            .append("productName", "Banana")
             .append("description", "A yellow fruit")
             .append("brand", "Dole")
             .append("category", "produce")
@@ -129,7 +129,7 @@ public class ProductControllerPutSpec {
             .append("threshold", 40));
     testProducts.add(
         new Document()
-            .append("product_name", "Canned Pinto Beans")
+            .append("productName", "Canned Pinto Beans")
             .append("description", "A can of pinto beans")
             .append("brand", "Our Family")
             .append("category", "canned goods")
@@ -144,7 +144,7 @@ public class ProductControllerPutSpec {
             .append("threshold", 4));
     testProducts.add(
         new Document()
-            .append("product_name", "Bread")
+            .append("productName", "Bread")
             .append("description", "You know what this is.")
             .append("brand", "Richard's Castle")
             .append("category", "bakery")
@@ -159,7 +159,7 @@ public class ProductControllerPutSpec {
             .append("threshold", 3));
     testProducts.add(
         new Document()
-            .append("product_name", "Rock")
+            .append("productName", "Rock")
             .append("description", "")
             .append("brand", "Hurt Ball")
             .append("category", "miscellaneous")
@@ -176,7 +176,7 @@ public class ProductControllerPutSpec {
     milksId = new ObjectId();
     Document milk = new Document()
         .append("_id", milksId)
-        .append("product_name", "Milk")
+        .append("productName", "Milk")
         .append("description",
             "A dairy liquid obtained from the teat of an unsuspecting animal")
         .append("brand", "Gerbil Goods")
@@ -228,7 +228,7 @@ public class ProductControllerPutSpec {
 
     String testNewProduct = "{"
         + "\"_id\": \"" + testId + "\","
-        + "\"product_name\": \"Other Milk\","
+        + "\"productName\": \"Other Milk\","
         + "\"description\":\"A dairy liquid obtained from the teat of an unsuspecting animal\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -248,7 +248,7 @@ public class ProductControllerPutSpec {
     productController.editProduct(ctx);
 
     String result = ctx.resultString();
-    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
+    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("_id").asText();
 
     assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
 
@@ -260,7 +260,7 @@ public class ProductControllerPutSpec {
     Document addedProduct = db.getCollection("products").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedProduct);
-    assertEquals("Other Milk", addedProduct.getString("product_name"));
+    assertEquals("Other Milk", addedProduct.getString("productName"));
     assertEquals("A dairy liquid obtained from the teat of an unsuspecting animal",
         addedProduct.getString("description"));
     assertEquals("test brand", addedProduct.getString("brand"));
