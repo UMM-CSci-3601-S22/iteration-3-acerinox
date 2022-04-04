@@ -8,7 +8,7 @@ describe('Product List', () => {
 
   beforeEach(() => {
     page.navigateTo();
-    cy.wait(2000);
+    cy.wait(20000);
   });
 
   it('Should have the correct title', () => {
