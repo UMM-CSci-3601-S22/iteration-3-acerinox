@@ -123,19 +123,19 @@ describe('Delete button on Products From Product List', () => {
   });
 
   // Cypress having trouble finding expansion panels
-  /* it('Should go to a product in an expansion tab and delete', () => {
+  it('Should go to a product in an expansion tab and delete', () => {
     // Filter products
     page.selectCategory('seasonal');
 
     // Check that 'Beef - Ground Lean Fresh' is the first product
     page.getExpansionItemsByCategory('seasonal').first().within(($product) => {
       cy.wrap($product).find('.product-item-name').should('contain.text', ' Beef - Ground Lean Fresh ');
+    });
 
     // Grab and click the delete button for the first one, 'Beef - Ground Lean Fresh'
     page.clickExpansionDeleteButton('seasonal');
     cy.get('.mat-dialog-content')
-    .should('contain.text', 'Are you sure you want to Beef - Ground Lean Fresh? This action cannot be undone');
-    });
-  }); */
+    .should('contain.text', 'Are you sure you want to delete Beef - Ground Lean Fresh? This action cannot be undone');
+  });
 
 });
