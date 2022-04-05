@@ -277,7 +277,6 @@ public class ProductControllerValidateProductSpec {
 
     productController.addNewProduct(ctx);
     String result = ctx.resultString();
-    System.out.println(result);
     String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
 
     // Our status should be 201, i.e., our new product was successfully

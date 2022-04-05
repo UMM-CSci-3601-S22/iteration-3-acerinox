@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
-import { BehaviorSubject, catchError, filter, map, Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, filter, Subscription } from 'rxjs';
 
 export type FormMode = 'EDIT' | 'ADD';
 @Component({
@@ -64,7 +64,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     ],
     notes: [
       { type: 'minlength', message: 'Product notes must be at least 1 character' },
-      { type: 'maxlength', message: 'Product notes must be at less than 350 characters' }
+      { type: 'maxlength', message: 'Product notes must be at less than 2000 characters' }
     ],
     tags: [
       { type: 'minlength', message: 'Product notes must be at least 1 character' },
@@ -123,11 +123,11 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         Validators.minLength(1), Validators.maxLength(100),
       ])),
       notes: new FormControl(this.getProductValueOrEmptyString('notes'), Validators.compose([
-        Validators.minLength(1), Validators.maxLength(350),
+        Validators.minLength(1), Validators.maxLength(2000),
       ])),
       tags: new FormControl([], Validators.compose([])),
       lifespan: new FormControl(this.getProductValueOrEmptyString('lifespan'), Validators.compose([
-        Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
+        Validators.min(0), Validators.max(1000000), Validators.pattern('^[0-9]+$')
       ])),
       threshold: new FormControl(this.getProductValueOrEmptyString('threshold'), Validators.compose([
         Validators.min(1), Validators.max(1000000), Validators.pattern('^[0-9]+$')
@@ -158,6 +158,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       ).subscribe(product => {
         this.product = product;
         this.createForms();
+        console.log(this.productForm.controls.productName);
       });
     }
     else {
@@ -170,7 +171,6 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       this.editProductSub.unsubscribe();
     }
   }
-
 
   async submitForm(): Promise<void> {
     if (this.mode === 'ADD') {

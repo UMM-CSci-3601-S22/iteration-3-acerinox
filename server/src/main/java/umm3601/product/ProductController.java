@@ -197,7 +197,6 @@ public class ProductController {
   }
 
   private Product validateProduct(Context ctx) {
-    System.out.println(ctx.body());
     return ctx.bodyValidator(Product.class)
         .check(product -> product.productName != null && product.productName.length() > 0,
             "Product must have a non-empty product name")
@@ -214,7 +213,7 @@ public class ProductController {
         .check(product -> product.notes != null && product.notes.length() > 0, "Product notes cannot be null")
         // .check(product -> product.tags != null && product.tags.size() >= 0, "Product
         // tags cannot be null")
-        .check(product -> product.lifespan > 0, "Products's lifespan must be greater than zero")
+        .check(product -> product.lifespan >= 0, "Products's lifespan must be greater than or equal to zero")
         .check(product -> product.threshold > 0, "Products's threshold must be greater than zero")
         .get();
   }

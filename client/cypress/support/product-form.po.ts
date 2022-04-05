@@ -1,20 +1,4 @@
 import { Product } from 'src/app/products/product';
-
-const testProductEditData = {
-  _id: '6227c728fc13ae58600005d7',
-  productName: 'Salami - Genova',
-  description: 'Thin sliced meat',
-  brand: 'Jacobson, Herman and Metz',
-  category: 'produce',
-  store: 'Willies',
-  location: 'volutpat',
-  notes: 'Slightly spicy',
-  tags: [],
-  lifespan: 0,
-  threshold: 33,
-  image: 'http://dummyimage.com/200x100.png/5fa2dd/ffffff'
-} as Product;
-
 export class ProductFormPage {
 
   navigateTo(mode: 'ADD' | 'EDIT', product?: Product) {
@@ -47,33 +31,53 @@ export class ProductFormPage {
     return cy.get('[data-test="confirmProductButton"]');
   }
 
-  addProduct(newProduct: Product) {
-    this.getFormField('productName').type(newProduct.productName);
-    this.getFormField('brand').type(newProduct.brand);
-    this.getFormField('store').type(newProduct.store);
-    this.selectMatSelectValue(cy.get('[formControlName=category]'), newProduct.category);
+  editProductButton() {
+    return cy.get('[data-test="confirmProductButton"]');
+  }
 
-    if (newProduct.description) {
-      this.getFormField('description').type(newProduct.description);
+  addProduct(productData: Product) {
+    this.fillInFormData(productData);
+    return this.editProductButton().click();
+  }
+
+  editProduct(productData: Product) {
+    this.fillInFormData(productData);
+    return this.editProductButton().click();
+  }
+
+  private fillInFormData(productData: Product) {
+    this.getFormField('productName').clear();
+    this.getFormField('productName').type(productData.productName);
+    this.getFormField('brand').clear();
+    this.getFormField('brand').type(productData.brand);
+    this.getFormField('store').clear();
+    this.getFormField('store').type(productData.store);
+    this.selectMatSelectValue(cy.get('[formControlName=category]'), productData.category);
+
+    if (productData.description) {
+      this.getFormField('description').clear();
+      this.getFormField('description').type(productData.description);
     }
-    if (newProduct.lifespan) {
+    if (productData.lifespan) {
       this.getFormField('lifespan').clear();
-      this.getFormField('lifespan').type(`${newProduct.lifespan}`);
+      this.getFormField('lifespan').type(`${productData.lifespan}`);
     }
-    if (newProduct.image) {
-      this.getFormField('image').type(newProduct.image);
+    if (productData.image) {
+      this.getFormField('image').clear();
+      this.getFormField('image').type(productData.image);
     }
-    if (newProduct.location) {
-      this.getFormField('location').type(newProduct.location);
+    if (productData.location) {
+      this.getFormField('location').clear();
+      this.getFormField('location').type(productData.location);
     }
-    if (newProduct.notes) {
-      this.getFormField('notes').type(newProduct.notes);
+    if (productData.notes) {
+      this.getFormField('notes').clear();
+      this.getFormField('notes').type(productData.notes);
     }
-    if (newProduct.threshold) {
+    if (productData.threshold) {
       this.getFormField('threshold').clear();
-      this.getFormField('threshold').type(`${newProduct.threshold}`);
+      this.getFormField('threshold').type(`${productData.threshold}`);
     }
 
-    return this.addProductButton().click();
   }
 }

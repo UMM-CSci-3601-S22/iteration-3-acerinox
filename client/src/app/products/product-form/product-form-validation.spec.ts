@@ -147,7 +147,7 @@ for (const mode of possibleModes) {
         });
 
         it('should fail on really long description.', () => {
-          descriptionControl.setValue('x'.repeat(2000));
+          descriptionControl.setValue('x'.repeat(2100));
           expect(descriptionControl.valid).toBeFalsy();
 
           expect(descriptionControl.hasError('maxlength')).toBeTruthy();
@@ -346,7 +346,7 @@ for (const mode of possibleModes) {
       // setting upper limits on things like name lengths just
       // because there are people with really long names.
       it('should fail on really long notes', () => {
-        notesControl.setValue('x'.repeat(2000));
+        notesControl.setValue('x'.repeat(2010));
         expect(notesControl.valid).toBeFalsy();
         // Annoyingly, Angular uses lowercase 'l' here
         // when it's an upper case 'L' in `Validators.maxLength(2)`.
