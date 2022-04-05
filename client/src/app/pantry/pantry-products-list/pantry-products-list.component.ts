@@ -49,7 +49,7 @@ export class PantryProductsListComponent implements OnInit {
   public miscellaneousProducts: Product[];
 
   // Columns displayed
-  columnsToDisplay = ['amount', 'product_name', 'oldest_purchase_date', 'oldest_amount'];
+  displayedColumns: string[] = ['product', 'purchase_date', 'notes'];
   /**
    * This constructor injects both an instance of `PantryService`
    * and an instance of `MatSnackBar` into this component.
@@ -91,6 +91,7 @@ export class PantryProductsListComponent implements OnInit {
         return dateA > dateB ? 1 : -1;
       });
       this.createUniquePantry();
+      console.log(this.uniquePantry);
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
