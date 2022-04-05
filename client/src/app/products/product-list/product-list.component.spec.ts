@@ -102,7 +102,7 @@ describe('ProductListComponent', () => {
     expect(productList.categoryNameMap.get('produce'))
     .toEqual([{
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',

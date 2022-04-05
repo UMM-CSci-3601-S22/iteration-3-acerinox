@@ -156,31 +156,6 @@ public class ProductControllerValidateProductSpec {
   }
 
   @Test
-  public void addEmptyLifespanProduct() throws IOException {
-    String testNewProduct = "{"
-        + "\"productName\": \"Test Product name\","
-        + "\"description\":\"A test product description\","
-        + "\"brand\": \"test brand\","
-        + "\"category\": \"test category\","
-        + "\"store\": \"test store\","
-        + "\"location\": \"test location\","
-        + "\"notes\": \"tastes like test\","
-        + "\"tags\": [\"test tag\"],"
-        + "\"lifespan\": null," // empty lifespan
-        + "\"threshold\": 84,"
-        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
-        + "}";
-    mockReq.setBodyContent(testNewProduct);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/products");
-
-    assertThrows(ValidationException.class, () -> {
-      productController.addNewProduct(ctx);
-    });
-  }
-
-  @Test
   public void addNullNameProduct() throws IOException {
     String testNewProduct = "{"
         + "\"productName\": null," // null name
