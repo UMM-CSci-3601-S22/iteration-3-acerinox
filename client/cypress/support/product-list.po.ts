@@ -2,7 +2,7 @@ import { ProductCategory } from 'src/app/products/product';
 
 export class ProductListPage {
   navigateTo() {
-    return cy.visit('/products');
+    return cy.visit('./products');
   }
 
   getUrl() {
