@@ -19,7 +19,7 @@ describe('Product List', () => {
     cy.get('#product-name-input').type('Muffin');
 
     // All of the product list items should have the name we are filtering by
-    cy.get('body').find('.conditional-product-list').find('.filtered-product-nav-list .filtered-product-list-item')
+    cy.get('body').find('.conditional-product-list').next().get('.filtered-product-nav-list')
     .each($item => {
       cy.wrap($item).get('.product-item-name').should('contain.text', 'Muffin');
     });
@@ -33,7 +33,7 @@ describe('Product List', () => {
     cy.get('#product-brand-input').type('Weimann');
 
     // All of the product list items should have the name we are filtering by
-    cy.get('body').find('.conditional-product-list').find('.filtered-product-nav-list .filtered-product-list-item')
+    cy.get('body').find('.conditional-product-list').next().get('.filtered-product-nav-list')
     .each($item => {
       cy.wrap($item).get('.product-item-brand').should('contain.text', 'Weimann');
     });
