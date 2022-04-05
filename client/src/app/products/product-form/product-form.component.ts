@@ -95,6 +95,9 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     if (this.product && this.product[key] !== null && this.product[key] !== undefined) {
       return this.product[key];
     }
+    if (['lifespan', 'threshold'].indexOf(key) > -1) {
+      return '1';
+    }
     return '';
   }
 
