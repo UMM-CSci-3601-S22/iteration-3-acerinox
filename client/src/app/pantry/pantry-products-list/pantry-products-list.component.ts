@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
+import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 
 @Component({
@@ -10,8 +11,13 @@ import { PantryService } from '../pantry.service';
   styleUrls: ['./pantry-products-list.component.scss']
 })
 export class PantryProductsListComponent implements OnInit {
-  // Unfiltered product list
-  public allProducts: Product[];
+  // Unfiltered lists
+  public matchingProducts: Product[];
+  public pantryInfo: PantryItem[];
+  public comboArray: Array<any>;
+
+  // Unique pantry list
+  public uniquePantry: PantryItem[];
 
   public name: string;
   public productBrand: string;
@@ -19,7 +25,7 @@ export class PantryProductsListComponent implements OnInit {
   public productStore: string;
   public productLimit: number;
   getProductsSub: Subscription;
-  getUnfilteredProductsSub: Subscription;
+  getPantrySub: Subscription;
 
 
 
@@ -38,9 +44,32 @@ export class PantryProductsListComponent implements OnInit {
   * Get the products in the pantry from the server,
   */
   getPantryItemsFromServer() {
-    this.pantryService.getPantryItems().subscribe(returnedPantryProducts => {
+    this.unsubProduct();
+    this.unsubPantry();
+    this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
-      this.allProducts = returnedPantryProducts;
+      this.matchingProducts = returnedPantryProducts;
+    }, err => {
+      // If there was an error getting the users, log
+      // the problem and display a message.
+      console.error('We couldn\'t get the list of todos; the server might be down');
+      this.snackBar.open(
+        'Problem contacting the server – try again',
+        'OK',
+        // The message will disappear after 3 seconds.
+        { duration: 3000 });
+    });
+
+    this.pantryService.getPantry().subscribe(returnedPantry => {
+
+      this.pantryInfo = returnedPantry;
+      this.createComboMapToArray();
+      this.pantryInfo.sort((a, b) => {
+        const dateA = a.purchase_date.toLowerCase();
+        const dateB = b.purchase_date.toLowerCase();
+        return dateA > dateB ? 1 : -1;
+      });
+      this.createUniquePantry();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -53,6 +82,23 @@ export class PantryProductsListComponent implements OnInit {
     });
   }
 
+  // Necessary? Leaving for now but not using the ComboMap for anything atm
+  createComboMapToArray() {
+    const tempMap = new Map();
+    this.matchingProducts.forEach((product, index) => {
+      const pantryItem = this.pantryInfo[index];
+      const productItem = product;
+      tempMap.set(productItem, pantryItem);
+    });
+    this.comboArray = Array.from(tempMap, ([product, pantryItem]) => ({ product, pantryItem }));
+    console.log(this.comboArray);
+  }
+
+  createUniquePantry() {
+    const check = new Set();
+    this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
+  }
+
   /*
   * Starts an asynchronous operation to update the users list
   */
@@ -60,5 +106,16 @@ export class PantryProductsListComponent implements OnInit {
     this.getPantryItemsFromServer();
   }
 
+  unsubProduct(): void {
+    if (this.getProductsSub) {
+      this.getProductsSub.unsubscribe();
+    }
+  }
+
+  unsubPantry(): void {
+    if (this.getPantrySub) {
+      this.getPantrySub.unsubscribe();
+    }
+  }
 
 }

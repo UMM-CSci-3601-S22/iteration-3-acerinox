@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Product } from '../products/product';
+import { PantryItem } from './pantryItem';
 
 import { PantryService } from './pantry.service';
 
@@ -52,6 +53,30 @@ describe('PantryService', () => {
       image: ''
     }
   ];
+
+  const testPantryItems: PantryItem[] = [
+    {
+     _id: 'first_banana',
+     product: 'banana_id',
+     purchase_date: '30-03-2022'
+    },
+    {
+     _id: 'sole_milk',
+     product: 'milk_id',
+     purchase_date: '16-07-2020'
+    },
+    {
+     _id: 'second_banana',
+     product: 'banana_id',
+     purchase_date: '31-03-2022'
+    },
+    {
+     _id: 'sole_bread',
+     product: 'bread_id',
+     purchase_date: '27-03-2022'
+    }
+  ];
+
   let pantryService: PantryService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
@@ -80,7 +105,7 @@ describe('PantryService', () => {
     // checked until the mocked HTTP request 'returns' a response.
     // This happens when we call req.flush(testPantryProducts) a few lines
     // down.
-    pantryService.getPantryItems().subscribe(
+    pantryService.getPantryProducts().subscribe(
       products => expect(products).toBe(testPantryProducts)
     );
 
@@ -95,6 +120,26 @@ describe('PantryService', () => {
 
   });
 
+  it('getPantry() calls api/pantry/info', () => {
+    // Assert that the pantryItems we get from this call to getPantryItems()
+    // should be our set of test pantryItems. Because we're subscribing
+    // to the result of getPantryItems(), this won't actually get
+    // checked until the mocked HTTP request 'returns' a response.
+    // This happens when we call req.flush(testPantryProducts) a few lines
+    // down.
+    pantryService.getPantry().subscribe(
+      pantryItems => expect(pantryItems).toBe(testPantryItems)
+    );
 
+        // Specify that (exactly) one request will be made to the specified URL.
+        const req = httpTestingController.expectOne(pantryService.pantryInfoUrl);
+        // Check that the request made to that URL was a GET request.
+        expect(req.request.method).toEqual('GET');
+        // Specify the content of the response to that request. This
+        // triggers the subscribe above, which leads to that check
+        // actually being performed.
+        req.flush(testPantryItems);
+
+  });
 
 });
