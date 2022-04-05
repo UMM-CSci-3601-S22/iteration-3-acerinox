@@ -19,14 +19,12 @@ describe('Product List', () => {
     cy.get('#product-name-input').type('Muffin');
 
     // All of the product list items should have the name we are filtering by
-    cy.get('body').find('.conditional-product-list').next().get('.filtered-product-nav-list').get('span')
-    .first().get('a').get('p').first().should('contain.text', 'Muffin');
-    /* page.getFilteredProductListItems().each($item => {
+    page.getFilteredProductListItems().each($item => {
       cy.wrap($item).find('.product-item-name').should('contain.text', 'Muffin');
-    }); */
+    });
   });
 
-  /* it('Should type something in the Brand filter and check that it returned correct elements', () => {
+  it('Should type something in the Brand filter and check that it returned correct elements', () => {
     // Filter for product 'Weimann'
     cy.get('#product-brand-input').type('Weimann');
 
@@ -35,9 +33,9 @@ describe('Product List', () => {
     .each($item => {
       cy.wrap($item).get('.product-item-brand').should('contain.text', 'Weimann');
     });
-  }); */
+  });
 
-  /* it('Should select a store and check that it returned correct elements', () => {
+  it('Should select a store and check that it returned correct elements', () => {
 
     // Filter for store 'Willies');
     page.selectStore('Willies');
@@ -73,11 +71,11 @@ describe('Product List', () => {
 
     // The URL should end with '/products/new'
     cy.url().should(url => expect(url.endsWith('/products/new')).to.be.true);
-  }); */
+  });
 
 });
 
-/* // "Bottom Half" of Product List
+// "Bottom Half" of Product List
 describe('Product List Expansion Panels', () => {
 
   beforeEach(() => {
@@ -143,4 +141,4 @@ describe('Delete button on Products From Product List', () => {
     .should('contain.text', 'Are you sure you want to delete Beef - Ground Lean Fresh? This action cannot be undone');
   });
 
-}); */
+});
