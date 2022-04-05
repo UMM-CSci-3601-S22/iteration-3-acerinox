@@ -19,8 +19,8 @@ describe('Product List', () => {
     cy.get('#product-name-input').type('Muffin');
 
     // All of the product list items should have the name we are filtering by
-    cy.get('body').find('.conditional-product-list').next().get('.filtered-product-nav-list')
-    .get('.product-item-name').first().should('contain.text', 'Muffin');
+    cy.get('body').find('.conditional-product-list').next().get('.filtered-product-nav-list').get('span')
+    .first().get('a').get('.product-item-name').should('contain.text', 'Muffin');
     /* page.getFilteredProductListItems().each($item => {
       cy.wrap($item).find('.product-item-name').should('contain.text', 'Muffin');
     }); */
