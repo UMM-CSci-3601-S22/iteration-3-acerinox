@@ -64,18 +64,18 @@ export class ProductListComponent implements OnInit, OnDestroy {
       category: this.productCategory,
       store: this.productStore
     }).subscribe(returnedProducts => {
+      if (this.productCategory || this.productStore) {
+        this.activeFilters = true;
+      }
+      else {
+        this.activeFilters = false;
+      }
       this.serverFilteredProducts = returnedProducts;
       this.initializeCategoryMap();
       this.updateFilter();
     }, err => {
       console.log(err);
     });
-    if (this.productCategory || this.productStore) {
-      this.activeFilters = true;
-    }
-    else {
-      this.activeFilters = false;
-    }
   }
 
   // Sorts products based on their category
