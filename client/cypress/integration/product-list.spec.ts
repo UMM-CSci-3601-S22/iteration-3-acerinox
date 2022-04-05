@@ -14,7 +14,7 @@ describe('Product List', () => {
     page.getProductListTitle().should('have.text', 'Products');
   });
 
-  it('Should type something in the Product Name filter and check that it returned correct elements', () => {
+  /* it('Should type something in the Product Name filter and check that it returned correct elements', () => {
     // Filter for product 'Muffin'
     cy.get('#product-name-input').type('Muffin');
 
@@ -64,7 +64,7 @@ describe('Product List', () => {
     page.getFilteredProductListItems().each($product => {
       cy.wrap($product).find('.product-item-category').should('have.text', ' canned goods ');
     });
-  });
+  }); */
 
   it('Should click add product and go to the right URL', () => {
     page.addProductButton().click();
@@ -75,7 +75,7 @@ describe('Product List', () => {
 
 });
 
-// "Bottom Half" of Product List
+/* // "Bottom Half" of Product List
 describe('Product List Expansion Panels', () => {
 
   beforeEach(() => {
@@ -141,4 +141,4 @@ describe('Delete button on Products From Product List', () => {
     .should('contain.text', 'Are you sure you want to delete Beef - Ground Lean Fresh? This action cannot be undone');
   });
 
-});
+}); */
