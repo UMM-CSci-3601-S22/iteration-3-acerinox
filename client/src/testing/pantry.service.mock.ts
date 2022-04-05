@@ -42,7 +42,7 @@ import { PantryItem } from 'src/app/pantry/pantryItem';
     },
     {
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',
