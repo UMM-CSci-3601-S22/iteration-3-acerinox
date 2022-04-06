@@ -76,15 +76,15 @@ describe('ProductListComponent', () => {
   });
 
   it('contains a product named \'banana\'', () => {
-    expect(productList.serverFilteredProducts.some((product: Product) => product.product_name === 'banana')).toBe(true);
+    expect(productList.serverFilteredProducts.some((product: Product) => product.productName === 'banana')).toBe(true);
   });
 
   it('contain a product named \'Wheat Bread\'', () => {
-    expect(productList.serverFilteredProducts.some((product: Product) => product.product_name === 'Wheat Bread')).toBe(true);
+    expect(productList.serverFilteredProducts.some((product: Product) => product.productName === 'Wheat Bread')).toBe(true);
   });
 
   it('doesn\'t contain a product named \'Santa\'', () => {
-    expect(productList.serverFilteredProducts.some((product: Product) => product.product_name === 'Santa')).toBe(false);
+    expect(productList.serverFilteredProducts.some((product: Product) => product.productName === 'Santa')).toBe(false);
   });
 
   it('has one product that is dairy', () => {
@@ -95,14 +95,14 @@ describe('ProductListComponent', () => {
     productList.productCategory = 'produce';
     productList.productBrand = 'Dole';
     productList.getProductsFromServer();
-    expect(productList.filteredProducts.some((product: Product) => product.product_name === 'banana')).toBe(true);
+    expect(productList.filteredProducts.some((product: Product) => product.productName === 'banana')).toBe(true);
   });
 
   it('should fill in categoryNameMap with brand key to array of product objects value', () => {
     expect(productList.categoryNameMap.get('produce'))
     .toEqual([{
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',

@@ -10,7 +10,7 @@
         <div fxLayout="row wrap" fxLayoutGap="15px" style="margin-right: 15px;">
           <mat-form-field class="input-field">
             <mat-label>Product Name</mat-label>
-            <input matInput id="product-name-input" placeholder="Filter products by name"
+            <input matInput data-test="productNameInput" placeholder="Filter products by name"
             [(ngModel)]="name" (input)="updateFilter()">
             <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
@@ -85,17 +85,17 @@
         <mat-nav-list class="filtered-product-nav-list">
           <span fxLayout="row" *ngFor="let product of this.filteredProducts" class="product-item-container">
             <a mat-list-item [routerLink]="['/products', product._id]" class="filtered-product-list-item">
-              <p matLine class="product-item-name"> {{product.product_name}} </p>
-              <p matLine class="product-item-brand"> {{product.brand}} </p>
-              <p matLine class="product-item-category capitalize"> {{product.category}} </p>
-              <p matLine class="product-item-store"> {{product.store}} </p>
+              <p matLine class="product-list-name"> {{product.productName}} </p>
+              <p matLine class="product-list-brand"> {{product.brand}} </p>
+              <p matLine class="product-list-category"> {{product.category}} </p>
+              <p matLine class="product-list-store"> {{product.store}} </p>
               <mat-divider></mat-divider>
             </a>
             <div class="delete-container" style="position: absolute;">
               <button mat-icon-button class="delete-product-button"
                                       matTooltip="Delete Product"
                                       matTooltipPosition="left"
-                                      (click)="openDeleteDialog(product.product_name, product._id)"
+                                      (click)="openDeleteDialog(product.productName, product._id)"
                                       data-test="deleteProductButton">
                 <mat-icon aria-label="Delete Product">close</mat-icon>
               </button>
@@ -131,17 +131,17 @@
             <mat-nav-list [ngClass]="productCategory.key.replace(' ', '-') + '-nav-list'">
               <span fxLayout="row" *ngFor="let product of productCategory.value">
                 <a mat-list-item [routerLink]="['/products', product._id]" class="product-list-item">
-                  <p matLine class="product-item-name"> {{product.product_name}} </p>
-                  <p matLine class="product-item-brand"> {{product.brand}} </p>
-                  <p matLine class="product-item-category capitalize"> {{product.category}} </p>
-                  <p matLine class="product-item-store"> {{product.store}} </p>
+                  <p matLine class="product-list-name"> {{product.productName}} </p>
+                  <p matLine class="product-list-brand"> {{product.brand}} </p>
+                  <p matLine class="product-list-category"> {{product.category}} </p>
+                  <p matLine class="product-list-store"> {{product.store}} </p>
                   <mat-divider></mat-divider>
                 </a>
                 <div class="deleteContainer" style="position: absolute;">
                   <button mat-icon-button class="delete-product-button"
                                           matTooltip="Delete Product"
                                           matTooltipPosition="left"
-                                          (click)="openDeleteDialog(product.product_name, product._id)"
+                                          (click)="openDeleteDialog(product.productName, product._id)"
                                           data-test="deleteProductButton">
                     <mat-icon aria-label="Delete Product">close</mat-icon>
                   </button>

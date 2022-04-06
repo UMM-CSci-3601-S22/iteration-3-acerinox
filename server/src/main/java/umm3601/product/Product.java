@@ -16,8 +16,7 @@ public class Product {
   // name of the field as used by MongoDB.
   @SuppressWarnings({ "MemberName" })
   public String _id;
-  @SuppressWarnings({ "MemberName" })
-  public String product_name;
+  public String productName;
   public String description;
   public String brand;
   public String category; // bakery, produce, meat, dairy, frozen foods, canned goods, drinks,
