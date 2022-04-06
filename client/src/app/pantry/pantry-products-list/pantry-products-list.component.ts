@@ -50,6 +50,7 @@ export class PantryProductsListComponent implements OnInit {
 
   // Columns displayed
   displayedColumns: string[] = ['product', 'purchase_date', 'notes'];
+  expandedElement: PantryItem | null;
   /**
    * This constructor injects both an instance of `PantryService`
    * and an instance of `MatSnackBar` into this component.
@@ -70,6 +71,7 @@ export class PantryProductsListComponent implements OnInit {
     this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
       this.matchingProducts = returnedPantryProducts;
+      this.createComboMapToArray();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -84,7 +86,6 @@ export class PantryProductsListComponent implements OnInit {
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
       this.pantryInfo = returnedPantry;
-      this.createComboMapToArray();
       this.pantryInfo.sort((a, b) => {
         const dateA = a.purchase_date.toLowerCase();
         const dateB = b.purchase_date.toLowerCase();
