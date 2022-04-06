@@ -130,7 +130,7 @@ public class PantryControllerSpec {
     testProducts.add(
         new Document()
             .append("_id", bananaEntryId)
-            .append("product_name", "Banana")
+            .append("productName", "Banana")
             .append("description", "A yellow fruit")
             .append("brand", "Dole")
             .append("category", "produce")
@@ -150,7 +150,7 @@ public class PantryControllerSpec {
     testProducts.add(
         new Document()
             .append("_id", beansEntryId)
-            .append("product_name", "Canned Pinto Beans")
+            .append("productName", "Canned Pinto Beans")
             .append("description", "A can of pinto beans")
             .append("brand", "Our Family")
             .append("category", "canned goods")

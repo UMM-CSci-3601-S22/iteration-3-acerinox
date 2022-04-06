@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
@@ -10,7 +11,7 @@ describe('ProductService', () => {
   const testProducts: Product[] = [
     {
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',
@@ -24,7 +25,7 @@ describe('ProductService', () => {
     },
     {
       _id: 'milk_id',
-      product_name: 'Whole Milk',
+      productName: 'Whole Milk',
       description: '',
       brand: 'Land O Lakes',
       category: 'dairy',
@@ -38,7 +39,7 @@ describe('ProductService', () => {
     },
     {
       _id: 'bread_id',
-      product_name: 'Wheat Bread',
+      productName: 'Wheat Bread',
       description: '',
       brand: 'Country Hearth',
       category: 'bakery',
@@ -157,16 +158,16 @@ describe('ProductService', () => {
       product => expect(product).toBe(targetProduct)
     );
 
-    const expectedUrl: string = productService.productUrl + '/' + targetId;
+    const expectedUrl = productService.productUrl + '/' + targetId;
     const req = httpTestingController.expectOne(expectedUrl);
     expect(req.request.method).toEqual('GET');
     req.flush(targetProduct);
   });
 
-  it('filterProducts() filters by product_name', () => {
+  it('filterProducts() filters by productName', () => {
     expect(testProducts.length).toBe(3);
     const name = 'a';
-    expect(productService.filterProducts(testProducts, { product_name: name }).length).toBe(2);
+    expect(productService.filterProducts(testProducts, { productName: name }).length).toBe(2);
   });
 
   it('filterProducts() filters by brand', () => {
@@ -175,11 +176,11 @@ describe('ProductService', () => {
     expect(productService.filterProducts(testProducts, { brand: productBrand }).length).toBe(1);
   });
 
-  it('filterProducts() filters by product_name and brand', () => {
+  it('filterProducts() filters by productName and brand', () => {
     expect(testProducts.length).toBe(3);
     const productBrand = 'Country Hearth';
     const name = 'Wheat Bread';
-    expect(productService.filterProducts(testProducts, { product_name: name, brand: productBrand }).length).toBe(1);
+    expect(productService.filterProducts(testProducts, { productName: name, brand: productBrand }).length).toBe(1);
   });
 
   it('filterProducts() filters by limit', () => {
@@ -206,6 +207,26 @@ describe('ProductService', () => {
     expect(req.request.body).toEqual(testProducts[1]);
 
     req.flush({id: 'testid'});
+  });
+
+  it('editProduct() puts to api/products/:{id}', () => {
+    // Make a copy of the 1st element in testProducts (milk), and edit some of the fields
+
+    let editedProduct = testProducts[1];
+    editedProduct.productName = 'Skim Milk';
+    editedProduct.threshold = 10;
+
+    productService.editProduct(testProducts[1]._id, editedProduct).subscribe(
+      product => expect(product).toBe(editedProduct)
+    );
+
+    const expectedUrl = `${productService.productUrl}/${testProducts[1]._id}`;
+    const req = httpTestingController.expectOne(expectedUrl);
+
+    expect(req.request.method).toEqual('PUT');
+    expect(req.request.body).toEqual(editedProduct);
+
+    req.flush(editedProduct);
   });
 
 });

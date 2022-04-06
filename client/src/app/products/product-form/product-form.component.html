@@ -1,0 +1,151 @@
+<form *ngIf="productForm" [formGroup]="productForm">
+  <mat-card class="add-product-card">
+      <mat-card-content fxLayout="column">
+
+        <mat-form-field>
+          <mat-label>Product Name</mat-label>
+          <input matInput placeholder="Product Name" formControlName="productName"
+                required data-test="productNameInput">
+          <mat-error *ngFor="let validation of productValidationMessages.productName">
+            <mat-error class="error-message" data-test="productNameError"
+                      *ngIf="productForm.get('productName').hasError(validation.type) && (productForm.get('productName').dirty || productForm.get('productName').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput placeholder="product description"
+                formControlName="description" data-test="productDescriptionInput">
+          <mat-error *ngFor="let validation of productValidationMessages.description">
+            <mat-error class="error-message" data-test="descriptionError"
+                      *ngIf="productForm.get('description').hasError(validation.type) && (productForm.get('description').dirty || productForm.get('description').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Brand</mat-label>
+          <input matInput placeholder="Product Brand" formControlName="brand"
+                required data-test="productBrandInput">
+          <mat-error *ngFor="let validation of productValidationMessages.brand">
+            <mat-error class="error-message" data-test="brandError"
+                      *ngIf="productForm.get('brand').hasError(validation.type) && (productForm.get('brand').dirty || productForm.get('brand').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Category</mat-label>
+          <mat-select required formControlName="category" data-test="productCategoryDropdown">
+            <mat-option value="bakery">Bakery</mat-option>
+            <mat-option value="produce">Produce</mat-option>
+            <mat-option value="meat">Meat</mat-option>
+            <mat-option value="dairy">Dairy</mat-option>
+            <mat-option value="frozen foods">Frozen Foods</mat-option>
+            <mat-option value="canned goods">Canned Goods</mat-option>
+            <mat-option value="drinks">Drinks</mat-option>
+            <mat-option value="general grocery">General Grocery</mat-option>
+            <mat-option value="miscellaneous">Miscellaneous</mat-option>
+            <mat-option value="seasonal">Seasonal</mat-option>
+          </mat-select>
+          <mat-error *ngIf="productForm.get('category').hasError('required')">You must make a selection</mat-error>
+          <mat-error *ngIf="productForm.get('category').hasError('pattern') && !productForm.get('category').hasError('required')">
+            Your selection is invalid
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Store</mat-label>
+          <input matInput placeholder="Product Store" formControlName="store"
+                required data-test="productStoreInput">
+          <mat-error *ngFor="let validation of productValidationMessages.store">
+            <mat-error class="error-message" data-test="storeError"
+                      *ngIf="productForm.get('store').hasError(validation.type) && (productForm.get('store').dirty || productForm.get('store').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Location</mat-label>
+          <input matInput placeholder="Product Location" formControlName="location"
+                  data-test="productLocationInput">
+          <mat-error *ngFor="let validation of productValidationMessages.location">
+            <mat-error class="error-message" data-test="locationError"
+                      *ngIf="productForm.get('location').hasError(validation.type) && (productForm.get('location').dirty || productForm.get('location').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Notes</mat-label>
+          <input matInput placeholder="Product Notes" formControlName="notes"
+                  data-test="productNotesInput">
+          <mat-error *ngFor="let validation of productValidationMessages.notes">
+            <mat-error class="error-message" data-test="notesError"
+                      *ngIf="productForm.get('notes').hasError(validation.type) && (productForm.get('notes').dirty || productForm.get('notes').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Tags - Feature Coming Soon</mat-label>
+          <input matInput placeholder="Image">
+          <mat-hint>Feature coming soon</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Lifespan</mat-label>
+          <input matInput type="number" placeholder="Product Lifespan"
+                formControlName="lifespan"
+                data-test="productLifespanInput">
+          <mat-error *ngFor="let validation of productValidationMessages.lifespan">
+            <mat-error class="error-message" data-test="lifespanError"
+                      *ngIf="productForm.get('lifespan').hasError(validation.type) && (productForm.get('lifespan').dirty || productForm.get('lifespan').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Product Threshold</mat-label>
+          <input matInput type="number" placeholder="Product Threshold"
+                formControlName="threshold"
+                data-test="productThresholdInput">
+          <mat-error *ngFor="let validation of productValidationMessages.threshold">
+            <mat-error class="error-message" data-test="thresholdError"
+                      *ngIf="productForm.get('threshold').hasError(validation.type) && (productForm.get('threshold').dirty || productForm.get('threshold').touched)">
+              {{validation.message}}
+            </mat-error>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Image - Feature Coming Soon</mat-label>
+          <input matInput placeholder="Image"
+                formControlName="image">
+          <mat-hint>Feature coming soon</mat-hint>
+        </mat-form-field>
+
+        <mat-card-actions align="end">
+          <button
+            mat-button
+            type="button"
+            color="primary"
+            [disabled]="!productForm.valid"
+            (click)="this.submitForm()"
+            data-test="confirmProductButton"
+          >
+          {{ this.mode }} Product
+          </button>
+        </mat-card-actions>
+
+      </mat-card-content>
+  </mat-card>
+</form>

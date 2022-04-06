@@ -26,7 +26,7 @@ import io.javalin.http.HttpCode;
 import io.javalin.http.NotFoundResponse;
 
 public class ProductController {
-  private static final String PRODUCT_NAME_KEY = "product_name";
+  private static final String PRODUCT_NAME_KEY = "productName";
   // private static final String DESCRIPTION_KEY = "description";
   private static final String BRAND_KEY = "brand";
   private static final String CATEGORY_KEY = "category";
@@ -116,35 +116,6 @@ public class ProductController {
       filters.add(regex(STORE_KEY, Pattern.quote(ctx.queryParam(STORE_KEY)), "i"));
     }
 
-    /*
-     * if (ctx.queryParamMap().containsKey(LOCATION_KEY)) {
-     * filters.add(regex(LOCATION_KEY, Pattern.quote(ctx.queryParam(LOCATION_KEY)),
-     * "i"));
-     * }
-     *
-     * if (ctx.queryParamMap().containsKey(NOTES_KEY)) {
-     * filters.add(regex(NOTES_KEY, Pattern.quote(ctx.queryParam(NOTES_KEY)), "i"));
-     * }
-     */
-
-    /*
-     * if (ctx.queryParamMap().containsKey(TAGS_KEY)) {
-     * filters.add(regex(TAGS_KEY, Pattern.quote(ctx.queryParam(TAGS_KEY)), "i"));
-     * }
-     *
-     * if (ctx.queryParamMap().containsKey(LIFESPAN_KEY)) {
-     * int targetLifespan = ctx.queryParamAsClass(LIFESPAN_KEY,
-     * Integer.class).get();
-     * filters.add(eq(LIFESPAN_KEY, targetLifespan));
-     * }
-     *
-     * if (ctx.queryParamMap().containsKey(THRESHOLD_KEY)) {
-     * int targetThreshold = ctx.queryParamAsClass(THRESHOLD_KEY,
-     * Integer.class).get();
-     * filters.add(eq(THRESHOLD_KEY, targetThreshold));
-     * }
-     */
-
     // Combine the list of filters into a single filtering document.
     Bson combinedFilter = filters.isEmpty() ? new Document() : and(filters);
 
@@ -198,7 +169,7 @@ public class ProductController {
 
   private Product validateProduct(Context ctx) {
     return ctx.bodyValidator(Product.class)
-        .check(product -> product.product_name != null && product.product_name.length() > 0,
+        .check(product -> product.productName != null && product.productName.length() > 0,
             "Product must have a non-empty product name")
         .check(product -> product.description != null,
             "Product description cannot be null")
@@ -213,7 +184,7 @@ public class ProductController {
         .check(product -> product.notes != null && product.notes.length() > 0, "Product notes cannot be null")
         // .check(product -> product.tags != null && product.tags.size() >= 0, "Product
         // tags cannot be null")
-        .check(product -> product.lifespan > 0, "Products's lifespan must be greater than zero")
+        .check(product -> product.lifespan >= 0, "Products's lifespan must be greater than or equal to zero")
         .check(product -> product.threshold > 0, "Products's threshold must be greater than zero")
         .get();
   }
@@ -226,12 +197,15 @@ public class ProductController {
 
     productCollection.replaceOne(eq("_id", new ObjectId(productID)), newProduct);
 
+    //For some reason, the id here is null, so reset it here for the redirect on client
+    newProduct._id = productID;
+
     // 201 is the HTTP code for when we successfully
-    // create a new resource (a user in this case).
+    // (PUT a new product)
     // See, e.g., https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
-    ctx.json(Map.of("id", newProduct._id));
+    ctx.json(newProduct);
   }
 
 }

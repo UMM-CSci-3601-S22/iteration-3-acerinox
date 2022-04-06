@@ -120,7 +120,7 @@ public class ProductControllerSpec {
     List<Document> testProducts = new ArrayList<>();
     testProducts.add(
         new Document()
-            .append("product_name", "Banana")
+            .append("productName", "Banana")
             .append("description", "A yellow fruit")
             .append("brand", "Dole")
             .append("category", "produce")
@@ -138,7 +138,7 @@ public class ProductControllerSpec {
             .append("threshold", 40));
     testProducts.add(
         new Document()
-            .append("product_name", "Canned Pinto Beans")
+            .append("productName", "Canned Pinto Beans")
             .append("description", "A can of pinto beans")
             .append("brand", "Our Family")
             .append("category", "canned goods")
@@ -156,7 +156,7 @@ public class ProductControllerSpec {
             .append("threshold", 4));
     testProducts.add(
         new Document()
-            .append("product_name", "Bread")
+            .append("productName", "Bread")
             .append("description", "You know what this is.")
             .append("brand", "Richard's Castle")
             .append("category", "bakery")
@@ -174,7 +174,7 @@ public class ProductControllerSpec {
             .append("threshold", 3));
     testProducts.add(
         new Document()
-            .append("product_name", "Rock")
+            .append("productName", "Rock")
             .append("description", "")
             .append("brand", "Hurt Ball")
             .append("category", "miscellaneous")
@@ -191,7 +191,7 @@ public class ProductControllerSpec {
     milksId = new ObjectId();
     Document milk = new Document()
         .append("_id", milksId)
-        .append("product_name", "Milk")
+        .append("productName", "Milk")
         .append("description", "A dairy liquid obtained from the teat of an unsuspecting animal")
         .append("brand", "Gerbil Goods")
         .append("category", "dairy")
@@ -298,7 +298,7 @@ public class ProductControllerSpec {
 
   @Test
   public void canGetProductsByName() throws IOException {
-    mockReq.setQueryString("product_name=Bread");
+    mockReq.setQueryString("productName=Bread");
     Context ctx = mockContext("api/products");
 
     productController.getAllProducts(ctx);
@@ -307,7 +307,7 @@ public class ProductControllerSpec {
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
     assertEquals(1, resultProducts.length); // There should be one product returned
     for (Product product : resultProducts) {
-      assertEquals("Bread", product.product_name);
+      assertEquals("Bread", product.productName);
     }
   }
 
@@ -381,7 +381,7 @@ public class ProductControllerSpec {
 
     assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
     assertEquals(milksId.toHexString(), resultProduct._id);
-    assertEquals("Milk", resultProduct.product_name);
+    assertEquals("Milk", resultProduct.productName);
   }
 
   @Test
@@ -406,7 +406,7 @@ public class ProductControllerSpec {
   public void addProduct() throws IOException {
 
     String testNewProduct = "{"
-        + "\"product_name\": \"Test Product name\","
+        + "\"productName\": \"Test Product name\","
         + "\"description\":\"A test product description\","
         + "\"brand\": \"test brand\","
         + "\"category\": \"test category\","
@@ -441,7 +441,7 @@ public class ProductControllerSpec {
     Document addedProduct = db.getCollection("products").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedProduct);
-    assertEquals("Test Product name", addedProduct.getString("product_name"));
+    assertEquals("Test Product name", addedProduct.getString("productName"));
     assertEquals("A test product description", addedProduct.getString("description"));
     assertEquals("test brand", addedProduct.getString("brand"));
     assertEquals("test category", addedProduct.getString("category"));

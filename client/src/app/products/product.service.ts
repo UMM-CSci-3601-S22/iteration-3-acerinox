@@ -28,19 +28,19 @@ export class ProductService {
   }
 
   getProductById(id: string): Observable<Product> {
-    return this.httpClient.get<Product>(this.productUrl + '/' + id);
+    return this.httpClient.get<Product>(`${this.productUrl}/${id}`);
   }
 
   // eslint-disable-next-line max-len
-  filterProducts(products: Product[], filters: { product_name?: string; brand?: string; limit?: number; category?: ProductCategory }): Product[] {
+  filterProducts(products: Product[], filters: { productName?: string; brand?: string; limit?: number; category?: ProductCategory }): Product[] {
 
     let filteredProducts = products;
 
-    // Filter by product_name
-    if (filters.product_name) {
-      filters.product_name = filters.product_name.toLowerCase();
+    // Filter by productName
+    if (filters.productName) {
+      filters.productName = filters.productName.toLowerCase();
 
-      filteredProducts = filteredProducts.filter(product => product.product_name.toLowerCase().indexOf(filters.product_name) !== -1);
+      filteredProducts = filteredProducts.filter(product => product.productName.toLowerCase().indexOf(filters.productName) !== -1);
     }
 
     // Filter by brand
@@ -68,7 +68,11 @@ export class ProductService {
   }
 
   deleteProduct(id: string): Observable<Product> {
-    return this.httpClient.delete<Product>(this.productUrl + '/' + id);
+    return this.httpClient.delete<Product>(`${this.productUrl}/${id}`);
+  }
+
+  editProduct(productId: string, newData: Product): Observable<Product> {
+    return this.httpClient.put<Product>(`${this.productUrl}/${productId}`, newData).pipe(map(res => res));
   }
 
 }
