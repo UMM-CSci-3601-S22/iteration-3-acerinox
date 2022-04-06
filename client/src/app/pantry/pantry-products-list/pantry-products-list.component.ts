@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -25,8 +26,9 @@ export class PantryProductsListComponent implements OnInit {
   public pantryInfo: PantryItem[];
   public comboArray: Array<any>;
 
-  // Unique pantry list
+  // Unique pantry/product lists
   public uniquePantry: PantryItem[];
+  public uniqueProducts: Product[];
 
   public name: string;
   public productBrand: string;
@@ -36,21 +38,32 @@ export class PantryProductsListComponent implements OnInit {
   getProductsSub: Subscription;
   getPantrySub: Subscription;
 
-  // Product Category lists
-  public bakeryProducts: Product[];
-  public produceProducts: Product[];
-  public meatProducts: Product[];
-  public dairyProducts: Product[];
-  public frozenProducts: Product[];
-  public cannedProducts: Product[];
-  public drinkProducts: Product[];
-  public generalProducts: Product[];
-  public seasonalProducts: Product[];
-  public miscellaneousProducts: Product[];
+// A list of the categories to be displayed, requested by the customer
+public categories: ProductCategory[] = [
+  'baked goods',
+  'baking supplies',
+  'beverages',
+  'cleaning products',
+  'dairy',
+  'deli',
+  'frozen foods',
+  'herbs/spices',
+  'meat',
+  'miscellaneous',
+  'paper products',
+  'pet supplies',
+  'produce',
+  'staples',
+  'toiletries',
+];
+
+// Stores the products sorted by their category
+public categoryNameMap = new Map<ProductCategory, Product[]>();
 
   // Columns displayed
   displayedColumns: string[] = ['product', 'purchase_date', 'notes'];
   expandedElement: PantryItem | null;
+
   /**
    * This constructor injects both an instance of `PantryService`
    * and an instance of `MatSnackBar` into this component.
@@ -72,6 +85,8 @@ export class PantryProductsListComponent implements OnInit {
 
       this.matchingProducts = returnedPantryProducts;
       this.createComboMapToArray();
+      this.createUniqueProducts();
+      this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -105,6 +120,16 @@ export class PantryProductsListComponent implements OnInit {
     });
   }
 
+  // Sorts products based on their category
+  initializeCategoryMap() {
+    for (let givenCategory of this.categories) {
+      this.categoryNameMap.set(givenCategory,
+        this.pantryService.filterProductByCategory(this.uniqueProducts, { category: givenCategory }));
+
+    }
+    console.log(this.categoryNameMap);
+  }
+
   // Necessary? Leaving for now but not using the ComboMap for anything atm
   createComboMapToArray() {
     const tempMap = new Map();
@@ -120,6 +145,11 @@ export class PantryProductsListComponent implements OnInit {
   createUniquePantry() {
     const check = new Set();
     this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
+  }
+
+  createUniqueProducts() {
+    const check = new Set();
+    this.uniqueProducts = this.matchingProducts.filter(product => !check.has(product._id) && check.add(product._id));
   }
 
   /*

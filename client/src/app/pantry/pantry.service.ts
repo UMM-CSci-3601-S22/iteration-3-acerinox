@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Product } from '../products/product';
+import { ProductCategory } from '../products/product';
 import { PantryItem } from './pantryItem';
 
 @Injectable()
@@ -21,5 +22,18 @@ export class PantryService {
   getPantry(): Observable<PantryItem[]> {
     return this.httpClient.get<PantryItem[]>(this.pantryInfoUrl, {
     });
+  }
+
+  // eslint-disable-next-line max-len
+  filterProductByCategory(products: Product[], filters: { category?: ProductCategory }): Product[] {
+
+    let filteredProducts = products;
+
+    // Filter by category
+    if (filters.category) {
+      filteredProducts = filteredProducts.filter(product => product.category.indexOf(filters.category) !== -1);
+    }
+
+    return filteredProducts;
   }
 }
