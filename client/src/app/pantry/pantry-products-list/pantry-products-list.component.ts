@@ -79,7 +79,13 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
     this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
       this.matchingProducts = returnedPantryProducts;
-      //this.initializeCategoryMap();
+      this.createComboItems();
+      this.comboItems.sort((a, b) => {
+        const dateA = a.purchase_date.toLowerCase();
+        const dateB = b.purchase_date.toLowerCase();
+        return dateA > dateB ? 1 : -1;
+      });
+      this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -94,12 +100,12 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
       this.pantryInfo = returnedPantry;
-      this.pantryInfo.sort((a, b) => {
+      this.createComboItems();
+      this.comboItems.sort((a, b) => {
         const dateA = a.purchase_date.toLowerCase();
         const dateB = b.purchase_date.toLowerCase();
         return dateA > dateB ? 1 : -1;
       });
-      this.createComboItems();
       this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
@@ -118,9 +124,7 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
     for (let givenCategory of this.categories) {
       this.categoryNameMap.set(givenCategory,
         this.pantryService.filterComboItemByCategory(this.comboItems, { category: givenCategory }));
-
     }
-    console.log(this.categoryNameMap);
   }
 
   createComboItems() {
