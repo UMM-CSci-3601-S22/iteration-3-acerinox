@@ -69,16 +69,21 @@ describe('PantryProductsListComponent', () => {
     expect(pantryProductsList.pantryInfo.length).toBe(4);
   });
 
-  it('creates a pantry array from the pantryInfo array', () => {
-    expect(pantryProductsList.uniquePantry.length).toBe(3);
+  it('creates an array of combined pantry/product objects from the two arrays', () => {
+    expect(pantryProductsList.comboItems.length).toBe(4);
   });
 
-  it('sorts the pantryInfo array by date purchased', () => {
-    expect(pantryProductsList.pantryInfo[0].purchase_date).toBe('16-07-2020');
+  it('sorts the comboItems array by date purchased', () => {
+    expect(pantryProductsList.comboItems[0].purchase_date).toBe('16-07-2020');
   });
 
-  it('creates an array of Products to PantryItems arrays', () => {
-    expect(pantryProductsList.comboArray.length).toBe(4);
+  it('creates the comboItems with keyvalues from both products and pantryItems', () => {
+    expect(pantryProductsList.comboItems[0].brand).toBe('Land O Lakes');
+    expect(pantryProductsList.comboItems[0]._id).toBe('sole_milk');
+  });
+
+  it('creates a category map of comboItems', () => {
+    expect(pantryProductsList.categoryNameMap.get('dairy')[0]._id).toBe('sole_milk');
   });
 
 });

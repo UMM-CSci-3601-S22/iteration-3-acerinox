@@ -1,0 +1,32 @@
+table {
+  width: 100%;
+}
+
+tr.pantry-detail-row {
+  height: 0;
+}
+
+tr.pantry-element-row:not(.pantry-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.pantry-element-row:not(.pantry-expanded-row):active {
+  background: #efefef;
+}
+
+.pantry-element-row td {
+  border-bottom-width: 0;
+}
+
+.pantry-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.pantry-detail-description {
+  padding: 16px;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

@@ -22,6 +22,13 @@
   },
   {
     "product": {
+      "$oid": "6227c728fc13ae58600005d2"
+    },
+    "purchase_date": "2013-01-27",
+    "notes": "In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet."
+  },
+  {
+    "product": {
       "$oid": "6227c728fc13ae58600005d3"
     },
     "purchase_date": "2022-10-19",
