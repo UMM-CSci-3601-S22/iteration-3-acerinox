@@ -10,7 +10,7 @@
         <div fxLayout="row wrap" fxLayoutGap="15px" style="margin-right: 15px;">
           <mat-form-field class="input-field">
             <mat-label>Product Name</mat-label>
-            <input matInput data-test="productNameInput" placeholder="Filter products by name"
+            <input matInput id="product-name-input" placeholder="Filter products by name"
             [(ngModel)]="name" (input)="updateFilter()">
             <mat-hint>Filtered on client</mat-hint>
           </mat-form-field>
