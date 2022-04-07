@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
+import { ComboItem } from '../pantryItem';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -24,56 +25,50 @@ export class PantryProductsListComponent implements OnInit {
   // Unfiltered lists
   public matchingProducts: Product[];
   public pantryInfo: PantryItem[];
-  public comboArray: Array<any>;
+  public comboItems: ComboItem[] = [];
 
-  // Unique pantry/product lists
-  public uniquePantry: PantryItem[];
-  public uniqueProducts: Product[];
+  // Unique pantry & product combo object list
+  public uniqueComboItems: ComboItem[];
 
-  public name: string;
+ /*  public name: string;
   public productBrand: string;
   public productCategory: ProductCategory;
   public productStore: string;
-  public productLimit: number;
+  public productLimit: number; */
   getProductsSub: Subscription;
   getPantrySub: Subscription;
 
 // A list of the categories to be displayed, requested by the customer
 public categories: ProductCategory[] = [
-  'baked goods',
-  'baking supplies',
-  'beverages',
-  'cleaning products',
-  'dairy',
-  'deli',
-  'frozen foods',
-  'herbs/spices',
-  'meat',
-  'miscellaneous',
-  'paper products',
-  'pet supplies',
-  'produce',
-  'staples',
-  'toiletries',
-];
+    'bakery',
+    'produce',
+    'meat',
+    'dairy',
+    'frozen foods',
+    'canned goods',
+    'drinks',
+    'general grocery',
+    'miscellaneous',
+    'seasonal',
+  ];
 
 // Stores the products sorted by their category
-public categoryNameMap = new Map<ProductCategory, Product[]>();
+public categoryNameMap = new Map<ProductCategory, ComboItem[]>();
 
-  // Columns displayed
-  displayedColumns: string[] = ['product', 'purchase_date', 'notes'];
-  expandedElement: PantryItem | null;
+// Columns displayed
+displayedColumns: string[] = ['productName', 'brand', 'purchase_date'];
+expandedElement: PantryItem | null;
 
-  /**
-   * This constructor injects both an instance of `PantryService`
-   * and an instance of `MatSnackBar` into this component.
-   *
-   * @param pantryService the `PantryService` used to get products in the pantry
-   * @param snackBar the `MatSnackBar` used to display feedback
-   */
-  constructor(private pantryService: PantryService, private snackBar: MatSnackBar) {
-    // Nothing here – everything is in the injection parameters.
-  }
+/**
+ * This constructor injects both an instance of `PantryService`
+ * and an instance of `MatSnackBar` into this component.
+ *
+ * @param pantryService the `PantryService` used to get products in the pantry
+ * @param snackBar the `MatSnackBar` used to display feedback
+ */
+constructor(private pantryService: PantryService, private snackBar: MatSnackBar) {
+  // Nothing here – everything is in the injection parameters.
+}
 
   /*
   * Get the products in the pantry from the server,
@@ -84,9 +79,7 @@ public categoryNameMap = new Map<ProductCategory, Product[]>();
     this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
       this.matchingProducts = returnedPantryProducts;
-      this.createComboMapToArray();
-      this.createUniqueProducts();
-      this.initializeCategoryMap();
+      //this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -106,8 +99,8 @@ public categoryNameMap = new Map<ProductCategory, Product[]>();
         const dateB = b.purchase_date.toLowerCase();
         return dateA > dateB ? 1 : -1;
       });
-      this.createUniquePantry();
-      console.log(this.uniquePantry);
+      this.createComboItems();
+      this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -124,32 +117,26 @@ public categoryNameMap = new Map<ProductCategory, Product[]>();
   initializeCategoryMap() {
     for (let givenCategory of this.categories) {
       this.categoryNameMap.set(givenCategory,
-        this.pantryService.filterProductByCategory(this.uniqueProducts, { category: givenCategory }));
+        this.pantryService.filterComboItemByCategory(this.comboItems, { category: givenCategory }));
 
     }
     console.log(this.categoryNameMap);
   }
 
-  // Necessary? Leaving for now but not using the ComboMap for anything atm
-  createComboMapToArray() {
-    const tempMap = new Map();
-    this.matchingProducts.forEach((product, index) => {
-      const pantryItem = this.pantryInfo[index];
-      const productItem = product;
-      tempMap.set(productItem, pantryItem);
+  createComboItems() {
+    this.matchingProducts.forEach(obj => {
+      delete obj._id;
+      delete obj.notes;
     });
-    this.comboArray = Array.from(tempMap, ([product, pantryItem]) => ({ product, pantryItem }));
-    console.log(this.comboArray);
-  }
+    this.pantryInfo.forEach(obj => {
+      delete obj.product;
+    });
 
-  createUniquePantry() {
-    const check = new Set();
-    this.uniquePantry = this.pantryInfo.filter(pItem => !check.has(pItem.product) && check.add(pItem.product));
-  }
+    for (let i = 0; i < this.matchingProducts.length; i++) {
+      const newObj = Object.assign(this.matchingProducts[i], this.pantryInfo[i]);
+      this.comboItems.push(newObj);
+    }
 
-  createUniqueProducts() {
-    const check = new Set();
-    this.uniqueProducts = this.matchingProducts.filter(product => !check.has(product._id) && check.add(product._id));
   }
 
   /*
