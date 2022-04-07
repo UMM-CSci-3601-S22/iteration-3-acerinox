@@ -73,9 +73,9 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
   /*
   * Get the products in the pantry from the server,
   */
-  getPantryItemsFromServer() {
+  getProductsAndPantryFromServer() {
     this.unsubProduct();
-    this.unsubPantry();
+    this.getPantryFromServer();
     this.pantryService.getPantryProducts().subscribe(returnedPantryProducts => {
 
       this.matchingProducts = returnedPantryProducts;
@@ -96,17 +96,14 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
         // The message will disappear after 3 seconds.
         { duration: 3000 });
     });
+  }
+
+  getPantryFromServer() {
+    this.unsubPantry();
 
     this.pantryService.getPantry().subscribe(returnedPantry => {
 
       this.pantryInfo = returnedPantry;
-      this.createComboItems();
-      this.comboItems.sort((a, b) => {
-        const dateA = a.purchase_date.toLowerCase();
-        const dateB = b.purchase_date.toLowerCase();
-        return dateA > dateB ? 1 : -1;
-      });
-      this.initializeCategoryMap();
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
@@ -147,7 +144,7 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
   * Starts an asynchronous operation to update the users list
   */
   ngOnInit(): void {
-    this.getPantryItemsFromServer();
+    this.getProductsAndPantryFromServer();
   }
 
   unsubProduct(): void {
