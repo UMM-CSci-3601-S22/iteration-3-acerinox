@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { Product } from '../products/product';
 import { ProductCategory } from '../products/product';
 import { PantryItem } from './pantryItem';
+import { ComboItem } from './pantryItem';
 
 @Injectable()
 export class PantryService {
@@ -25,15 +26,15 @@ export class PantryService {
   }
 
   // eslint-disable-next-line max-len
-  filterProductByCategory(products: Product[], filters: { category?: ProductCategory }): Product[] {
+  filterComboItemByCategory(comboItems: ComboItem[], filters: { category?: ProductCategory }): ComboItem[] {
 
-    let filteredProducts = products;
+    let filteredCombos = comboItems;
 
     // Filter by category
     if (filters.category) {
-      filteredProducts = filteredProducts.filter(product => product.category.indexOf(filters.category) !== -1);
+      filteredCombos = filteredCombos.filter(combo => combo.category.indexOf(filters.category) !== -1);
     }
 
-    return filteredProducts;
+    return filteredCombos;
   }
 }
