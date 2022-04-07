@@ -3,7 +3,7 @@
     <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="matchingProducts; else productsError" style="width: 90%;">
       <!-- All pantry items separated into categories and listed in dropdowns -->
       <mat-card class="expansion-product-panels">
-        <mat-card-title style="padding-bottom: 5px">Pantry Tracking</mat-card-title>
+        <mat-card-title style="padding-bottom: 5px" class="pantry-products-list-title">My Pantry</mat-card-title>
         <mat-card-content>
 
           <mat-accordion>
@@ -15,9 +15,10 @@
                 </mat-panel-title>
               </mat-expansion-panel-header>
 
-              <div [ngClass]="productCategory.key.replace(' ', '-') + '-table'">
+              <div>
                 <table mat-table
                         [dataSource]="productCategory.value" multiTemplateDataRows
+                        [ngClass]="productCategory.key.replace(' ', '-') + '-table'"
                         class="mat-elevation-z8">
                   <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
                     <th mat-header-cell *matHeaderCellDef class="capitalize"> {{column.replace('_', ' ').replace('N', ' N')}} </th>
