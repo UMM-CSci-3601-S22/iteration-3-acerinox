@@ -36,16 +36,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // A list of the categories to be displayed, requested by the customer
   public categories: ProductCategory[] = [
-    'bakery',
-    'produce',
-    'meat',
+    'baked goods',
+    'baking supplies',
+    'beverages',
+    'cleaning products',
     'dairy',
+    'deli',
     'frozen foods',
-    'canned goods',
-    'drinks',
-    'general grocery',
+    'herbs/spices',
+    'meat',
     'miscellaneous',
-    'seasonal',
+    'paper products',
+    'pet supplies',
+    'produce',
+    'staples',
+    'toiletries',
   ];
 
   // Stores the products sorted by their category

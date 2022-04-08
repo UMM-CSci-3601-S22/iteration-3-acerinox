@@ -30,7 +30,9 @@
             <mat-select (selectionChange)="getProductsFromServer()" [(ngModel)]="productStore" data-test="productStoreSelect">
               <mat-option>--</mat-option>
               <mat-option value="Willies">Willies</mat-option>
-              <mat-option value="Pomme de Terre">Pomme de Terre </mat-option>
+              <mat-option value="Pomme de Terre">Pomme de Terre</mat-option>
+              <mat-option value="RealFoodHub">RealFoodHub</mat-option>
+              <mat-option value="Other Store">Other Store</mat-option>
             </mat-select>
             <mat-hint>Filtered on server</mat-hint>
           </mat-form-field>
@@ -39,16 +41,21 @@
             <mat-label>Category</mat-label>
             <mat-select (selectionChange)="getProductsFromServer()" [(ngModel)]="productCategory" data-test="productCategorySelect">
               <mat-option>--</mat-option>
-              <mat-option value="bakery">Bakery</mat-option>
-              <mat-option value="produce">Produce</mat-option>
-              <mat-option value="meat">Meat</mat-option>
+              <mat-option value="baked goods">Baked Goods</mat-option>
+              <mat-option value="baking supplies">Baking Supplies</mat-option>
+              <mat-option value="beverages">Beverages</mat-option>
+              <mat-option value="cleaning products">Cleaning Products</mat-option>
               <mat-option value="dairy">Dairy</mat-option>
+              <mat-option value="deli">Deli</mat-option>
               <mat-option value="frozen foods">Frozen Foods</mat-option>
-              <mat-option value="canned goods">Canned Goods</mat-option>
-              <mat-option value="drinks">Drinks</mat-option>
-              <mat-option value="general grocery">General Grocery</mat-option>
+              <mat-option value="herbs/spices">Herbs/Spices</mat-option>
+              <mat-option value="meat">Meat</mat-option>
               <mat-option value="miscellaneous">Miscellaneous</mat-option>
-              <mat-option value="seasonal">Seasonal</mat-option>
+              <mat-option value="paper products">Paper Products</mat-option>
+              <mat-option value="pet supplies">Pet Supplies</mat-option>
+              <mat-option value="produce">Produce</mat-option>
+              <mat-option value="staples">Staples</mat-option>
+              <mat-option value="toiletries">Toiletries</mat-option>
             </mat-select>
             <mat-hint>Filtered on server</mat-hint>
           </mat-form-field>
@@ -85,9 +92,9 @@
         <mat-nav-list class="filtered-product-nav-list">
           <span fxLayout="row" *ngFor="let product of this.filteredProducts" class="product-item-container">
             <a mat-list-item [routerLink]="['/products', product._id]" class="filtered-product-list-item">
-              <p matLine class="product-list-name"> {{product.productName}} </p>
+              <h3 matLine class="product-list-name"> <font size="4"><b> {{product.productName}} </b></font> </h3>
               <p matLine class="product-list-brand"> {{product.brand}} </p>
-              <p matLine class="product-list-category"> {{product.category}} </p>
+              <p matLine class="product-list-category capitalize"> {{product.category}} </p>
               <p matLine class="product-list-store"> {{product.store}} </p>
               <mat-divider></mat-divider>
             </a>
@@ -131,9 +138,9 @@
             <mat-nav-list [ngClass]="productCategory.key.replace(' ', '-') + '-nav-list'">
               <span fxLayout="row" *ngFor="let product of productCategory.value">
                 <a mat-list-item [routerLink]="['/products', product._id]" class="product-list-item">
-                  <p matLine class="product-list-name"> {{product.productName}} </p>
+                  <h3 matLine class="product-list-name"> <font size="4"><b> {{product.productName}} </b></font> </h3>
                   <p matLine class="product-list-brand"> {{product.brand}} </p>
-                  <p matLine class="product-list-category"> {{product.category}} </p>
+                  <p matLine class="product-list-category capitalize"> {{product.category}} </p>
                   <p matLine class="product-list-store"> {{product.store}} </p>
                   <mat-divider></mat-divider>
                 </a>

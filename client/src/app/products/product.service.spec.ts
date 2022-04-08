@@ -42,7 +42,7 @@ describe('ProductService', () => {
       productName: 'Wheat Bread',
       description: '',
       brand: 'Country Hearth',
-      category: 'bakery',
+      category: 'baked goods',
       store: 'Walmart',
       location: '',
       notes: '',
@@ -134,7 +134,7 @@ describe('ProductService', () => {
 
   it('getProducts() calls api/products with multiple filter parameters', () => {
 
-    productService.getProducts({ category: 'bakery', store: 'Walmart' }).subscribe(
+    productService.getProducts({ category: 'baked goods', store: 'Walmart' }).subscribe(
       products => expect(products).toBe(testProducts)
     );
 
@@ -145,7 +145,7 @@ describe('ProductService', () => {
 
     expect(req.request.method).toEqual('GET');
 
-    expect(req.request.params.get('category')).toEqual('bakery');
+    expect(req.request.params.get('category')).toEqual('baked goods');
     expect(req.request.params.get('store')).toEqual('Walmart');
 
     req.flush(testProducts);

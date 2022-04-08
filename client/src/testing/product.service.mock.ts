@@ -47,7 +47,7 @@ export class MockProductService extends ProductService {
       productName: 'Wheat Bread',
       description: '',
       brand: 'Country Hearth',
-      category: 'bakery',
+      category: 'baked goods',
       store: 'Walmart',
       location: '',
       notes: '',

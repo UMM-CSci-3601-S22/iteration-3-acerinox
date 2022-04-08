@@ -30,26 +30,26 @@ export class PantryProductsListComponent implements OnInit {
   // Unique pantry & product combo object list
   public uniqueComboItems: ComboItem[];
 
- /*  public name: string;
-  public productBrand: string;
-  public productCategory: ProductCategory;
-  public productStore: string;
-  public productLimit: number; */
   getProductsSub: Subscription;
   getPantrySub: Subscription;
 
 // A list of the categories to be displayed, requested by the customer
 public categories: ProductCategory[] = [
-    'bakery',
-    'produce',
-    'meat',
-    'dairy',
-    'frozen foods',
-    'canned goods',
-    'drinks',
-    'general grocery',
-    'miscellaneous',
-    'seasonal',
+  'baked goods',
+  'baking supplies',
+  'beverages',
+  'cleaning products',
+  'dairy',
+  'deli',
+  'frozen foods',
+  'herbs/spices',
+  'meat',
+  'miscellaneous',
+  'paper products',
+  'pet supplies',
+  'produce',
+  'staples',
+  'toiletries',
   ];
 
 // Stores the products sorted by their category
@@ -89,7 +89,7 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
-      console.error('We couldn\'t get the list of todos; the server might be down');
+      console.error('We couldn\'t get the pantry list; the server might be down');
       this.snackBar.open(
         'Problem contacting the server – try again',
         'OK',
@@ -141,7 +141,7 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
   }
 
   /*
-  * Starts an asynchronous operation to update the users list
+  * Starts an asynchronous operation to update the pantry
   */
   ngOnInit(): void {
     this.getProductsAndPantryFromServer();
