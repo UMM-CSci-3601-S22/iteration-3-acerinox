@@ -49,8 +49,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     category: [
       { type: 'required', message: 'Product category is required' },
       {
-        type: 'pattern', message: 'Category must be, bakery, produce, meat, dairy, frozen foods, ' +
-          'canned goods, drinks, general grocery, miscellaneous, or seasonal'
+        type: 'pattern', message: 'Category must be, baked goods, baking supplies, beverages, cleaning products, dairy' +
+          ', deli, frozen foods, herbs/spices, meat, miscellaneous, paper products, pet supplies, produce, staples, or toiletries'
       },
     ],
     store: [
@@ -114,7 +114,8 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       ])),
       category: new FormControl(this.getProductValueOrEmptyString('category'), Validators.compose([
         Validators.required,
-        Validators.pattern('^(bakery|produce|meat|dairy|frozen foods|canned goods|drinks|general grocery|miscellaneous|seasonal)$')
+        // eslint-disable-next-line max-len
+        Validators.pattern('^(baked goods|baking supplies|beverages|cleaning products|dairy|deli|frozen foods|herbs/spices|meat|miscellaneous|paper products|pet supplies|produce|staples|toiletries)$')
       ])),
       store: new FormControl(this.getProductValueOrEmptyString('store'), Validators.compose([
         Validators.required, Validators.minLength(1), Validators.maxLength(100),

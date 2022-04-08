@@ -3,33 +3,33 @@ import { ProductFormPage } from 'cypress/support/product-form.po';
 import { Product } from 'src/app/products/product';
 
 const testProductToEdit: Product = {
-  _id: '6227c728fc13ae58600005d7',
-  productName: 'Salami - Genova',
-  description: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.',
-  brand: 'Jacobson, Herman and Metz',
+  _id: '624f7cbcfc13ae732800008c',
+  productName: 'Salmon - Canned',
+  description: 'In congue. Etiam justo. Etiam pretium iaculis justo.In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.',
+  brand: 'Schmidt Group',
   category: 'produce',
-  store: 'Willies',
-  location: 'volutpat',
-  notes: 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede.',
+  store: 'RealFoodHub',
+  location: 'Aisle 92',
+  notes: 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.',
   tags: [],
-  lifespan: 0,
-  threshold: 33,
-  image: 'http://dummyimage.com/200x100.png/5fa2dd/ffffff'
+  lifespan: 879,
+  threshold: 41,
+  image: 'https://creinkmun.cn/UMM-SP22-CSCI3601-Product-Temp-Pic.png'
 };
 
 const testProductEditData: Product = {
   _id: '6227c728fc13ae58600005d7',
-  productName: 'Salami - Genova',
-  description: 'Thin sliced meat',
+  productName: 'Salmon - Canned',
+  description: 'In congue. Etiam justo. Etiam pretium iaculis justo.In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.',
   brand: 'Jacobson, Herman and Metz',
   category: 'produce',
   store: 'Willies',
   location: 'volutpat',
   notes: 'Slightly spicy',
   tags: [],
-  lifespan: 0,
+  lifespan: 879,
   threshold: 33,
-  image: 'http://dummyimage.com/200x100.png/5fa2dd/ffffff'
+  image: 'https://creinkmun.cn/UMM-SP22-CSCI3601-Product-Temp-Pic.png'
 };
 
 describe('Edit Product', () => {
@@ -51,6 +51,7 @@ describe('Edit Product', () => {
     page.getFormField('brand').should('have.value', testProductToEdit.brand);
     page.getFormField('store').should('have.value', testProductToEdit.store);
     page.selectMatSelectValue(cy.get('[formControlName=category]'), testProductToEdit.category);
+    cy.wait(1000);
     page.getFormField('description').should('have.value', testProductToEdit.description);
     page.getFormField('lifespan').should('have.value', `${testProductToEdit.lifespan}`);
     page.getFormField('location').should('have.value', testProductToEdit.location);

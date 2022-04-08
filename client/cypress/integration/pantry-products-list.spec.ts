@@ -11,21 +11,21 @@ describe('Pantry List Expansion Panels and tables', () => {
 
   it('Should check that expansion panels have the correct titles and items by categories', () => {
 
-    page.getExpansionTitleByCategory('bakery').should('have.text', ' bakery ');
+    page.getExpansionTitleByCategory('baked goods').should('have.text', ' baked goods ');
 
-    page.getTableProductNameByCategory('bakery').first().should('have.text', ' Island Oasis - Raspberry ');
+    page.getTableProductNameByCategory('baked goods').first().should('have.text', ' Chips Potato Reg 43g ');
 
-    page.getTablePurchaseDateByCategory('bakery').first().should('have.text', ' 2022-07-15 ');
+    page.getTablePurchaseDateByCategory('baked goods').first().should('have.text', ' 12-12-2022 ');
 
-    page.getTableNotesByCategory('bakery').first().should('contains.text', ' Integer tincidunt ');
+    page.getTableNotesByCategory('baked goods').first().should('contains.text', ' Duis consequat ');
 
     page.getExpansionTitleByCategory('meat').should('have.text', ' meat ');
 
-    page.getTableProductNameByCategory('meat').first().should('have.text', ' Nantucket Apple Juice ');
+    page.getTableProductNameByCategory('meat').first().should('have.text', ' Radish - Pickled ');
 
-    page.getTablePurchaseDateByCategory('meat').first().should('have.text', ' 2022-05-26 ');
+    page.getTablePurchaseDateByCategory('meat').first().should('have.text', ' 02-09-2022 ');
 
-    page.getTableNotesByCategory('meat').first().should('contains.text', ' Phasellus in ');
+    page.getTableNotesByCategory('meat').first().should('contains.text', ' Duis consequat ');
 
   });
 

@@ -41,7 +41,7 @@ describe('Product List', () => {
     page.selectStore('Willies');
 
     //further limit so cypress test doesn't stall out reading 100+ products
-    page.selectCategory('bakery');
+    page.selectCategory('baked goods');
 
     // Some of the products should be listed
     page.getFilteredProductListItems().should('exist');
@@ -54,15 +54,15 @@ describe('Product List', () => {
 
   it('Should select a category and check that it returned correct elements', () => {
 
-    // Filter for category 'canned goods');
-    page.selectCategory('canned goods');
+    // Filter for category 'miscellaneous');
+    page.selectCategory('miscellaneous');
 
     // Some of the products should be listed
     page.getFilteredProductListItems().should('exist');
 
     // All of the product list items that show should have the store we are looking for
     page.getFilteredProductListItems().each($product => {
-      cy.wrap($product).find('.product-list-category').should('have.text', ' canned goods ');
+      cy.wrap($product).find('.product-list-category').should('have.text', ' miscellaneous ');
     });
   });
 
@@ -85,10 +85,10 @@ describe('Product List Expansion Panels', () => {
 
   it('Should check that expansion panels have the correct titles and items by categories', () => {
 
-    page.getExpansionTitleByCategory('bakery').should('have.text', ' bakery ');
+    page.getExpansionTitleByCategory('baked goods').should('have.text', ' baked goods ');
 
-    page.getExpansionItemsByCategory('bakery').each($product => {
-      cy.wrap($product).find('.product-list-category').should('have.text', ' bakery ');
+    page.getExpansionItemsByCategory('baked goods').each($product => {
+      cy.wrap($product).find('.product-list-category').should('have.text', ' baked goods ');
     });
 
     page.getExpansionTitleByCategory('miscellaneous').should('have.text', ' miscellaneous ');
@@ -111,34 +111,33 @@ describe('Delete button on Products From Product List', () => {
   it('Should the delete button for the first product from the filtered list and read the dialog popup', () => {
 
     // Filter products
-    page.selectCategory('general grocery');
-    cy.get('#product-name-input').type('Coffee');
+    page.selectCategory('frozen foods');
+    cy.get('#product-name-input').type('Kahlua');
 
     // Check that 'Coffee - Cafe Moreno' is the first product
     page.getFilteredProductListItems().first().within(($product) => {
-      cy.wrap($product).find('.product-list-name').should('contain.text', ' Coffee - Cafe Moreno ');
+      cy.wrap($product).find('.product-list-name').should('contain.text', ' Kahlua ');
     });
 
-    // Grab and delete first one, 'Coffee - Cafe Moreno'
+    // Grab and delete first one, 'Kahlua'
     page.clickDeleteButton();
     cy.get('.mat-dialog-content')
-    .should('contain.text', 'Are you sure you want to delete Coffee - Cafe Moreno? This action cannot be undone');
+    .should('contain.text', 'Are you sure you want to delete Kahlua? This action cannot be undone');
   });
 
-  // Cypress having trouble finding expansion panels
   it('Should go to a product in an expansion tab and delete', () => {
     // Filter products
-    page.selectCategory('seasonal');
+    page.selectCategory('dairy');
 
-    // Check that 'Beef - Ground Lean Fresh' is the first product
-    page.getExpansionItemsByCategory('seasonal').first().within(($product) => {
-      cy.wrap($product).find('.product-list-name').should('contain.text', ' Beef - Ground Lean Fresh ');
+    // Check that 'Aspic - Light' is the first product
+    page.getExpansionItemsByCategory('dairy').first().within(($product) => {
+      cy.wrap($product).find('.product-list-name').should('contain.text', ' Aspic - Light ');
     });
 
-    // Grab and click the delete button for the first one, 'Beef - Ground Lean Fresh'
-    page.clickExpansionDeleteButton('seasonal');
+    // Grab and click the delete button for the first one, 'Aspic - Light'
+    page.clickExpansionDeleteButton('dairy');
     cy.get('.mat-dialog-content')
-    .should('contain.text', 'Are you sure you want to delete Beef - Ground Lean Fresh? This action cannot be undone');
+    .should('contain.text', 'Are you sure you want to delete Aspic - Light? This action cannot be undone');
   });
 
 });
