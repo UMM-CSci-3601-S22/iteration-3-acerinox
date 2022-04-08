@@ -1,13 +1,12 @@
 /* eslint-disable prefer-const */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 import { ComboItem } from '../pantryItem';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-pantry-products-list',
@@ -81,8 +80,8 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
       this.matchingProducts = returnedPantryProducts;
       this.createComboItems();
       this.comboItems.sort((a, b) => {
-        const dateA = a.purchase_date.toLowerCase();
-        const dateB = b.purchase_date.toLowerCase();
+        const dateA = a.purchase_date.split('-').reverse().join('-');
+        const dateB = b.purchase_date.split('-').reverse().join('-');
         return dateA > dateB ? 1 : -1;
       });
       this.initializeCategoryMap();

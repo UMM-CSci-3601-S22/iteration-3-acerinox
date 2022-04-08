@@ -13,19 +13,19 @@ describe('Pantry List Expansion Panels and tables', () => {
 
     page.getExpansionTitleByCategory('baked goods').should('have.text', ' baked goods ');
 
-    page.getTableProductNameByCategory('baked goods').first().should('have.text', ' Chips Potato Reg 43g ');
+    page.getTableProductNameByCategory('baked goods').first().should('have.text', ' Soup Campbells Beef With Veg ');
 
-    page.getTablePurchaseDateByCategory('baked goods').first().should('have.text', ' 12-12-2022 ');
+    page.getTablePurchaseDateByCategory('baked goods').first().should('have.text', ' 31-05-2022 ');
 
-    page.getTableNotesByCategory('baked goods').first().should('contains.text', ' Duis consequat ');
+    page.getTableNotesByCategory('baked goods').first().should('contains.text', ' Aenean lectus. ');
 
     page.getExpansionTitleByCategory('meat').should('have.text', ' meat ');
 
-    page.getTableProductNameByCategory('meat').first().should('have.text', ' Radish - Pickled ');
+    page.getTableProductNameByCategory('meat').first().should('have.text', ' Shrimp - 16/20, Iqf, Shell On ');
 
-    page.getTablePurchaseDateByCategory('meat').first().should('have.text', ' 02-09-2022 ');
+    page.getTablePurchaseDateByCategory('meat').first().should('have.text', ' 18-04-2002 ');
 
-    page.getTableNotesByCategory('meat').first().should('contains.text', ' Duis consequat ');
+    page.getTableNotesByCategory('meat').first().should('contains.text', ' Curabitur gravida ');
 
   });
 
