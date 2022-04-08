@@ -1,13 +1,12 @@
 /* eslint-disable prefer-const */
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 import { ComboItem } from '../pantryItem';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-pantry-products-list',
