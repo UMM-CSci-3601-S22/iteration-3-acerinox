@@ -43,7 +43,7 @@ export class AddProductToPantryComponent implements OnInit {
     this.addToPantryForm = this.fb.group({
       product: this.product._id,
 
-      name: this.product.product_name,
+      name: this.product.productName,
 
       category: this.product.category,
 
@@ -70,7 +70,7 @@ export class AddProductToPantryComponent implements OnInit {
         duration: 2000,
       });
       this.router.navigate(['']);
-      this.pantryList.reloadComponent();
+      // this.pantryList.reloadComponent();
     }, err => {
       this.snackBar.open('Failed to add the product to your pantry', 'OK', {
         duration: 5000,

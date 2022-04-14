@@ -1,11 +1,12 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
 import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
+import { AddProductToPantryComponent } from '../add-product-to-pantry/add-product-to-pantry.component';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild('dialogRef')
   dialogRef!: TemplateRef<any>;
 
+  @Input() product: Product;
+
   public serverFilteredProducts: Product[];
   public filteredProducts: Product[];
 
@@ -33,6 +36,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Boolean for if there are active filters
   public activeFilters: boolean;
+
+  public popup: boolean;
 
   // A list of the categories to be displayed, requested by the customer
   public categories: ProductCategory[] = [

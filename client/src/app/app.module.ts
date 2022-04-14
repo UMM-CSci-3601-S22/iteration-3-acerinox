@@ -72,6 +72,7 @@ const MATERIAL_MODULES: any[] = [
     ProductCardComponent,
     EditProductComponent,
     ProductFormComponent,
+    AddProductToPantryComponent
   ],
   imports: [
     BrowserModule,
