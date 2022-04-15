@@ -1,11 +1,13 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
 import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
+import { PantryItem } from 'src/app/pantry/pantryItem';
+import { PantryService } from 'src/app/pantry/pantry.service';
 import { AddProductToPantryComponent } from '../add-product-to-pantry/add-product-to-pantry.component';
 
 
@@ -23,6 +25,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   @Input() product: Product;
 
+  @Output() newItemEvent = new EventEmitter<PantryItem>();
+
   public serverFilteredProducts: Product[];
   public filteredProducts: Product[];
 
@@ -36,8 +40,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Boolean for if there are active filters
   public activeFilters: boolean;
-
-  public popup: boolean;
 
   // A list of the categories to be displayed, requested by the customer
   public categories: ProductCategory[] = [
@@ -66,7 +68,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public tempName: string;
   public tempDialog: any;
   public tempDeleted: Product;
-  constructor(private productService: ProductService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(private productService: ProductService, private snackBar: MatSnackBar, private pantryService: PantryService,
+    private dialog: MatDialog) { }
 
   getProductsFromServer(): void {
     this.unsub();
@@ -154,4 +157,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return this.tempDeleted;
   }
 
+
+  addProductToPantry(pantryItem: PantryItem) {
+    this.pantryService.addPantryItem(pantryItem);
+  }
+
+  openAddDialog() {
+    this.dialog.open(AddProductToPantryComponent);
+  }
 }

@@ -53,7 +53,7 @@ describe('AddProductToPantryComponent', () => {
     addProductToPantryComponent = fixture.componentInstance;
     addProductToPantryComponent.product = {
       _id: 'banana_id',
-      product_name: 'banana',
+      productName: 'banana',
       description: '',
       brand: 'Dole',
       category: 'produce',

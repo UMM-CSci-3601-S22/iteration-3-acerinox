@@ -72,7 +72,7 @@ const MATERIAL_MODULES: any[] = [
     ProductCardComponent,
     EditProductComponent,
     ProductFormComponent,
-    AddProductToPantryComponent
+    AddProductToPantryComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,7 +87,9 @@ const MATERIAL_MODULES: any[] = [
   ],
   providers: [
     ProductService,
-    PantryService
+    PantryService,
+    PantryProductsListComponent,
+    ProductListComponent
   ],
   bootstrap: [AppComponent]
 })
