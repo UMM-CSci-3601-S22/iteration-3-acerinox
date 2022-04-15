@@ -79,6 +79,9 @@ public class Server {
     // Get the specified pantry item
     server.get("/api/pantry/{id}", pantryController::getPantryItemByID);
 
+    // List shoppingListItems
+    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
+
     // Delete the specified product
     server.delete("/api/products/{id}", productController::deleteProduct);
 

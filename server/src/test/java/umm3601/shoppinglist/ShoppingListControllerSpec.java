@@ -3,7 +3,6 @@ package umm3601.shoppinglist;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +34,6 @@ import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
 import com.mongodb.client.MongoDatabase;
-
-import umm3601.product.Product;
-import umm3601.shoppinglist.ShoppingListController;
 
 @SuppressWarnings({ "MagicNumber", "NoWhitespaceAfter" })
 public class ShoppingListControllerSpec {
@@ -103,8 +99,6 @@ public class ShoppingListControllerSpec {
 
     MongoCollection<Document> productsDocuments = db.getCollection("products");
     productsDocuments.drop();
-  }
-
 
     // Add test list for products to database
     List<Document> testProducts = new ArrayList<>();
@@ -166,7 +160,7 @@ public class ShoppingListControllerSpec {
             })
             .append("lifespan", 4)
             .append("threshold", 40));
-    shoppingListDocuments.insertMany(testProducts);
+    productsDocuments.insertMany(testProducts);
 
 
 
@@ -176,7 +170,7 @@ public class ShoppingListControllerSpec {
     testShoppingListItems.add(
       new Document()
         .append("_id", appleEntryId)
-        .append("product", appleProductId )
+        .append("product", appleProductId)
         .append("_count", 10)
     );
 
@@ -196,8 +190,9 @@ public class ShoppingListControllerSpec {
             .append("count", 20)
     );
     shoppingListDocuments.insertMany(testShoppingListItems);
+}
 
-    private Context mockContext(String path){
+    private Context mockContext(String path) {
       return mockContext(path, Collections.emptyMap());
     }
 
@@ -215,8 +210,8 @@ public class ShoppingListControllerSpec {
 
     private ShoppingListItem[] returnedShoppingListItems(Context ctx) {
       String result = ctx.resultString();
-      ShoppingListItem[] pantryItems = javalinJackson.fromJsonString(result, ShoppingListItem[].class);
-      return pantryItems;
+      ShoppingListItem[] shoppingListItems = javalinJackson.fromJsonString(result, ShoppingListItem[].class);
+      return shoppingListItems;
     }
 
     @Test
