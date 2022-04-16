@@ -21,12 +21,13 @@ import { MatDialog } from '@angular/material/dialog';
 
 export class AddProductToPantryComponent implements OnInit {
 
-  @Input() product: Product;
+  @Input() givenProduct: Product;
   @Output() newItemEvent = new EventEmitter<PantryItem>();
 
   // @Input() pantryList: PantryProductsListComponent;
 
   addToPantryForm: FormGroup;
+  newPantryItem: PantryItem;
 
   addPantryValidationMessages = {
     purchase_date: [
@@ -40,13 +41,12 @@ export class AddProductToPantryComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder, private pantryService: PantryService,
-     private snackBar: MatSnackBar, private router: Router) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar,) {
   }
 
   createForms() {
     this.addToPantryForm = this.fb.group({
-      product: this.product._id,
+      product: this.givenProduct._id,
 
       purchase_date: new FormControl('', Validators.compose([
         Validators.required,
@@ -65,7 +65,7 @@ export class AddProductToPantryComponent implements OnInit {
   }
 
   submitForm() {
-    console.log(this.addToPantryForm.value);
-    this.newItemEvent.emit(this.addToPantryForm.value);
+    Object.assign(this.newPantryItem, this.addToPantryForm.value);
+    this.newItemEvent.emit();
   }
 }
