@@ -8,7 +8,7 @@ import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
 import { PantryItem } from 'src/app/pantry/pantryItem';
 import { PantryService } from 'src/app/pantry/pantry.service';
-import { AddProductToPantryComponent } from '../add-product-to-pantry/add-product-to-pantry.component';
+import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
 
 
 @Component({

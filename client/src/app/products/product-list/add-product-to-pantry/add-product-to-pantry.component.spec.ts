@@ -10,12 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockPantryService } from 'src/testing/pantry.service.mock';
 import { PantryService } from 'src/app/pantry/pantry.service';
-import { ProductService } from '../product.service';
+import { ProductService } from '../../product.service';
 import { AddProductToPantryComponent } from './add-product-to-pantry.component';
-import { SingleProductPageComponent } from '../single-product-page/single-product-page.component';
+import { SingleProductPageComponent } from '../../single-product-page/single-product-page.component';
 import { PantryProductsListComponent } from 'src/app/pantry/pantry-products-list/pantry-products-list.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { MatDialog, MatDialogModule, MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 describe('AddProductToPantryComponent', () => {
   let addProductToPantryComponent: AddProductToPantryComponent;
@@ -51,7 +51,7 @@ describe('AddProductToPantryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddProductToPantryComponent);
     addProductToPantryComponent = fixture.componentInstance;
-    addProductToPantryComponent.product = {
+    addProductToPantryComponent.givenProduct = {
       _id: 'banana_id',
       productName: 'banana',
       description: '',

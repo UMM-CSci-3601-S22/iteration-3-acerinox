@@ -2,15 +2,8 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { Product } from '../product';
-import { ProductService } from '../product.service';
-import { ProductListComponent } from '../product-list/product-list.component';
-import { PantryProductsListComponent } from 'src/app/pantry/pantry-products-list/pantry-products-list.component';
-import { PantryService } from 'src/app/pantry/pantry.service';
+import { Product } from '../../product';
 import { PantryItem } from 'src/app/pantry/pantryItem';
-import { create, template } from 'lodash';
-import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
