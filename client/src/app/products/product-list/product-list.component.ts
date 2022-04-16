@@ -20,8 +20,8 @@ import { AddProductToPantryComponent } from '../add-product-to-pantry/add-produc
 
 export class ProductListComponent implements OnInit, OnDestroy {
   // MatDialog
-  @ViewChild('dialogRef')
-  dialogRef!: TemplateRef<any>;
+  @ViewChild('deleteDialogRef')
+  deleteDialogRef!: TemplateRef<any>;
 
   @Input() product: Product;
 
@@ -42,7 +42,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public activeFilters: boolean;
 
   // A list of the categories to be displayed, requested by the customer
-  public categories: ProductCategory[] = [
+  public categoriesList: ProductCategory[] = [
     'baked goods',
     'baking supplies',
     'beverages',
@@ -58,6 +58,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
     'produce',
     'staples',
     'toiletries',
+  ];
+
+  // A list of the categories to be displayed, requested by the customer
+  public storesList: string[] = [
+    'Willies',
+    'Pomme de Terre',
+    'RealFoodHub',
+    'Other Store',
   ];
 
   // Stores the products sorted by their category
@@ -93,7 +101,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Sorts products based on their category
   initializeCategoryMap() {
-    for (let givenCategory of this.categories) {
+    for (let givenCategory of this.categoriesList) {
       this.categoryNameMap.set(givenCategory,
         this.productService.filterProducts(this.serverFilteredProducts, { category: givenCategory }));
 
@@ -104,7 +112,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   openDeleteDialog(pname: string, id: string) {
     this.tempId = id;
     this.tempName = pname;
-    this.tempDialog = this.dialog.open(this.dialogRef, { data: { name: this.tempName, _id: this.tempId } },);
+    this.tempDialog = this.dialog.open(this.deleteDialogRef, { data: { name: this.tempName, _id: this.tempId } },);
     this.tempDialog.afterClosed().subscribe((res) => {
 
       // Data back from dialog
