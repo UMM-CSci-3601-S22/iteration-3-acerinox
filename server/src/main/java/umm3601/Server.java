@@ -100,9 +100,6 @@ public class Server {
     // Edit a product with a given id
     server.put("/api/products/{id}", productController::editProduct);
 
-    // Gets the shopping list
-    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
-
     // This catches any uncaught exceptions thrown in the server
     // code and turns them into a 500 response ("Internal Server
     // Error Response"). In general you'll like to *never* actually

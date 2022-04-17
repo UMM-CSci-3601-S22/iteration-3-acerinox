@@ -190,6 +190,8 @@ public class ShoppingListControllerSpec {
             .append("count", 20)
     );
     shoppingListDocuments.insertMany(testShoppingListItems);
+
+    shoppingListController = new ShoppingListController(db);
 }
 
     private Context mockContext(String path) {
@@ -228,7 +230,7 @@ public class ShoppingListControllerSpec {
     // the class HttpCode.
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
     assertEquals(
-        db.getCollection("shoppinglist").countDocuments(),
+        db.getCollection("shoppingList").countDocuments(),
         returnedShoppingListItems.length);
   }
 }
