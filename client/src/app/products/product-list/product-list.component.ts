@@ -174,8 +174,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   openAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.pantryService.addPantryItem(result);
+      this.pantryService.addPantryItem(result).subscribe(newPantryId => {
+        if(newPantryId) {
+          this.snackBar.open('Product successfully added to your pantry.');
+        }
+        else {
+          this.snackBar.open('Something went wrong.  The product was not added to the pantry.');
+        }
+      });
     });
   }
 }

@@ -7,6 +7,7 @@ import { Product, ProductCategory } from 'src/app/products/product';
 import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 import { ComboItem } from '../pantryItem';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pantry-products-list',
@@ -65,7 +66,7 @@ expandedElement: PantryItem | null;
  * @param pantryService the `PantryService` used to get products in the pantry
  * @param snackBar the `MatSnackBar` used to display feedback
  */
-constructor(private pantryService: PantryService, private snackBar: MatSnackBar) {
+constructor(private pantryService: PantryService, private snackBar: MatSnackBar, private router: Router) {
   // Nothing here – everything is in the injection parameters.
 }
 
@@ -157,5 +158,4 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar)
       this.getPantrySub.unsubscribe();
     }
   }
-
 }
