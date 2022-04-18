@@ -189,10 +189,10 @@ public class ShoppingListControllerSpec {
     );
 
     shoppingListDocuments.insertMany(testShoppingListItems);
-  }
+
 
     shoppingListController = new ShoppingListController(db);
-}
+  }
 
     private Context mockContext(String path) {
       return mockContext(path, Collections.emptyMap());
