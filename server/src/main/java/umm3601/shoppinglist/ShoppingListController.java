@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Projections;
 
+import org.bson.Document;
 import org.bson.UuidRepresentation;
 import org.mongojack.JacksonMongoCollection;
 
@@ -27,13 +29,22 @@ public class ShoppingListController {
     }
 
     public void getAllShoppingListItems(Context ctx) {
-        ArrayList<ShoppingListItem> returnedShoppingListItems = shoppingListCollection
+        ArrayList<Document> returnedShoppingListItems = shoppingListCollection
                 .aggregate(
                         Arrays.asList(
                                 Aggregates.lookup("products", "product", "_id", "productData"),
-                                Aggregates.sort(ascending("productData.store")),
-                                Aggregates.project(Projections.fields(Projections.include("product", "count")))
+                                Aggregates.unwind("$productData"),
+                                Aggregates.group("$productData.store", Accumulators.addToSet("products",
+                                new Document("productName", "$productData.productName")
+                                .append("location", "$productData.location")))),
+                                /*
+                                Aggregates.project(Projections.fields(
+                                  Projections.include("count"),
+                                  Projections.computed("productName", "$productData.productName"),
+                                  Projections.computed("location", "$productData.location")))
                                 )
+                                */
+                                Document.class
                                 ).into(new ArrayList<>());
 
         ctx.json(returnedShoppingListItems);

@@ -210,9 +210,9 @@ public class ShoppingListControllerSpec {
                   new JavalinConfig().maxRequestSize)));
     }
 
-    private ShoppingListItem[] returnedShoppingListItems(Context ctx) {
+    private Document[] returnedShoppingListItems(Context ctx) {
       String result = ctx.resultString();
-      ShoppingListItem[] shoppingListItems = javalinJackson.fromJsonString(result, ShoppingListItem[].class);
+      Document[] shoppingListItems = javalinJackson.fromJsonString(result, Document[].class);
       return shoppingListItems;
     }
 
@@ -223,12 +223,16 @@ public class ShoppingListControllerSpec {
     Context ctx = mockContext(path);
 
     shoppingListController.getAllShoppingListItems(ctx);
-    ShoppingListItem[] returnedShoppingListItems = returnedShoppingListItems(ctx);
+    Document[] returnedShoppingListItems = returnedShoppingListItems(ctx);
 
     // The response status should be 200, i.e., our request
     // was handled successfully (was OK). This is a named constant in
     // the class HttpCode.
     assertEquals(HttpCode.OK.getStatus(), mockRes.getStatus());
+    for (Document d: returnedShoppingListItems) {
+      System.out.println(d);
+    }
+
     assertEquals(
         db.getCollection("shoppingList").countDocuments(),
         returnedShoppingListItems.length);
