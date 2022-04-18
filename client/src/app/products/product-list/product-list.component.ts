@@ -166,11 +166,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     return this.tempDeleted;
   }
 
-
-  addProductToPantry(pantryItem: PantryItem) {
-    this.pantryService.addPantryItem(pantryItem);
-  }
-
   openAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(result => {
