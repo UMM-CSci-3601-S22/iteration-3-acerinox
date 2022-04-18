@@ -30,11 +30,3 @@
       Product To Pantry</button>
   </mat-card-actions>
 </mat-card>
-
-<div class="overlay" *ngIf="popup">
-  <div class="popup">
-    <h2>Add This Product to Your Pantry</h2>
-    <a class="close" (click)="popup = false">&times;</a>
-    <app-add-product-to-pantry [givenProduct]="this.product"></app-add-product-to-pantry>
-  </div>
-</div>

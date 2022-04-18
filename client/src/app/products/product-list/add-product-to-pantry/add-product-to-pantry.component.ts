@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../../product';
 import { PantryItem } from 'src/app/pantry/pantryItem';
-
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-product-to-pantry',
@@ -14,13 +14,11 @@ import { PantryItem } from 'src/app/pantry/pantryItem';
 
 export class AddProductToPantryComponent implements OnInit {
 
-  @Input() givenProduct: Product;
-  @Output() newItemEvent = new EventEmitter<PantryItem>();
-
   // @Input() pantryList: PantryProductsListComponent;
 
   addToPantryForm: FormGroup;
   newPantryItem: PantryItem;
+
 
   addPantryValidationMessages = {
     purchase_date: [
@@ -34,12 +32,14 @@ export class AddProductToPantryComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar,) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<AddProductToPantryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Product) {
   }
 
   createForms() {
     this.addToPantryForm = this.fb.group({
-      product: this.givenProduct._id,
+      product: this.data._id,
 
       purchase_date: new FormControl('', Validators.compose([
         Validators.required,
@@ -58,7 +58,6 @@ export class AddProductToPantryComponent implements OnInit {
   }
 
   submitForm() {
-    Object.assign(this.newPantryItem, this.addToPantryForm.value);
-    this.newItemEvent.emit();
+    return this.addToPantryForm.value;
   }
 }

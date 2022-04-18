@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
 import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
@@ -76,6 +76,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public tempName: string;
   public tempDialog: any;
   public tempDeleted: Product;
+
   constructor(private productService: ProductService, private snackBar: MatSnackBar, private pantryService: PantryService,
     private dialog: MatDialog) { }
 
@@ -170,7 +171,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.pantryService.addPantryItem(pantryItem);
   }
 
-  openAddDialog() {
-    this.dialog.open(AddProductToPantryComponent);
+  openAddDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.pantryService.addPantryItem(result);
+    });
   }
 }
