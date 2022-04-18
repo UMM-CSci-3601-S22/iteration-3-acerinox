@@ -162,8 +162,6 @@ public class ShoppingListControllerSpec {
             .append("threshold", 40));
     productsDocuments.insertMany(testProducts);
 
-
-
     // Add test list for shopping list items to database
     List<Document> testShoppingListItems = new ArrayList<>();
     appleEntryId = new ObjectId();
@@ -189,7 +187,9 @@ public class ShoppingListControllerSpec {
             .append("product", bananaProductId)
             .append("count", 20)
     );
+
     shoppingListDocuments.insertMany(testShoppingListItems);
+  }
 
     shoppingListController = new ShoppingListController(db);
 }
