@@ -125,6 +125,7 @@ public class ShoppingListControllerSpec {
     ObjectId beansProductId = new ObjectId();
     testProducts.add(
         new Document()
+            .append("_id", beansProductId)
             .append("productName", "Canned Pinto Beans")
             .append("description", "A can of pinto beans")
             .append("brand", "Our Family")
@@ -144,6 +145,7 @@ public class ShoppingListControllerSpec {
     ObjectId appleProductId = new ObjectId();
     testProducts.add(
         new Document()
+            .append("_id", appleProductId)
             .append("productName", "apple")
             .append("description", "A yellow fruit")
             .append("brand", "Dole")
@@ -189,7 +191,6 @@ public class ShoppingListControllerSpec {
     );
 
     shoppingListDocuments.insertMany(testShoppingListItems);
-
 
     shoppingListController = new ShoppingListController(db);
   }
