@@ -39,6 +39,7 @@ import { PantryService } from './pantry/pantry.service';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-list.component';
+import { ShoppinglistService } from './shoppinglist/shoppinglist.service';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -87,7 +88,8 @@ const MATERIAL_MODULES: any[] = [
   ],
   providers: [
     ProductService,
-    PantryService
+    PantryService,
+    ShoppinglistService
   ],
   bootstrap: [AppComponent]
 })
