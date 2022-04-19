@@ -1,8 +1,5 @@
 export interface ShoppinglistDisplayItem {
-  _id: string;
-  product: string;
-  name: string;
-  store: string;
+  productName: string;
   location: string;
   count: number;
 }

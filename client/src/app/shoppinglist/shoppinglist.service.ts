@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { ShoppinglistDisplayItem } from './shoppinglistDisplayItem';
+import { ShoppinglistStoreGroup } from './shoppinglistStoreGroup';
 
 @Injectable()
 export class ShoppinglistService {
@@ -10,9 +10,9 @@ export class ShoppinglistService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getShoppinglist(): Observable<ShoppinglistDisplayItem[]> {
+  getShoppinglist(): Observable<ShoppinglistStoreGroup[]> {
     const httpParams: HttpParams = new HttpParams();
-    return this.httpClient.get<ShoppinglistDisplayItem[]>(this.shoppinglistUrl, {
+    return this.httpClient.get<ShoppinglistStoreGroup[]>(this.shoppinglistUrl, {
       params: httpParams,
     });
   }

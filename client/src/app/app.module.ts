@@ -40,6 +40,7 @@ import { EditProductComponent } from './products/edit-product/edit-product.compo
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-list.component';
 import { ShoppinglistService } from './shoppinglist/shoppinglist.service';
+import { ShoppinglistGroupComponent } from './shoppinglist/shoppinglist-group/shoppinglist-group.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -74,6 +75,7 @@ const MATERIAL_MODULES: any[] = [
     EditProductComponent,
     ProductFormComponent,
     ShoppingListComponent,
+    ShoppinglistGroupComponent,
   ],
   imports: [
     BrowserModule,
