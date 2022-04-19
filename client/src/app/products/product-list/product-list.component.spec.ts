@@ -143,10 +143,9 @@ describe('Delete From ProductList', () => {
     });
   }));
 
-  it('should call openDeleteDialog, call removeProduct and delete the product', () => {
-    productList.openDeleteDialog('banana', 'banana_id');
+  it('should call removeProduct, call removeProduct and delete the product', () => {
+    productList.removeProduct(productList[0]);
     fixture.detectChanges();
-    productList.removeProduct('banana_id');
     expect(productList.serverFilteredProducts.length).toBe(2);
   });
 

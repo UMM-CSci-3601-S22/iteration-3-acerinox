@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
 import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
@@ -72,12 +72,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Stores the products sorted by their category
   public categoryNameMap = new Map<ProductCategory, Product[]>();
 
-  // temp variables to use for deletion
-  public tempId: string;
-  public tempName: string;
-  public tempDialog: any;
-  public tempDeleted: Product;
-
   constructor(private productService: ProductService, private snackBar: MatSnackBar, private pantryService: PantryService,
     private dialog: MatDialog) { }
 
@@ -138,23 +132,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Removes the product and updates the categoryNameMap to reflect the deletion
-/*   removeProduct(id: string): Product {
-    this.productService.deleteProduct(id).subscribe(
-      prod => {
-        this.serverFilteredProducts = this.serverFilteredProducts.filter(product => product._id !== id);
-        this.tempDeleted = prod;
-        this.updateFilter();
-        this.initializeCategoryMap();
-      }
-    );
-    this.tempDialog.close();
-    this.snackBar.open(`${this.tempDeleted.productName} deleted`, 'OK', {
-      duration: 5000,
-    });
-    return this.tempDeleted;
-  } */
-
+  // Pops up a dialog to add a product to the pantry
   openAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(result => {
@@ -168,6 +146,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
     });
   }
+  //Pops up a dialog to delete a product from the product list
   removeProduct(givenProduct: Product): void {
     const dialogRef = this.dialog.open(DialogDeleteComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(
@@ -181,9 +160,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
           }
         });
       });
-    this.tempDialog.close();
-    this.snackBar.open(`${this.tempDeleted.productName} deleted`, 'OK', {
-      duration: 5000,
-    });
+      this.updateFilter();
+      this.initializeCategoryMap();
   }
 }
