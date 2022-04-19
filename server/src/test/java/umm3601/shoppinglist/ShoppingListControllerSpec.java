@@ -192,7 +192,6 @@ public class ShoppingListControllerSpec {
 
     shoppingListDocuments.insertMany(testShoppingListItems);
 
-
     shoppingListController = new ShoppingListController(db);
   }
 
