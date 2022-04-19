@@ -6,8 +6,10 @@
           <mat-card>
             <div>
               <mat-selection-list>
-                <mat-list-option *ngFor="let slItem of storeGroup.products">
-                  {{slItem.productName}}
+                <mat-list-option *ngFor="let slItem of storeGroup.products" checkboxPosition="before">
+                  {{slItem.productName}},
+                  {{slItem.location}},
+                  {{slItem.count}}
                 </mat-list-option>
               </mat-selection-list>
             </div>
