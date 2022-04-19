@@ -27,6 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -64,7 +65,8 @@ const MATERIAL_MODULES: any[] = [
   MatPaginatorModule,
   MatDialogModule,
   MatTableModule,
-  MatTabsModule
+  MatTabsModule,
+  MatButtonToggleModule
 ];
 
 @NgModule({

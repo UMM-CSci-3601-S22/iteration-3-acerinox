@@ -1,10 +1,29 @@
 <div layout="column">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
     <mat-card>
-      <mat-card-content>
-        <h1>My Shopping List</h1>
-        <app-shoppinglist-group></app-shoppinglist-group>
-      </mat-card-content>
+      
+      <h1>My Shopping List</h1>
+      <mat-button-toggle-group [(ngModel)]="viewType" name="pageView" aria-label="Page View">
+        <mat-button-toggle value="interactive">
+          Interactive View
+        </mat-button-toggle>
+        <mat-button-toggle value="print">
+          Print View
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </mat-card>
+    <div [ngSwitch]="viewType">
+      <div *ngSwitchCase="'interactive'">
+        <app-shoppinglist-group></app-shoppinglist-group>
+      </div>
+      <div>
+
+      </div>
+    </div>
+    <div>
+      <button mat-button>
+        Remove Items From Shopping List
+      </button>
+    </div>
   </div>
 </div>

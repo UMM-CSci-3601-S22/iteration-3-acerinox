@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingListComponent implements OnInit {
 
+  public viewType: 'interactive' | 'print' = 'interactive';
+
   constructor() {}
 
   ngOnInit(): void {
