@@ -165,6 +165,8 @@ public class ProductController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
+    ctx.status(HttpCode.GONE);
+    ctx.json(true);
   }
 
   private Product validateProduct(Context ctx) {

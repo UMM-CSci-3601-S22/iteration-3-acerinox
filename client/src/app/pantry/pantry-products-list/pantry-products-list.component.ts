@@ -107,7 +107,7 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar,
     }, err => {
       // If there was an error getting the users, log
       // the problem and display a message.
-      console.error('We couldn\'t get the list of todos; the server might be down');
+      console.error('We couldn\'t get the list of products; the server might be down');
       this.snackBar.open(
         'Problem contacting the server – try again',
         'OK',
