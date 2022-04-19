@@ -1,7 +1,19 @@
 <div>
-  <mat-accordion>
-    <mat-expansion-panel *nfFor="let storeGroup of shoppingList">
-
-    </mat-expansion-panel>
-  </mat-accordion>
+  <mat-card>
+    <mat-tab-group animationDuration="400ms" [color]="'accent'" dynamicHeight [backgroundColor]="'primary'">
+      <div *ngFor="let storeGroup of this.shoppingList">
+        <mat-tab label="{{storeGroup.store}}">
+          <mat-card>
+            <div>
+              <mat-selection-list>
+                <mat-list-option *ngFor="let slItem of storeGroup.products">
+                  {{slItem.productName}}
+                </mat-list-option>
+              </mat-selection-list>
+            </div>
+          </mat-card>
+        </mat-tab>
+      </div>
+    </mat-tab-group>
+  </mat-card>
 </div>
