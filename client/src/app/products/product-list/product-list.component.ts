@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { PantryItem } from 'src/app/pantry/pantryItem';
 import { PantryService } from 'src/app/pantry/pantry.service';
 import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
+import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 
 
 @Component({
@@ -110,18 +111,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
     console.log(this.categoryNameMap);
   }
 
-  openDeleteDialog(pname: string, id: string) {
-    this.tempId = id;
-    this.tempName = pname;
-    this.tempDialog = this.dialog.open(this.deleteDialogRef, { data: { name: this.tempName, _id: this.tempId } },);
-    this.tempDialog.afterClosed().subscribe((res) => {
-
-      // Data back from dialog
-      console.log({ res });
-    });
-  }
-
-
 
   public updateFilter(): void {
     this.filteredProducts = this.productService.filterProducts(
@@ -150,7 +139,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   // Removes the product and updates the categoryNameMap to reflect the deletion
-  removeProduct(id: string): Product {
+/*   removeProduct(id: string): Product {
     this.productService.deleteProduct(id).subscribe(
       prod => {
         this.serverFilteredProducts = this.serverFilteredProducts.filter(product => product._id !== id);
@@ -164,7 +153,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       duration: 5000,
     });
     return this.tempDeleted;
-  }
+  } */
 
   openAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
@@ -177,6 +166,24 @@ export class ProductListComponent implements OnInit, OnDestroy {
           this.snackBar.open('Something went wrong.  The product was not added to the pantry.');
         }
       });
+    });
+  }
+  removeProduct(givenProduct: Product): void {
+    const dialogRef = this.dialog.open(DialogDeleteComponent, {data: givenProduct});
+    dialogRef.afterClosed().subscribe(
+      result => {
+        this.productService.deleteProduct(result).subscribe(returnedProductId => {
+          if(returnedProductId) {
+            this.snackBar.open('Product successfully Deleted.');
+          }
+          else {
+            this.snackBar.open('Something went wrong.  The product was not removed from your product list.');
+          }
+        });
+      });
+    this.tempDialog.close();
+    this.snackBar.open(`${this.tempDeleted.productName} deleted`, 'OK', {
+      duration: 5000,
     });
   }
 }

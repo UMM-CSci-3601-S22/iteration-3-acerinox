@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../../product';
 import { PantryItem } from 'src/app/pantry/pantryItem';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-product-to-pantry',
@@ -13,8 +12,6 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 })
 
 export class AddProductToPantryComponent implements OnInit {
-
-  // @Input() pantryList: PantryProductsListComponent;
 
   addToPantryForm: FormGroup;
   newPantryItem: PantryItem;
@@ -32,7 +29,7 @@ export class AddProductToPantryComponent implements OnInit {
   };
 
 
-  constructor(private fb: FormBuilder, private snackBar: MatSnackBar,
+  constructor(private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddProductToPantryComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product) {
   }
@@ -55,6 +52,10 @@ export class AddProductToPantryComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForms();
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
   submitForm() {

@@ -13,9 +13,9 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button [mat-dialog-close]="this.addToPantryForm.value" mat-button type="button" color="primary" type="submit"
+  <button [mat-dialog-close]="submitForm()" mat-button type="button" color="primary" type="submit"
     data-test="confirmAddProductToPantryButton">
     Add To Pantry
   </button>
-  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
 </mat-dialog-actions>

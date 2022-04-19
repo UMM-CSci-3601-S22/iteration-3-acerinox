@@ -39,6 +39,7 @@ import { PantryService } from './pantry/pantry.service';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { AddProductToPantryComponent } from './products/product-list/add-product-to-pantry/add-product-to-pantry.component';
+import { DialogDeleteComponent } from './products/product-list/dialog-delete/dialog-delete.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -73,6 +74,7 @@ const MATERIAL_MODULES: any[] = [
     EditProductComponent,
     ProductFormComponent,
     AddProductToPantryComponent,
+    DialogDeleteComponent,
   ],
   imports: [
     BrowserModule,

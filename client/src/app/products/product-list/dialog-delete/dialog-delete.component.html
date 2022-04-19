@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Delete Product?</h1>
+<!-- Delete Product from Database Dialog Component -->
+<mat-dialog-content>
+<p>Remove {{data.productName | titlecase}} from your products?</p>
+<p>
+  <b>Note:</b> This action cannot be undone.
+
+</mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button mat-button data-test="dialogDelete" color="warn" [mat-dialog-close]='data._id'>Delete</button>
+    <button mat-button [mat-dialog-close]="" cdkFocusInitial>Cancel</button>
+  </mat-dialog-actions>
+
