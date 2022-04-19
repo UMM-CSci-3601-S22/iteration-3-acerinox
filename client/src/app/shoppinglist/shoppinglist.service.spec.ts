@@ -1,34 +1,40 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ShoppinglistDisplayItem } from './shoppinglistDisplayItem';
+import { ShoppinglistStoreGroup } from './shoppinglistStoreGroup';
 import { ShoppinglistService } from './shoppinglist.service';
 
 describe('ShoppinglistService', () => {
-  const testShoppinglistDisplayItems: ShoppinglistDisplayItem[] = [
+  const testShoppinglistStoreGroups: ShoppinglistStoreGroup[] = [
     {
-      _id: 'first',
-      product: 'firstProduct',
-      name: 'one',
-      store: 'einz',
-      location: 'un',
-      count: 4
+      store: 'firstStore',
+      products: [
+        {
+          productName: 'firstProduct',
+          location: 'firstAisle',
+          count: 1
+        }
+      ]
     },
     {
-      _id: 'second',
-      product: 'secondProduct',
-      name: 'two',
-      store: 'zwei',
-      location: 'deuz',
-      count: 8
+      store: 'secondStore',
+      products: [
+        {
+          productName: 'secondProduct',
+          location: 'secondAisle',
+          count: 2
+        }
+      ]
     },
     {
-      _id: 'third',
-      product: 'thirdProduct',
-      name: 'three',
-      store: 'drei',
-      location: 'trois',
-      count: 12
+      store: 'thirdStore',
+      products: [
+        {
+          productName: 'thirdProduct',
+          location: 'thirdAisle',
+          count: 3
+        }
+      ]
     }
   ];
 
@@ -54,14 +60,14 @@ describe('ShoppinglistService', () => {
   });
 
   it('getShoppinglist() calls api/shoppinglist', () => {
-    // Assert that the shoppinglistDisplayItems we get from this call to getShoppinglist()
-    // should be our set of test shoppinglistDisplayItems. Because we're subscribing
+    // Assert that the shoppinglistStoreGroups we get from this call to getShoppinglist()
+    // should be our set of test groups. Because we're subscribing
     // to the result of getShoppinglist(), this won't actually get
     // checked until the mocked HTTP request 'returns' a response.
-    // This happens when we call req.flush(testShoppinglistDisplayItems) a few lines
+    // This happens when we call req.flush(testShoppinglistStoreGroups) a few lines
     // down.
     shoppinglistService.getShoppinglist().subscribe(
-      shoppingListDisplayItems => expect(shoppingListDisplayItems).toBe(testShoppinglistDisplayItems)
+      shoppingListDisplayItems => expect(shoppingListDisplayItems).toBe(testShoppinglistStoreGroups)
     );
 
     // Specify that (exactly) one request will be made to the specified URL.
@@ -71,6 +77,6 @@ describe('ShoppinglistService', () => {
     // Specify the content of the response to that request. This
     // triggers the subscribe above, which leads to that check
     // actually being performed.
-    req.flush(testShoppinglistDisplayItems);
+    req.flush(testShoppinglistStoreGroups);
   });
 });
