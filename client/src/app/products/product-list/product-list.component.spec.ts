@@ -14,7 +14,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs';
@@ -22,6 +22,10 @@ import { MockProductService } from '../../../testing/product.service.mock';
 import { Product } from '../product';
 import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
+import { PantryService } from 'src/app/pantry/pantry.service';
+import { MockPantryService } from 'src/testing/pantry.service.mock';
+import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
+import { AddProductComponent } from '../add-product/add-product.component';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
@@ -51,7 +55,8 @@ describe('ProductListComponent', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ProductListComponent],
-      providers: [{ provide: ProductService, useValue: new MockProductService() }]
+      providers: [{ provide: ProductService, useValue: new MockProductService() },
+         {provide: PantryService, useValue: new MockPantryService()}]
     });
   });
 
@@ -127,7 +132,9 @@ describe('Delete From ProductList', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ProductListComponent],
-      providers: [{ provide: ProductService, useValue: new MockProductService() }]
+      providers: [{ provide: ProductService, useValue: new MockProductService() },
+      {provide: PantryService, useValue: new MockPantryService()},
+      {provide: MAT_DIALOG_DATA, useValue: MockProductService.testProducts[0]}]
     });
   });
 
@@ -143,9 +150,13 @@ describe('Delete From ProductList', () => {
     });
   }));
 
-  it('should call removeProduct, call removeProduct and delete the product', () => {
-    productList.removeProduct(productList[0]);
+  it('should call removeProduct, call deleteProduct and delete the product', () => {
+    const app = fixture.componentInstance;
+    const expected_header = 'Delete Product?';
+    app.removeProduct(productList[0]);
     fixture.detectChanges();
+    const popUpHeader = document.getElementsByTagName('h1')[0] as HTMLHeadElement;
+    expect(popUpHeader.innerText).toEqual(expected_header);
     expect(productList.serverFilteredProducts.length).toBe(2);
   });
 

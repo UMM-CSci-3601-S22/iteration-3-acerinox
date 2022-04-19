@@ -24,10 +24,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
   @ViewChild('deleteDialogRef')
   deleteDialogRef!: TemplateRef<any>;
 
-  @Input() product: Product;
-
-  @Output() newItemEvent = new EventEmitter<PantryItem>();
-
   public serverFilteredProducts: Product[];
   public filteredProducts: Product[];
 

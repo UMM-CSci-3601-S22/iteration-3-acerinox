@@ -15,5 +15,28 @@ import { AddProductToPantryComponent } from './add-product-to-pantry.component';
 import { SingleProductPageComponent } from '../../single-product-page/single-product-page.component';
 import { PantryProductsListComponent } from 'src/app/pantry/pantry-products-list/pantry-products-list.component';
 import { HttpClient, HttpHandler } from '@angular/common/http';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+describe('AddDialogComponent', () => {
+  let component: AddProductToPantryComponent;
+  let fixture: ComponentFixture<AddProductToPantryComponent>;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [AddProductToPantryComponent], providers: [{provide: MAT_DIALOG_DATA, UseValue: {}
+     }]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AddProductToPantryComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+ });
