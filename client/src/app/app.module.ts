@@ -42,6 +42,7 @@ import { ProductFormComponent } from './products/product-form/product-form.compo
 import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-list.component';
 import { ShoppinglistService } from './shoppinglist/shoppinglist.service';
 import { ShoppinglistGroupComponent } from './shoppinglist/shoppinglist-group/shoppinglist-group.component';
+import { ShoppinglistPrintComponent } from './shoppinglist/shoppinglist-print/shoppinglist-print.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -78,6 +79,7 @@ const MATERIAL_MODULES: any[] = [
     ProductFormComponent,
     ShoppingListComponent,
     ShoppinglistGroupComponent,
+    ShoppinglistPrintComponent,
   ],
   imports: [
     BrowserModule,
