@@ -1,6 +1,17 @@
 <div layout="column">
   <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
-    <h1>My Shopping List</h1>
-    <app-shoppinglist-group></app-shoppinglist-group>
+    <mat-card>
+      <mat-card-content>
+        <h1>My Shopping List</h1>
+        <mat-tab-group animationDuration="400ms" [color]="'accent'" dynamicHeight [backgroundColor]="'primary'">
+          <mat-tab label="Interactive Display">
+            <app-shoppinglist-group></app-shoppinglist-group>
+          </mat-tab>
+          <mat-tab label="Print Display">
+            <p>Print stuff here I guess</p>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
   </div>
 </div>

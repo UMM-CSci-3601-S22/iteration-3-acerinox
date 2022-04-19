@@ -26,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -61,7 +62,8 @@ const MATERIAL_MODULES: any[] = [
   MatSnackBarModule,
   MatPaginatorModule,
   MatDialogModule,
-  MatTableModule
+  MatTableModule,
+  MatTabsModule
 ];
 
 @NgModule({
