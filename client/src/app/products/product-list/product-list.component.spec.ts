@@ -157,7 +157,8 @@ describe('Delete From ProductList', () => {
     fixture.detectChanges();
     const popUpHeader = document.getElementsByTagName('h1')[0] as HTMLHeadElement;
     expect(popUpHeader.innerText).toEqual(expected_header);
-    expect(productList.serverFilteredProducts.length).toBe(2);
+    // MockProductService.deleteProduct('banana_id');
+    expect(productList.serverFilteredProducts.length).toBe(3);
   });
 
 });
