@@ -48,4 +48,9 @@ public class ShoppingListController {
 
         ctx.json(returnedShoppingListItems);
     }
+
+    public void resetShoppingList(Context ctx) {
+      //placeholder method for the shoppinglist generation
+      ctx.json(null);
+    }
 }
