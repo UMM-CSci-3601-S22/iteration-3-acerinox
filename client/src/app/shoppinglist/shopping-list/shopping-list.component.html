@@ -1,13 +1,13 @@
 <div layout="column">
-  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="shopping-list">
 
-    <mat-card>
-      <h1 style="font-size: 40px;">My Shopping List</h1>
-      <mat-button-toggle-group [(ngModel)]="viewType" name="pageView" aria-label="Page View">
-        <mat-button-toggle value="interactive">
+    <mat-card class="shopping-list-header">
+      <h1 style="font-size: 40px;" class="shoppinglist-title">My Shopping List</h1>
+      <mat-button-toggle-group [(ngModel)]="viewType" name="pageView" aria-label="Page View" class="shopping-list-view-toggle">
+        <mat-button-toggle value="interactive" class="shopping-list-view-interactive-button">
           Interactive View
         </mat-button-toggle>
-        <mat-button-toggle value="print">
+        <mat-button-toggle value="print" class="shopping-list-view-print-button">
           Print View
         </mat-button-toggle>
       </mat-button-toggle-group>
