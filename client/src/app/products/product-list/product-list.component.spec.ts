@@ -151,13 +151,7 @@ describe('Delete From ProductList', () => {
   }));
 
   it('should call removeProduct, call deleteProduct and delete the product', () => {
-    const app = fixture.componentInstance;
-    const expected_header = 'Delete Product?';
-    app.removeProduct(productList[0]);
-    fixture.detectChanges();
-    const popUpHeader = document.getElementsByTagName('h1')[0] as HTMLHeadElement;
-    expect(popUpHeader.innerText).toEqual(expected_header);
-    // MockProductService.deleteProduct('banana_id');
+    productList.removeProduct(productList[0]);
     expect(productList.serverFilteredProducts.length).toBe(3);
   });
 

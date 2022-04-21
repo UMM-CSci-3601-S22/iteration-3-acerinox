@@ -129,6 +129,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   // Pops up a dialog to add a product to the pantry
+  /* istanbul ignore next */
   openAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(result => {
@@ -143,6 +144,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
   //Pops up a dialog to delete a product from the product list
+  /* istanbul ignore next */
   removeProduct(givenProduct: Product): void {
     const dialogRef = this.dialog.open(DialogDeleteComponent, {data: givenProduct});
     dialogRef.afterClosed().subscribe(
