@@ -11,6 +11,17 @@
           Print View
         </mat-button-toggle>
       </mat-button-toggle-group>
+      <button mat-button #tooltip="matTooltip"
+              matTooltip="Print Shopping List"
+              [matTooltipPosition]="'right'"
+              aria-label="Button that prints the Shopping List"
+              class="print-button"
+              printSectionId="print"
+              ngxPrint
+              *ngIf="this.viewType === 'print'"
+      >
+        <mat-icon color="accent">print</mat-icon>
+      </button>
     </mat-card>
 
     <div [ngSwitch]="viewType">
