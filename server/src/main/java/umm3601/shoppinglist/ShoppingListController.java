@@ -1,5 +1,7 @@
 package umm3601.shoppinglist;
 
+import static com.mongodb.client.model.Sorts.ascending;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -40,7 +42,8 @@ public class ShoppingListController {
                                     Projections.computed("store", "$_id"),
                                     Projections.include("products"),
                                     Projections.excludeId()
-                                ))
+                                )),
+                                Aggregates.sort(ascending("store"))
                         ),
                         Document.class)
                         .into(new ArrayList<>());
