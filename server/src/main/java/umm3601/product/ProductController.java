@@ -5,12 +5,16 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Accumulators;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
 
@@ -89,6 +93,41 @@ public class ProductController {
     // Set the JSON body of the response to be the list of products returned by
     // the database.
     ctx.json(matchingProducts);
+  }
+
+  public void groupProductsByCategory(Context ctx) {
+    Bson combinedFilter = constructFilter(ctx);
+    Bson sortingOrder = constructSortingOrder(ctx);
+
+    ArrayList<CategorySortItem> output = productCollection
+        .aggregate(
+            Arrays.asList(
+                Aggregates.match(combinedFilter),
+                Aggregates.sort(sortingOrder),
+                Aggregates.group("$category",
+                    Accumulators.sum("count", 1),
+                    Accumulators.addToSet("products",
+                        new Document("_id", "$_id")
+                            .append("brand", "$brand")
+                            .append("description", "$description")
+                            .append("image", "$image")
+                            .append("lifespan", "$lifespan")
+                            .append("location", "$location")
+                            .append("notes", "$notes")
+                            .append("productName", "$productName")
+                            .append("store", "$store")
+                            .append("tags", "$tags")
+                            .append("threshold", "$threshold"))),
+                Aggregates.project(
+                    Projections.fields(
+                        Projections.computed("category", "$_id"),
+                        Projections.include("count", "products"),
+                        Projections.excludeId()))),
+            CategorySortItem.class)
+        .into(new ArrayList<>());
+
+    ctx.json(output);
+
   }
 
   private Bson constructFilter(Context ctx) {
@@ -197,7 +236,8 @@ public class ProductController {
 
     productCollection.replaceOne(eq("_id", new ObjectId(productID)), newProduct);
 
-    //For some reason, the id here is null, so reset it here for the redirect on client
+    // For some reason, the id here is null, so reset it here for the redirect on
+    // client
     newProduct._id = productID;
 
     // 201 is the HTTP code for when we successfully
