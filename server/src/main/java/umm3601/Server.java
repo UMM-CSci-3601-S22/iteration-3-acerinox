@@ -82,6 +82,9 @@ public class Server {
     // List shoppingListItems
     server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
 
+    //Generate the shoppingList based on the inventory and threshold
+    server.put("api/shoppinglist", shoppingListController::resetShoppingList);
+
     // Delete the specified product
     server.delete("/api/products/{id}", productController::deleteProduct);
 
