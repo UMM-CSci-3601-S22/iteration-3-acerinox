@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
+import { ShoppinglistService } from '../shoppinglist.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shopping-list',
@@ -7,11 +10,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShoppingListComponent implements OnInit {
 
+  @Output() public shoppingList: ShoppinglistStoreGroup[];
   public viewType: 'interactive' | 'print' = 'interactive';
+  getShoppinglistSub: Subscription;
 
-  constructor() {}
+  constructor(private shoppinglistService: ShoppinglistService) {}
 
-  ngOnInit(): void {
+  public getShoppinglistFromServer(): void {
+    this.unsub();
+    this.getShoppinglistSub = this.shoppinglistService.getShoppinglist()
+      .subscribe(returnedShoppinglist => {
+        this.shoppingList = returnedShoppinglist;
+      }, err => {
+        console.log(err);
+      });
   }
 
+  unsub(): void {
+    if (this.getShoppinglistSub) {
+      this.getShoppinglistSub.unsubscribe();
+    }
+  }
+
+  ngOnInit(): void {
+    this.getShoppinglistFromServer();
+  }
 }

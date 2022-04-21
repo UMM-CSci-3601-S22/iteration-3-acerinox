@@ -1,1 +1,13 @@
-<p>shoppinglist-print works!</p>
+<div layout="column">
+  <button mat-button align="end" onclick="printList()">
+    <mat-icon>print</mat-icon>
+  </button>
+  <mat-card id="print">
+    <div *ngFor="let storeGroup of this.list">
+      <h2>{{storeGroup.store}}</h2>
+      <div *ngFor="let slItem of storeGroup.products">
+        <p>{{slItem.productName}}</p>
+      </div>
+    </div>
+  </mat-card>
+</div>
