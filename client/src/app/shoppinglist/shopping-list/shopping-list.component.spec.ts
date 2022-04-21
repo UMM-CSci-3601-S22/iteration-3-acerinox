@@ -15,6 +15,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MockShoppingListService } from 'src/testing/shopping-list.service.mock';
 import { ShoppinglistService } from '../shoppinglist.service';
 
 import { ShoppingListComponent } from './shopping-list.component';
