@@ -13,6 +13,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ShoppinglistService } from '../shoppinglist.service';
@@ -37,6 +38,7 @@ const COMMON_IMPORTS: any[] = [
   MatIconModule,
   BrowserAnimationsModule,
   RouterTestingModule,
+  MatTabsModule,
 ];
 
 describe('ShoppingListComponent', () => {
@@ -47,7 +49,7 @@ describe('ShoppingListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ ShoppingListComponent ],
-      providers: [{ provide: ShoppinglistService, usevalue: new MockShoppingListService() }]
+      providers: [{ provide: ShoppinglistService, useValue: new MockShoppingListService() }]
     });
   });
 
@@ -68,7 +70,6 @@ describe('ShoppingListComponent', () => {
   });
 
   it('should get the shoppinglist and contain all of the StoreGroups', () => {
-    shoppinglist.unsub();
     shoppinglist.getShoppinglistFromServer();
     expect(shoppinglist.shoppingList.length).toBe(4);
   });

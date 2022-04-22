@@ -1,15 +1,15 @@
 
 export class ShoppinglistPage {
 
-    navigateTo() {
-      return cy.visit('./shoppinglist');
-    }
+  navigateTo() {
+    return cy.visit('./shoppinglist');
+  }
 
-    getUrl() {
-      return cy.url();
-    }
+  getUrl() {
+    return cy.url();
+  }
 
-    getShoppinglistTitle() {
-      return cy.get('.shoppinglist-title');
-    }
+  getShoppinglistTitle() {
+    return cy.get('.shoppinglist-title');
+  }
 }
