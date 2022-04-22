@@ -147,9 +147,4 @@ describe('Delete From ProductList', () => {
     });
   }));
 
-  it('should call removeProduct, call deleteProduct and delete the product', () => {
-    productList.removeProduct(productList[0]);
-    expect(productList.serverFilteredProducts.length).toBe(3);
-  });
-
 });
