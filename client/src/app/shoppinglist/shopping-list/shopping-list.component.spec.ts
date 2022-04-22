@@ -16,8 +16,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTabsModule } from '@angular/material/tabs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ShoppinglistService } from '../shoppinglist.service';
 import { MockShoppingListService } from 'src/testing/shopping-list.service.mock';
+import { ShoppinglistService } from '../shoppinglist.service';
 
 import { ShoppingListComponent } from './shopping-list.component';
 
