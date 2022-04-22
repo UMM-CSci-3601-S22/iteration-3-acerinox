@@ -165,6 +165,8 @@ public class ProductController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
+    ctx.status(HttpCode.GONE);
+    ctx.json(true);
   }
 
   private Product validateProduct(Context ctx) {
@@ -197,7 +199,8 @@ public class ProductController {
 
     productCollection.replaceOne(eq("_id", new ObjectId(productID)), newProduct);
 
-    //For some reason, the id here is null, so reset it here for the redirect on client
+    // For some reason, the id here is null, so reset it here for the redirect on
+    // client
     newProduct._id = productID;
 
     // 201 is the HTTP code for when we successfully
