@@ -423,25 +423,6 @@ public class PantryControllerSpec {
   }
 
   @Test
-  public void addProductWithBadDate() throws IOException {
-
-    String testNewEntry = "{"
-        + "\"product\": \"" + bananaEntryId.toHexString() + "\","
-        + "\"purchase_date\": \"01272023\","
-        + "\"notes\": \"check on gerbils every 3 days\""
-        + "}";
-
-    mockReq.setBodyContent(testNewEntry);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/pantry");
-
-    assertThrows(ValidationException.class, () -> {
-      pantryController.addNewPantryItem(ctx);
-    });
-  }
-
-  @Test
   public void addProductWithBadNote() throws IOException {
 
     String testNewEntry = "{"
