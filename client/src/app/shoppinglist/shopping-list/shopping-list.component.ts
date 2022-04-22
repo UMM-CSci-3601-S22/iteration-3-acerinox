@@ -10,8 +10,12 @@ import { Subscription } from 'rxjs';
 })
 export class ShoppingListComponent implements OnInit {
 
+  // Stored shoppinglist, sent to child components through input/output
   @Output() public shoppingList: ShoppinglistStoreGroup[];
+
+  // Page view, determines DOM elements displayed
   public viewType: 'interactive' | 'print' = 'interactive';
+
   getShoppinglistSub: Subscription;
 
   constructor(private shoppinglistService: ShoppinglistService) {}
