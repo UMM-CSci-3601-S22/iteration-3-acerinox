@@ -17,15 +17,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { MockProductService } from '../../../testing/product.service.mock';
 import { Product } from '../product';
 import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
 import { PantryService } from 'src/app/pantry/pantry.service';
 import { MockPantryService } from 'src/testing/pantry.service.mock';
-import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
-import { AddProductComponent } from '../add-product/add-product.component';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
