@@ -15,6 +15,7 @@ import io.javalin.core.util.RouteOverviewPlugin;
 import io.javalin.http.InternalServerErrorResponse;
 import umm3601.pantry.PantryController;
 import umm3601.product.ProductController;
+import umm3601.shoppinglist.ShoppingListController;
 
 public class Server {
 
@@ -45,6 +46,7 @@ public class Server {
     // Initialize dependencies
     ProductController productController = new ProductController(database);
     PantryController pantryController = new PantryController(database);
+    ShoppingListController shoppingListController = new ShoppingListController(database);
 
     Javalin server = Javalin.create(config -> config.registerPlugin(new RouteOverviewPlugin("/api")));
     /*
@@ -65,6 +67,8 @@ public class Server {
     // List products, filtered using query params
     server.get("/api/products", productController::getAllProducts);
 
+    server.get("/api/products/group", productController::groupProductsByCategory);
+
     // Get the specified product
     server.get("/api/products/{id}", productController::getProductByID);
 
@@ -76,6 +80,12 @@ public class Server {
 
     // Get the specified pantry item
     server.get("/api/pantry/{id}", pantryController::getPantryItemByID);
+
+    // List shoppingListItems
+    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
+
+    //Generate the shoppingList based on the inventory and threshold
+    server.put("api/shoppinglist", shoppingListController::resetShoppingList);
 
     // Delete the specified product
     server.delete("/api/products/{id}", productController::deleteProduct);
@@ -104,6 +114,7 @@ public class Server {
     // certainly want to use a logging library to log all errors
     // caught here so you'd know about them and could try to address
     // them.
+
 
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
