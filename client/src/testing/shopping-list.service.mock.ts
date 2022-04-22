@@ -3,7 +3,9 @@ import { Observable, of, Subscription } from 'rxjs';
 import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
 import { ShoppinglistStoreGroup } from 'src/app/shoppinglist/shoppinglistStoreGroup';
 
-export class MockShoppingListService extends ShoppinglistService{
+@Injectable()
+export class MockShoppingListService extends ShoppinglistService {
+
   static testShoppinglistStoreGroups: ShoppinglistStoreGroup[] = [
     {
       store: 'firstStore',
@@ -36,4 +38,12 @@ export class MockShoppingListService extends ShoppinglistService{
       ]
     }
   ];
+
+  constructor() {
+    super(null);
+  }
+
+  override getShoppinglist(): Observable<ShoppinglistStoreGroup[]> {
+      return of(MockShoppingListService.testShoppinglistStoreGroups);
+  }
 }
