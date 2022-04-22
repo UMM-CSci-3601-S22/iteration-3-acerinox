@@ -71,6 +71,6 @@ describe('ShoppingListComponent', () => {
 
   it('should get the shoppinglist and contain all of the StoreGroups', () => {
     shoppinglist.getShoppinglistFromServer();
-    expect(shoppinglist.shoppingList.length).toBe(4);
+    expect(shoppinglist.shoppingList.length).toBe(3);
   });
 });
