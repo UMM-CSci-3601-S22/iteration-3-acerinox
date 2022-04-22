@@ -464,7 +464,7 @@ public class ProductControllerSpec {
 
     productController.deleteProduct(ctx);
 
-    assertEquals(HttpURLConnection.HTTP_GONE, mockRes.getStatus());
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
 
     // Product is no longer in the database
     assertEquals(0, db.getCollection("products").countDocuments(eq("_id", new ObjectId(testID))));

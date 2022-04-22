@@ -3,12 +3,12 @@
 <mat-dialog-content [formGroup]="addToPantryForm">
   <mat-form-field appearance="fill">
     <mat-label>Date Added to Pantry</mat-label>
-    <input matInput placeholder="dd-mm-yyyy" formControlName="purchase_date" required>
+    <input matInput placeholder="dd-mm-yyyy" data-test="purchaseDateInput" formControlName="purchase_date" required>
   </mat-form-field>
   <br>
   <mat-form-field appearance="fill">
     <mat-label>Pantry Item Notes</mat-label>
-    <input matInput placeholder="Pantry Item Notes" formControlName="notes" required>
+    <input matInput placeholder="Pantry Item Notes" data-test="notesInput" formControlName="notes" required>
   </mat-form-field>
 </mat-dialog-content>
 

@@ -130,14 +130,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
   // Pops up a dialog to add a product to the pantry
   /* istanbul ignore next */
   openAddDialog(givenProduct: Product) {
-    const dialogRef = this.dialog.open(AddProductToPantryComponent, {data: givenProduct});
+    const dialogRef = this.dialog.open(AddProductToPantryComponent, { data: givenProduct });
     dialogRef.afterClosed().subscribe(result => {
       this.pantryService.addPantryItem(result).subscribe(newPantryId => {
-        if(newPantryId) {
-          this.snackBar.open('Product successfully added to your pantry.');
+        if (newPantryId) {
+          this.snackBar.open('Product successfully added to your pantry.',
+            'OK', { duration: 5000 });
         }
         else {
-          this.snackBar.open('Something went wrong.  The product was not added to the pantry.');
+          this.snackBar.open('Something went wrong.  The product was not added to the pantry.',
+            'OK', { duration: 5000 });
         }
       });
     });
@@ -145,19 +147,21 @@ export class ProductListComponent implements OnInit, OnDestroy {
   //Pops up a dialog to delete a product from the product list
   /* istanbul ignore next */
   removeProduct(givenProduct: Product): void {
-    const dialogRef = this.dialog.open(DialogDeleteComponent, {data: givenProduct});
+    const dialogRef = this.dialog.open(DialogDeleteComponent, { data: givenProduct });
     dialogRef.afterClosed().subscribe(
       result => {
-        this.productService.deleteProduct(result).subscribe(returnedProductId => {
-          if(returnedProductId) {
-            this.snackBar.open('Product successfully Deleted.');
+        this.productService.deleteProduct(result).subscribe(returnedBoolean => {
+          if (returnedBoolean) {
+            this.snackBar.open('Product successfully deleted.',
+              'OK', { duration: 5000 });
           }
           else {
-            this.snackBar.open('Something went wrong.  The product was not removed from your product list.');
+            this.snackBar.open('Something went wrong.  The product was not removed from your product list.',
+              'OK', { duration: 5000 });
           }
         });
       });
-      this.updateFilter();
-      this.initializeCategoryMap();
+    this.updateFilter();
+    this.initializeCategoryMap();
   }
 }
