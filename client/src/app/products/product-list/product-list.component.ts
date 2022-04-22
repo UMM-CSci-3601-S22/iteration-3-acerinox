@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, TemplateRef, ViewChild, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
