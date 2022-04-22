@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockShoppingListService } from 'src/testing/shopping-list.service.mock';
 import { ShoppinglistService } from '../shoppinglist.service';
+import { MockShoppingListService } from 'src/testing/shopping-list.service.mock';
 
 import { ShoppingListComponent } from './shopping-list.component';
 
@@ -40,23 +41,36 @@ const COMMON_IMPORTS: any[] = [
 ];
 
 describe('ShoppingListComponent', () => {
-  let component: ShoppingListComponent;
+  let shoppinglist: ShoppingListComponent;
   let fixture: ComponentFixture<ShoppingListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ShoppingListComponent ]
-    })
-    .compileComponents();
+      imports: [COMMON_IMPORTS],
+      declarations: [ ShoppingListComponent ],
+      providers: [{ provide: ShoppinglistService, usevalue: new MockShoppingListService() }]
+    });
   });
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ShoppingListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+  afterEach(() => {
+    fixture.destroy();
   });
+
+  beforeEach(waitForAsync(() => {
+    TestBed.compileComponents().then(() => {
+      fixture = TestBed.createComponent(ShoppingListComponent);
+      shoppinglist = fixture.componentInstance;
+      fixture.detectChanges();
+    });
+  }));
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(shoppinglist).toBeTruthy();
+  });
+
+  it('should get the shoppinglist and contain all of the StoreGroups', () => {
+    shoppinglist.unsub();
+    shoppinglist.getShoppinglistFromServer();
+    expect(shoppinglist.shoppingList.length).toBe(4);
   });
 });

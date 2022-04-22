@@ -4,7 +4,8 @@ import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
 import { ShoppinglistStoreGroup } from 'src/app/shoppinglist/shoppinglistStoreGroup';
 
 @Injectable()
-export class MockShoppingListService extends ShoppinglistService{
+export class MockShoppingListService extends ShoppinglistService {
+
   static testShoppinglistStoreGroups: ShoppinglistStoreGroup[] = [
     {
       store: 'firstStore',
@@ -42,8 +43,7 @@ export class MockShoppingListService extends ShoppinglistService{
     super(null);
   }
 
-  getShoppinglist(): Observable<ShoppinglistStoreGroup[]> {
-    return of(MockShoppingListService.testShoppinglistStoreGroups);
+  override getShoppinglist(): Observable<ShoppinglistStoreGroup[]> {
+      return of(MockShoppingListService.testShoppinglistStoreGroups);
   }
-
 }

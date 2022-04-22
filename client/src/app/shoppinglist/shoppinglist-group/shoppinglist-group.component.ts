@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ShoppinglistDisplayItem } from '../shoppinglistDisplayItem';
+import { Component, Input, OnInit } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
-import { ShoppinglistService } from '../shoppinglist.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-shoppinglist-group',
@@ -10,28 +7,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./shoppinglist-group.component.scss']
 })
 export class ShoppinglistGroupComponent implements OnInit {
-  public shoppingList: ShoppinglistStoreGroup[];
-  getShoppinglistSub: Subscription;
+  @Input() list: ShoppinglistStoreGroup[];
 
-  constructor(private shoppinglistService: ShoppinglistService) {}
-
-  public getShoppinglistFromServer(): void {
-    this.unsub();
-    this.getShoppinglistSub = this.shoppinglistService.getShoppinglist()
-      .subscribe(returnedShoppinglist => {
-        this.shoppingList = returnedShoppinglist;
-      }, err => {
-        console.log(err);
-      });
-  }
-
-  unsub(): void {
-    if (this.getShoppinglistSub) {
-      this.getShoppinglistSub.unsubscribe();
-    }
-  }
+  constructor() {}
 
   ngOnInit(): void {
-    this.getShoppinglistFromServer();
+
   }
 }
