@@ -1,11 +1,14 @@
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, TemplateRef, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, TemplateRef, ViewChild, OnInit, OnDestroy, } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, } from '@angular/material/dialog';
 import { Product, ProductCategory } from '../product';
 import { ProductService } from '../product.service';
 import { Subscription } from 'rxjs';
+import { PantryService } from 'src/app/pantry/pantry.service';
+import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
+import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 
 
 @Component({
@@ -17,8 +20,8 @@ import { Subscription } from 'rxjs';
 
 export class ProductListComponent implements OnInit, OnDestroy {
   // MatDialog
-  @ViewChild('dialogRef')
-  dialogRef!: TemplateRef<any>;
+  @ViewChild('deleteDialogRef')
+  deleteDialogRef!: TemplateRef<any>;
 
   public serverFilteredProducts: Product[];
   public filteredProducts: Product[];
@@ -35,7 +38,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public activeFilters: boolean;
 
   // A list of the categories to be displayed, requested by the customer
-  public categories: ProductCategory[] = [
+  public categoriesList: ProductCategory[] = [
     'baked goods',
     'baking supplies',
     'beverages',
@@ -53,15 +56,19 @@ export class ProductListComponent implements OnInit, OnDestroy {
     'toiletries',
   ];
 
+  // A list of the categories to be displayed, requested by the customer
+  public storesList: string[] = [
+    'Willies',
+    'Pomme de Terre',
+    'RealFoodHub',
+    'Other Store',
+  ];
+
   // Stores the products sorted by their category
   public categoryNameMap = new Map<ProductCategory, Product[]>();
 
-  // temp variables to use for deletion
-  public tempId: string;
-  public tempName: string;
-  public tempDialog: any;
-  public tempDeleted: Product;
-  constructor(private productService: ProductService, private snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(private productService: ProductService, private snackBar: MatSnackBar, private pantryService: PantryService,
+    private dialog: MatDialog) { }
 
   getProductsFromServer(): void {
     this.unsub();
@@ -85,25 +92,13 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Sorts products based on their category
   initializeCategoryMap() {
-    for (let givenCategory of this.categories) {
+    for (let givenCategory of this.categoriesList) {
       this.categoryNameMap.set(givenCategory,
         this.productService.filterProducts(this.serverFilteredProducts, { category: givenCategory }));
 
     }
     console.log(this.categoryNameMap);
   }
-
-  openDeleteDialog(pname: string, id: string) {
-    this.tempId = id;
-    this.tempName = pname;
-    this.tempDialog = this.dialog.open(this.dialogRef, { data: { name: this.tempName, _id: this.tempId } },);
-    this.tempDialog.afterClosed().subscribe((res) => {
-
-      // Data back from dialog
-      console.log({ res });
-    });
-  }
-
 
 
   public updateFilter(): void {
@@ -132,21 +127,41 @@ export class ProductListComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Removes the product and updates the categoryNameMap to reflect the deletion
-  removeProduct(id: string): Product {
-    this.productService.deleteProduct(id).subscribe(
-      prod => {
-        this.serverFilteredProducts = this.serverFilteredProducts.filter(product => product._id !== id);
-        this.tempDeleted = prod;
-        this.updateFilter();
-        this.initializeCategoryMap();
-      }
-    );
-    this.tempDialog.close();
-    this.snackBar.open(`${this.tempDeleted.productName} deleted`, 'OK', {
-      duration: 5000,
+  // Pops up a dialog to add a product to the pantry
+  /* istanbul ignore next */
+  openAddDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(AddProductToPantryComponent, { data: givenProduct });
+    dialogRef.afterClosed().subscribe(result => {
+      this.pantryService.addPantryItem(result).subscribe(newPantryId => {
+        if (newPantryId) {
+          this.snackBar.open('Product successfully added to your pantry.',
+            'OK', { duration: 5000 });
+        }
+        else {
+          this.snackBar.open('Something went wrong.  The product was not added to the pantry.',
+            'OK', { duration: 5000 });
+        }
+      });
     });
-    return this.tempDeleted;
   }
-
+  //Pops up a dialog to delete a product from the product list
+  /* istanbul ignore next */
+  removeProduct(givenProduct: Product): void {
+    const dialogRef = this.dialog.open(DialogDeleteComponent, { data: givenProduct });
+    dialogRef.afterClosed().subscribe(
+      result => {
+        this.productService.deleteProduct(result).subscribe(returnedBoolean => {
+          if (returnedBoolean) {
+            this.snackBar.open('Product successfully deleted.',
+              'OK', { duration: 5000 });
+          }
+          else {
+            this.snackBar.open('Something went wrong.  The product was not removed from your product list.',
+              'OK', { duration: 5000 });
+          }
+        });
+      });
+    this.updateFilter();
+    this.initializeCategoryMap();
+  }
 }
