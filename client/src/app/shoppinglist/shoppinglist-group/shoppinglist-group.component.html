@@ -1,8 +1,8 @@
 <div>
   <mat-card class="shopping-list-interactive">
     <mat-tab-group animationDuration="400ms" [color]="'accent'" dynamicHeight [backgroundColor]="'primary'" class="store-tabs-group">
-      <div *ngFor="let storeGroup of this.list" class="">
-        <mat-tab label="{{storeGroup.store}}" class="store-tab">
+      <div *ngFor="let storeGroup of this.list">
+        <mat-tab label="{{storeGroup.store}}">
           <mat-card>
             <div>
               <mat-selection-list>

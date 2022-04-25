@@ -103,7 +103,7 @@ const MATERIAL_MODULES: any[] = [
   providers: [
     ProductService,
     PantryService,
-    ShoppinglistService
+    ShoppinglistService,
     PantryProductsListComponent,
     ProductListComponent
   ],
