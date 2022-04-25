@@ -14,7 +14,7 @@ export class ProductListPage {
   }
 
   getFilteredProductListItems() {
-    return cy.get('.filtered-product-nav-list .filtered-product-list-item');
+    return cy.get('.filtered-product-list-item');
   }
 
   getExpansionTitleByCategory(category: string) {
@@ -22,7 +22,7 @@ export class ProductListPage {
   }
 
   getExpansionItemsByCategory(category: string) {
-    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel .' + category.replace(' ', '-') + '-nav-list .product-list-item');
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel .' + category.replace(' ', '-') + '-nav-list');
   }
 
   /**
@@ -34,7 +34,7 @@ export class ProductListPage {
     // Find and click the drop down
     return cy.get('[data-test=productCategorySelect]').click()
       // Select and click the desired value from the resulting menu
-      .get(`mat-option[value="${value}"]`).click();
+      .get(`mat-option[ng-reflect-value="${value}"]`).click();
   }
 
   /**
@@ -42,11 +42,11 @@ export class ProductListPage {
    *
    * @param value The store *value* to select, this is what's found in the mat-option "value" attribute.
    */
-   selectStore(value: string) {
+  selectStore(value: string) {
     // Find and click the drop down
     return cy.get('[data-test=productStoreSelect]').click()
       // Select and click the desired value from the resulting menu
-      .get(`mat-option[value="${value}"]`).click();
+      .get(`mat-option[ng-reflect-value="${value}"]`).click();
   }
 
   addProductButton() {
@@ -55,13 +55,57 @@ export class ProductListPage {
 
   clickDeleteButton() {
     return this.getFilteredProductListItems()
-    .get('.product-item-container:first .delete-container .delete-product-button')
-    .click();
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=deleteProductButton]')
+          .click();
+      });
   }
 
   clickExpansionDeleteButton(category: string) {
-    return this.getExpansionItemsByCategory(category)
-    .get('.product-item-container:first .delete-container .delete-product-button')
-    .click();
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel')
+      .click()
+      .get('.' + category.replace(' ', '-') + '-nav-list')
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=deleteProductButton]')
+          .click();
+      });
+  }
+
+  clickAddButton() {
+    return this.getFilteredProductListItems()
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=addToPantryButton]')
+          .click();
+      });
+  }
+
+  clickExpansionAddButton(category: string) {
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel')
+      .click()
+      .get('.' + category.replace(' ', '-') + '-nav-list')
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=addToPantryButton]')
+          .click();
+      });
+  }
+
+  enterPurchaseDate(purchaseDate: string) {
+    return cy.get('[data-test=purchaseDateInput]').type(purchaseDate);
+  }
+
+  enterNotes(notes: string) {
+    return cy.get('[data-test=notesInput]').type(notes);
+  }
+
+  clickDialogAddButton() {
+    return cy.get('[data-test=confirmAddProductToPantryButton]').click();
+  }
+
+  clickDialogDeleteButton() {
+    return cy.get('[data-test=dialogDelete]').click();
   }
 }

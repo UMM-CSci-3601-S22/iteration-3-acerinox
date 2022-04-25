@@ -45,6 +45,8 @@ import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-lis
 import { ShoppinglistService } from './shoppinglist/shoppinglist.service';
 import { ShoppinglistGroupComponent } from './shoppinglist/shoppinglist-group/shoppinglist-group.component';
 import { ShoppinglistPrintComponent } from './shoppinglist/shoppinglist-print/shoppinglist-print.component';
+import { AddProductToPantryComponent } from './products/product-list/add-product-to-pantry/add-product-to-pantry.component';
+import { DialogDeleteComponent } from './products/product-list/dialog-delete/dialog-delete.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -83,6 +85,8 @@ const MATERIAL_MODULES: any[] = [
     ShoppingListComponent,
     ShoppinglistGroupComponent,
     ShoppinglistPrintComponent,
+    AddProductToPantryComponent,
+    DialogDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,6 +104,8 @@ const MATERIAL_MODULES: any[] = [
     ProductService,
     PantryService,
     ShoppinglistService
+    PantryProductsListComponent,
+    ProductListComponent
   ],
   bootstrap: [AppComponent]
 })
