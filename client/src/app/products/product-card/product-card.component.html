@@ -1,5 +1,5 @@
 <mat-card class="product-card" style="margin: 16px" *ngIf="this.product">
-  <div fxLayout="row" >
+  <div fxLayout="row">
     <div style="padding: 16px;">
       <mat-card-header>
         <mat-card-title class="product-card-name">{{ this.product.productName }}</mat-card-title>
@@ -22,9 +22,11 @@
     </mat-card-content>
   </div>
   <mat-card-actions class="edit-product">
-    <button color="primary" mat-raised-button data-test="editProductButton" routerLink="{{this.editURL}}">Edit Product</button>
+    <button color="primary" mat-raised-button data-test="editProductButton" routerLink="{{this.editURL}}">Edit
+      Product</button>
   </mat-card-actions>
   <mat-card-actions class="add-to-pantry">
-    <button color="primary" mat-raised-button data-test="addToPantryButton"> Add Product To Pantry</button>
+    <button color="primary" mat-raised-button type="button" (click)="popup = true" data-test="addToPantryButton"> Add
+      Product To Pantry</button>
   </mat-card-actions>
 </mat-card>

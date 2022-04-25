@@ -10,6 +10,8 @@ export class ProductCardComponent implements OnInit, OnChanges {
 
   @Input() product: Product;
 
+  popup = false;
+
   editURL: string;
 
   constructor() { }
