@@ -165,7 +165,7 @@ public class ProductController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
-    ctx.status(HttpCode.GONE);
+    ctx.status(HttpCode.OK);
     ctx.json(true);
   }
 

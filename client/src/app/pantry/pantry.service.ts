@@ -42,4 +42,8 @@ export class PantryService {
     // Send post request to add a new user with the user data as the body.
     return this.httpClient.post<{ id: string }>(this.pantryUrl, newPantryItem).pipe(map(res => res.id));
   }
+
+  deleteItem(id: string): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.pantryUrl}/${id}`);
+  }
 }

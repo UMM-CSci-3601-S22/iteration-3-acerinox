@@ -40,6 +40,7 @@ import { EditProductComponent } from './products/edit-product/edit-product.compo
 import { ProductFormComponent } from './products/product-form/product-form.component';
 import { AddProductToPantryComponent } from './products/product-list/add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './products/product-list/dialog-delete/dialog-delete.component';
+import { DeletePantryItemComponent } from './pantry/pantry-products-list/delete-pantry-item/delete-pantry-item.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -75,6 +76,7 @@ const MATERIAL_MODULES: any[] = [
     ProductFormComponent,
     AddProductToPantryComponent,
     DialogDeleteComponent,
+    DeletePantryItemComponent,
   ],
   imports: [
     BrowserModule,
