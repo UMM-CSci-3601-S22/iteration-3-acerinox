@@ -278,6 +278,23 @@ public class ProductControllerSpec {
     return product;
   }
 
+
+  /**
+   * A little helper method that assumes that the given context
+   * body contains a list of CategorySortItems, and extracts and returns
+   * that list.
+   *
+   * @param ctx the `Context` whose body is assumed to contain
+   *            a list of `CategorySortItem`.
+   * @return the list of `CategorySortItem` extracted from the given `Context`.
+   */
+  private CategorySortItem[] getGroupedItems(Context ctx) {
+    String result = ctx.resultString();
+    CategorySortItem[] items = javalinJackson.fromJsonString(result, CategorySortItem[].class);
+    return items;
+  }
+
+
   @Test
   public void canGetAllProducts() throws IOException {
     // Create our fake Javalin context
@@ -403,6 +420,26 @@ public class ProductControllerSpec {
   }
 
   @Test
+  public void groupProductsByCategory() {
+    Context ctx = mockContext("api/products/group");
+
+    productController.groupProductsByCategory(ctx);
+    CategorySortItem[] returnedItems = getGroupedItems(ctx);
+
+    //check that there are 5 different categories with items
+    assertEquals(5, returnedItems.length);
+
+    for (CategorySortItem item : returnedItems) {
+      //check that the count is equal to the number of products
+      assertEquals(item.count, item.products.size());
+      //check that each item has the correct category
+      for (Product p: item.products) {
+        assertEquals(item.category, p.category);
+      }
+    }
+  }
+
+  @Test
   public void addProduct() throws IOException {
 
     String testNewProduct = "{"
@@ -464,7 +501,7 @@ public class ProductControllerSpec {
 
     productController.deleteProduct(ctx);
 
-    assertEquals(HttpURLConnection.HTTP_GONE, mockRes.getStatus());
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
 
     // Product is no longer in the database
     assertEquals(0, db.getCollection("products").countDocuments(eq("_id", new ObjectId(testID))));

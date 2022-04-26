@@ -30,9 +30,9 @@ describe('Product List', () => {
 
     // All of the product list items should have the name we are filtering by
     cy.get('body').find('.conditional-product-list').next().get('.filtered-product-list-item')
-    .each($item => {
-      cy.wrap($item).get('.product-list-brand').should('contain.text', 'Renner');
-    });
+      .each($item => {
+        cy.wrap($item).get('.product-list-brand').should('contain.text', 'Renner');
+      });
   });
 
   it('Should select a store and check that it returned correct elements', () => {
@@ -62,7 +62,7 @@ describe('Product List', () => {
 
     // All of the product list items that show should have the store we are looking for
     page.getFilteredProductListItems().each($product => {
-      cy.wrap($product).find('.product-list-category').should('have.text', ' Miscellaneous ');
+      cy.wrap($product).should('contain.text', ' Miscellaneous ');
     });
   });
 
@@ -122,22 +122,15 @@ describe('Delete button on Products From Product List', () => {
     // Grab and delete first one, 'Kahlua'
     page.clickDeleteButton();
     cy.get('.mat-dialog-content')
-    .should('contain.text', 'Remove Kahlua from your products?Note: This action cannot be undone');
+      .should('contain.text', 'Remove Kahlua from your products?Note: This action cannot be undone');
   });
 
-  it('Should go to a product in an expansion tab and delete', () => {
-    // Filter products
-    page.selectCategory('dairy');
-
-    // Check that 'Aspic - Light' is the first product
-    page.getExpansionItemsByCategory('dairy').first().within(($product) => {
-      cy.wrap($product).find('.product-list-name').should('contain.text', ' Aspic - Light ');
-    });
+  it('Should go to a product in an expansion tab and read the dialog', () => {
 
     // Grab and click the delete button for the first one, 'Aspic - Light'
     page.clickExpansionDeleteButton('dairy');
     cy.get('.mat-dialog-content')
-    .should('contain.text', 'Remove Aspic - Light from your products?Note: This action cannot be undone');
+      .should('contain.text', 'Remove Aspic - Light from your products?Note: This action cannot be undone');
   });
 });
 
@@ -163,21 +156,46 @@ describe('Add button on Products to Pantry List', () => {
     // Grab and delete first one, 'Kahlua'
     page.clickAddButton();
     cy.get('.mat-dialog-title')
-    .should('contain.text', 'Add Kahlua to your Pantry');
+      .should('contain.text', 'Add Kahlua to your Pantry');
   });
 
   it('Should go to a product in an expansion tab and read the dialog', () => {
-    // Filter products
-    page.selectCategory('dairy');
 
-    // Check that 'Aspic - Light' is the first product
-    page.getExpansionItemsByCategory('dairy').first().within(($product) => {
-      cy.wrap($product).find('.product-list-name').should('contain.text', ' Aspic - Light ');
-    });
-
-    // Grab and click the delete button for the first one, 'Aspic - Light'
+    // Grab and click the add button for the first one, 'Aspic - Light'
     page.clickExpansionAddButton('dairy');
     cy.get('.mat-dialog-title')
-    .should('contain.text', 'Add Aspic - Light to your Pantry');
+      .should('contain.text', 'Add Aspic - Light to your Pantry');
   });
+});
+
+describe('Add Product to Pantry List', () => {
+
+  beforeEach(() => {
+    page.navigateTo();
+    cy.wait(1000);
+  });
+
+  it('should enter the purchase date and notes of a pantry item then click the button', () => {
+    page.clickExpansionAddButton('dairy');
+    page.enterPurchaseDate('2022-10-10');
+    page.enterNotes('This is a test');
+    page.clickDialogAddButton();
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully added to your pantry.');
+  });
+
+});
+
+describe('Delete from Product List', () => {
+
+  beforeEach(() => {
+    page.navigateTo();
+    cy.wait(1000);
+  });
+
+  it('should click the delete button on a product and confirm delete', () => {
+    page.clickExpansionDeleteButton('baked goods');
+    page.clickDialogDeleteButton();
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully deleted.');
+  });
+
 });

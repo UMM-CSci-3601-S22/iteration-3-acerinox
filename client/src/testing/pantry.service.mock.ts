@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { PantryService } from 'src/app/pantry/pantry.service';
-import { Product, ProductCategory } from '../app/products/product';
+import { Product } from '../app/products/product';
 import { PantryItem } from 'src/app/pantry/pantryItem';
 
 /**

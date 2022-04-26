@@ -1,0 +1,10 @@
+<div layout="column">
+  <mat-card id="print" class="shopping-list-print">
+    <div *ngFor="let storeGroup of this.list">
+      <h2 class="print-list-store-name">{{storeGroup.store}}</h2>
+      <div *ngFor="let slItem of storeGroup.products" class="print-list-store-items">
+        <p>{{slItem.productName}}</p>
+      </div>
+    </div>
+  </mat-card>
+</div>
