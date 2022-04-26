@@ -26,7 +26,7 @@
                       <ng-container *ngIf="column === 'remove'; then thenBlock else elseBlock"></ng-container>
                       <ng-template #thenBlock>
                         <button mat-mini-fab color="warn" matTooltip="Delete Pantry Item" matTooltipPosition="right"
-                          (click)="removePantryItem(this.element)" data-test="deleteProductButton">
+                          (click)="removePantryItem(this.element)" data-test="deleteItemButton">
                           <mat-icon aria-label="Delete Pantry Item">close</mat-icon>
                       </button>
                       </ng-template>

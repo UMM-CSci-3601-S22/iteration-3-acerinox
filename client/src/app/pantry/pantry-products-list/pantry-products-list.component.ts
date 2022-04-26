@@ -171,7 +171,7 @@ constructor(private pantryService: PantryService,
     this.router.navigate([pantryPageUrl]);
   }
 
-  //Pops up a dialog to delete a product from the product list
+  //Pops up a dialog to delete an item from the pantry
   /* istanbul ignore next */
   removePantryItem(givenItem: ComboItem): void {
     const dialogRef = this.dialog.open(DeletePantryItemComponent, {data: givenItem});
