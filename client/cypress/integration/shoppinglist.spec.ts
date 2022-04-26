@@ -55,10 +55,4 @@ describe('Print Shoppinglist', () => {
     page.getPrintShoppingList();
     cy.get('h2').first().should('contain.text', 'Other Store');
   });
-
-  it('Should click the print button and open print window', () => {
-    // No clue how to test the print window, can't focus it and it doesn't have url or anything
-    // so just clicking it and seeing on cypress watch that new window opens
-    page.getPrintButton().click();
-  });
 });

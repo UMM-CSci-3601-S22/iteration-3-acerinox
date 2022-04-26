@@ -50,7 +50,7 @@ export class ShoppinglistPage {
    * @param viewType Which view type to change to: "interactive" or "print".
    */
    changeView(viewType: 'interactive' | 'print') {
-    return cy.get(`[data-test=viewTypeGroup] #${viewType}-view-button`).click();
+    return cy.get(`[data-test=viewTypeGroup] #${viewType}-view-button`).trigger('click');
   }
 
   getPrintShoppingList() {
