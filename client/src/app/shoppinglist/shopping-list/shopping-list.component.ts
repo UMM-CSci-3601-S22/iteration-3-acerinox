@@ -14,7 +14,7 @@ export class ShoppingListComponent implements OnInit {
   @Output() public shoppingList: ShoppinglistStoreGroup[];
 
   // Page view, determines DOM elements displayed
-  viewType: 'interactive' | 'print' = 'interactive';
+  public viewType: 'interactive' | 'print' = 'interactive';
 
   getShoppinglistSub: Subscription;
 
