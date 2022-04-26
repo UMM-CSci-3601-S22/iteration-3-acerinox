@@ -180,12 +180,12 @@ constructor(private pantryService: PantryService,
         this.pantryService.deleteItem(result).subscribe(returnedProductId => {
           if(returnedProductId) {
             this.snackBar.open('Item successfully removed from your pantry.');
+            this.reloadComponent();
           }
           else {
             this.snackBar.open('Something went wrong.  The item was not removed from your pantry.');
           }
         });
       });
-      this.reloadComponent();
-  }
+    }
 }
