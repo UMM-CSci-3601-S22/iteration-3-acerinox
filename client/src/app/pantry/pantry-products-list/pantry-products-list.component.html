@@ -23,13 +23,16 @@
                     <th mat-header-cell *matHeaderCellDef class="capitalize"> {{column.replace('_', ' ').replace('N', '
                       N')}} </th>
                     <td *matCellDef="let element" mat-cell>
-                      <ng-container *ngIf="column === 'remove'; then thenBlock else elseBlock"></ng-container>
+                      <ng-container *ngIf="column === 'remove'; then thenBlock"></ng-container>
                       <ng-template #thenBlock>
                         <button mat-mini-fab color="warn" matTooltip="Delete Pantry Item" matTooltipPosition="right"
                           (click)="removePantryItem(this.element)" data-test="deleteItemButton">
                           <mat-icon aria-label="Delete Pantry Item">close</mat-icon>
-                      </button>
+                        </button>
                       </ng-template>
+                      <ng-template #elseBlock>{{element[column]}}</ng-template>
+                      <ng-container *ngIf="column === 'purchase_date'; then thenBlock else elseBlock"></ng-container>
+                      <ng-template #thenBlock>{{element | date : 'dd/MM/yyyy'}}</ng-template>
                       <ng-template #elseBlock>{{element[column]}}</ng-template>
                     </td>
                   </ng-container>

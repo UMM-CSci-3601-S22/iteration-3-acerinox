@@ -86,8 +86,8 @@ constructor(private pantryService: PantryService,
       this.matchingProducts = returnedPantryProducts;
       this.createComboItems();
       this.comboItems.sort((a, b) => {
-        const dateA = a.purchase_date.split('-').reverse().join('-');
-        const dateB = b.purchase_date.split('-').reverse().join('-');
+        const dateA = a.purchase_date;
+        const dateB = b.purchase_date;
         return dateA > dateB ? 1 : -1;
       });
       this.initializeCategoryMap();
@@ -96,7 +96,7 @@ constructor(private pantryService: PantryService,
       // the problem and display a message.
       console.error('We couldn\'t get the pantry list; the server might be down');
       this.snackBar.open(
-        'Problem contacting the server – try again',
+        'Problem contacting the server - try again',
         'OK',
         // The message will disappear after 3 seconds.
         { duration: 3000 });
@@ -114,7 +114,7 @@ constructor(private pantryService: PantryService,
       // the problem and display a message.
       console.error('We couldn\'t get the list of products; the server might be down');
       this.snackBar.open(
-        'Problem contacting the server – try again',
+        'Problem contacting the server - try again',
         'OK',
         // The message will disappear after 3 seconds.
         { duration: 3000 });
