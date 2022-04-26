@@ -170,6 +170,8 @@ public class PantryController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the pantry?");
     }
+    ctx.status(HttpCode.OK);
+    ctx.json(true);
   }
 
   /**
