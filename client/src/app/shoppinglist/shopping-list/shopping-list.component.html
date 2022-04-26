@@ -8,7 +8,11 @@
       <h1 style="font-size: 40px;" class="shoppinglist-title">My Shopping List</h1>
 
       <!-- Page View Toggle -->
-      <mat-button-toggle-group name="viewType" aria-label="Page View" data-test="viewTypeGroup">
+      <mat-button-toggle-group name="viewType"
+                              aria-label="Page View"
+                              data-test="viewTypeGroup"
+                              [(ngModel)]="viewType"
+                              >
         <mat-button-toggle value="interactive" class="shopping-list-view-interactive-button" id="interactive-view-button">
           Interactive View
         </mat-button-toggle>
