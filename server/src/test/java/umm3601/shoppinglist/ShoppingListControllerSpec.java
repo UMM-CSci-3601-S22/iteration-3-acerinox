@@ -266,13 +266,13 @@ public class ShoppingListControllerSpec {
     // MongoDB ID
     // for that item.
     assertNotEquals("", id);
-    assertEquals(1, db.getCollection("shoppinglist").countDocuments(eq("_id", new ObjectId(id))));
+    assertEquals(1, db.getCollection("shoppingList").countDocuments(eq("_id", new ObjectId(id))));
 
     // Verify that the product was added to the database with the correct ID
-    Document addedShoppingListItem = db.getCollection("shoppinglist").find(eq("_id", new ObjectId(id))).first();
+    Document addedShoppingListItem = db.getCollection("shoppingList").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedShoppingListItem);
     assertEquals(bananaProductId.toHexString(), addedShoppingListItem.getString("product"));
-    assertEquals(5, addedShoppingListItem.getString("count"));
+    assertEquals(5, addedShoppingListItem.getInteger("count"));
   }
 }
