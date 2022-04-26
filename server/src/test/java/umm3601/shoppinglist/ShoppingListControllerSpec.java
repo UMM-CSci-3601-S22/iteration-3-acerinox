@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import static com.mongodb.client.model.Filters.eq;
 import static java.util.Map.entry;
-import static com.mongodb.client.model.Filters.eq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;

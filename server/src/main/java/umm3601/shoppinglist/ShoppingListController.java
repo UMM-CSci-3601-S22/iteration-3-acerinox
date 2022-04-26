@@ -17,10 +17,8 @@ import org.bson.UuidRepresentation;
 import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
-import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
-import io.javalin.http.NotFoundResponse;
 import umm3601.product.Product;
 
 public class ShoppingListController {
