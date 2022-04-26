@@ -1,14 +1,11 @@
 package umm3601.shoppinglist;
 
 import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Filters.eq;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
@@ -17,6 +14,7 @@ import com.mongodb.client.model.Projections;
 
 import org.bson.Document;
 import org.bson.UuidRepresentation;
+import org.bson.types.ObjectId;
 import org.mongojack.JacksonMongoCollection;
 
 import io.javalin.http.BadRequestResponse;
@@ -107,7 +105,7 @@ public class ShoppingListController {
       ShoppingListItem newShoppingListItem = ctx.bodyValidator(ShoppingListItem.class)
           .check(item -> productExists(item.product), "error: product does not exist")
           .check(item -> ObjectId.isValid(item.product), "The product id is not a legal Mongo Object ID.")
-          .check(item -> item.count != null && item.notes >= baseCount,
+          .check(item -> item.count >= baseCount,
               "Shopping list item count cannot be 0")
           .get();
 

@@ -1,15 +1,20 @@
 package umm3601.shoppinglist;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import static com.mongodb.client.model.Filters.eq;
 import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static io.javalin.plugin.json.JsonMapperKt.JSON_MAPPER_KEY;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mockrunner.mock.web.MockHttpServletRequest;
 import com.mockrunner.mock.web.MockHttpServletResponse;
 
@@ -51,6 +56,7 @@ public class ShoppingListControllerSpec {
   private ObjectId appleEntryId;
   private ObjectId bananaEntryId;
   private ObjectId beansEntryId;
+  private ObjectId bananaProductId;
 
   // The client and database that will be used
   // for all the tests in this spec file.
@@ -102,7 +108,7 @@ public class ShoppingListControllerSpec {
 
     // Add test list for products to database
     List<Document> testProducts = new ArrayList<>();
-    ObjectId bananaProductId = new ObjectId();
+    bananaProductId = new ObjectId();
     testProducts.add(
         new Document()
             .append("_id", bananaProductId)
@@ -168,56 +174,53 @@ public class ShoppingListControllerSpec {
     List<Document> testShoppingListItems = new ArrayList<>();
     appleEntryId = new ObjectId();
     testShoppingListItems.add(
-      new Document()
-        .append("_id", appleEntryId)
-        .append("product", appleProductId)
-        .append("_count", 10)
-    );
+        new Document()
+            .append("_id", appleEntryId)
+            .append("product", appleProductId)
+            .append("_count", 10));
 
     beansEntryId = new ObjectId();
     testShoppingListItems.add(
         new Document()
             .append("_id", beansEntryId)
             .append("product", beansProductId)
-            .append("count", 20)
-    );
+            .append("count", 20));
 
     bananaEntryId = new ObjectId();
     testShoppingListItems.add(
         new Document()
             .append("_id", bananaEntryId)
             .append("product", bananaProductId)
-            .append("count", 20)
-    );
+            .append("count", 20));
 
     shoppingListDocuments.insertMany(testShoppingListItems);
 
     shoppingListController = new ShoppingListController(db);
   }
 
-    private Context mockContext(String path) {
-      return mockContext(path, Collections.emptyMap());
-    }
+  private Context mockContext(String path) {
+    return mockContext(path, Collections.emptyMap());
+  }
 
-    private Context mockContext(String path, Map<String, String> pathParams) {
-      return ContextUtil.init(
-          mockReq, mockRes,
-          path,
-          pathParams,
-          HandlerType.INVALID,
-          Map.ofEntries(
-              entry(JSON_MAPPER_KEY, javalinJackson),
-              entry(ContextUtil.maxRequestSizeKey,
-                  new JavalinConfig().maxRequestSize)));
-    }
+  private Context mockContext(String path, Map<String, String> pathParams) {
+    return ContextUtil.init(
+        mockReq, mockRes,
+        path,
+        pathParams,
+        HandlerType.INVALID,
+        Map.ofEntries(
+            entry(JSON_MAPPER_KEY, javalinJackson),
+            entry(ContextUtil.maxRequestSizeKey,
+                new JavalinConfig().maxRequestSize)));
+  }
 
-    private Document[] returnedShoppingListItems(Context ctx) {
-      String result = ctx.resultString();
-      Document[] shoppingListItems = javalinJackson.fromJsonString(result, Document[].class);
-      return shoppingListItems;
-    }
+  private Document[] returnedShoppingListItems(Context ctx) {
+    String result = ctx.resultString();
+    Document[] shoppingListItems = javalinJackson.fromJsonString(result, Document[].class);
+    return shoppingListItems;
+  }
 
-    @Test
+  @Test
   public void canGetAllShoppingListItems() throws IOException {
     // Create our fake Javalin context
     String path = "api/shoppinglist";
@@ -236,10 +239,10 @@ public class ShoppingListControllerSpec {
   }
 
   @Test
-  public void addItem() throws IOException {
+  public void addNewShoppingListItem() throws IOException {
 
     String testNewEntry = "{"
-        + "\"product\": \"" + bananaEntryId.toHexString() + "\","
+        + "\"product\": \"" + bananaProductId.toHexString() + "\","
         + "\"count\": 5"
         + "}";
 
@@ -250,13 +253,16 @@ public class ShoppingListControllerSpec {
 
     shoppingListController.addNewShoppingListItem(ctx);
     String result = ctx.resultString();
+
+    System.out.println(result);
     String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
 
     // Our status should be 201, i.e., our new shoppinglist item was successfully
     // created. This is a named constant in the class HttpURLConnection.
     assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
 
-    // Successfully adding the shopping list item should return the newly generated MongoDB ID
+    // Successfully adding the shopping list item should return the newly generated
+    // MongoDB ID
     // for that item.
     assertNotEquals("", id);
     assertEquals(1, db.getCollection("shoppinglist").countDocuments(eq("_id", new ObjectId(id))));
@@ -265,9 +271,7 @@ public class ShoppingListControllerSpec {
     Document addedShoppingListItem = db.getCollection("shoppinglist").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedShoppingListItem);
-    assertEquals(bananaEntryId.toHexString(), addedShoppingListItem.getString("product"));
+    assertEquals(bananaProductId.toHexString(), addedShoppingListItem.getString("product"));
     assertEquals(5, addedShoppingListItem.getString("count"));
   }
 }
-
-

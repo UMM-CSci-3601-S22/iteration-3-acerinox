@@ -102,6 +102,9 @@ public class Server {
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products/{id}", productController::addNewProduct);
 
+    // Add new shopping list item with info from JSON body of HTTP request
+    server.post("/api/shoppinglist", shoppingListController::addNewShoppingListItem);
+
     // Edit a product with a given id
     server.put("/api/products/{id}", productController::editProduct);
 
