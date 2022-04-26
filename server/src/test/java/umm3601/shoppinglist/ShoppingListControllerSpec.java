@@ -234,6 +234,40 @@ public class ShoppingListControllerSpec {
         db.getCollection("shoppingList").countDocuments(),
         returnedShoppingListItems.length);
   }
+
+  @Test
+  public void addItem() throws IOException {
+
+    String testNewEntry = "{"
+        + "\"product\": \"" + bananaEntryId.toHexString() + "\","
+        + "\"count\": 5"
+        + "}";
+
+    mockReq.setBodyContent(testNewEntry);
+    mockReq.setMethod("POST");
+
+    Context ctx = mockContext("api/shoppinglist");
+
+    shoppingListController.addNewShoppingListItem(ctx);
+    String result = ctx.resultString();
+    String id = javalinJackson.fromJsonString(result, ObjectNode.class).get("id").asText();
+
+    // Our status should be 201, i.e., our new shoppinglist item was successfully
+    // created. This is a named constant in the class HttpURLConnection.
+    assertEquals(HttpURLConnection.HTTP_CREATED, mockRes.getStatus());
+
+    // Successfully adding the shopping list item should return the newly generated MongoDB ID
+    // for that item.
+    assertNotEquals("", id);
+    assertEquals(1, db.getCollection("shoppinglist").countDocuments(eq("_id", new ObjectId(id))));
+
+    // Verify that the product was added to the database with the correct ID
+    Document addedShoppingListItem = db.getCollection("shoppinglist").find(eq("_id", new ObjectId(id))).first();
+
+    assertNotNull(addedShoppingListItem);
+    assertEquals(bananaEntryId.toHexString(), addedShoppingListItem.getString("product"));
+    assertEquals(5, addedShoppingListItem.getString("count"));
+  }
 }
 
 
