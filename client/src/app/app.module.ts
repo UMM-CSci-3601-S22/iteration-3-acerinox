@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgxPrintModule } from 'ngx-print';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,6 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -38,6 +41,10 @@ import { ProductCardComponent } from './products/product-card/product-card.compo
 import { PantryService } from './pantry/pantry.service';
 import { EditProductComponent } from './products/edit-product/edit-product.component';
 import { ProductFormComponent } from './products/product-form/product-form.component';
+import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-list.component';
+import { ShoppinglistService } from './shoppinglist/shoppinglist.service';
+import { ShoppinglistGroupComponent } from './shoppinglist/shoppinglist-group/shoppinglist-group.component';
+import { ShoppinglistPrintComponent } from './shoppinglist/shoppinglist-print/shoppinglist-print.component';
 import { AddProductToPantryComponent } from './products/product-list/add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './products/product-list/dialog-delete/dialog-delete.component';
 
@@ -60,7 +67,9 @@ const MATERIAL_MODULES: any[] = [
   MatSnackBarModule,
   MatPaginatorModule,
   MatDialogModule,
-  MatTableModule
+  MatTableModule,
+  MatTabsModule,
+  MatButtonToggleModule
 ];
 
 @NgModule({
@@ -73,6 +82,9 @@ const MATERIAL_MODULES: any[] = [
     ProductCardComponent,
     EditProductComponent,
     ProductFormComponent,
+    ShoppingListComponent,
+    ShoppinglistGroupComponent,
+    ShoppinglistPrintComponent,
     AddProductToPantryComponent,
     DialogDeleteComponent,
   ],
@@ -86,10 +98,12 @@ const MATERIAL_MODULES: any[] = [
     HttpClientModule,
     MATERIAL_MODULES,
     LayoutModule,
+    NgxPrintModule
   ],
   providers: [
     ProductService,
     PantryService,
+    ShoppinglistService,
     PantryProductsListComponent,
     ProductListComponent
   ],
