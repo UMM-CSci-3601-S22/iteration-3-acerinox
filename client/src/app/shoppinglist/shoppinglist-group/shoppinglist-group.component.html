@@ -3,10 +3,10 @@
     <mat-tab-group animationDuration="400ms" [color]="'accent'" dynamicHeight [backgroundColor]="'primary'" class="store-tabs-group">
       <div *ngFor="let storeGroup of this.list">
         <mat-tab label="{{storeGroup.store}}">
-          <mat-card>
+          <mat-card class="shopping-list-items-card">
             <div>
               <mat-selection-list>
-                <mat-list-option *ngFor="let slItem of storeGroup.products" checkboxPosition="before">
+                <mat-list-option *ngFor="let slItem of storeGroup.products" checkboxPosition="before" class="shopping-list-item-option">
                     {{slItem.productName}},
                     {{slItem.location}},
                     {{slItem.count}}

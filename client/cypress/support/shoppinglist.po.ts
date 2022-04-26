@@ -31,6 +31,20 @@ export class ShoppinglistPage {
   }
 
   /**
+   *  Get the store group list of products
+   *
+   * @param position the order of the store list (first store grouping of items is '0')
+   */
+  getStoreProductsPanel(position: number) {
+    return cy.get('.store-tabs-group .mat-tab-body[role="tabpanel"]').eq(position);
+  }
+
+  getStoreItems(position: number) {
+    this.getStoreProductsPanel(position);
+    return cy.get('.shopping-list-item-option');
+  }
+
+  /**
    * Change the shoppinglist view.
    *
    * @param viewType Which view type to change to: "interactive" or "print".
