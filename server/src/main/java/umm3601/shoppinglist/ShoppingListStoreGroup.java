@@ -3,7 +3,7 @@ import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
 @SuppressWarnings({ "VisibilityModifier", "MemberName" })
-public class ShoppingListItem {
+public class ShoppingStoreGroupItem {
   @ObjectId
   @Id
   // By default Java field names shouldn't start with underscores.
