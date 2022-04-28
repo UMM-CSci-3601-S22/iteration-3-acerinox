@@ -136,7 +136,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.pantryService.addPantryItem(result).subscribe(newPantryId => {
         if (newPantryId) {
-          this.snackBar.open('Product successfully added to your pantry.',
+          this.snackBar.open(`'${givenProduct.productName} successfully added to your pantry.'`,
             'OK', { duration: 5000 });
         }
         else {
@@ -152,9 +152,9 @@ export class ProductListComponent implements OnInit, OnDestroy {
   openShoppinglistAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToShoppinglistComponent, { data: givenProduct });
     dialogRef.afterClosed().subscribe(result => {
-      this.shoppinglistService.addShoppinglistItem(result).subscribe(newPantryId => {
-        if (newPantryId) {
-          this.snackBar.open('Product successfully added to your shoppinglist.',
+      this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
+        if (newShoppinglistId) {
+          this.snackBar.open(`'${givenProduct.productName} successfully added to your shoppinglist.'`,
             'OK', { duration: 5000 });
         }
         else {
