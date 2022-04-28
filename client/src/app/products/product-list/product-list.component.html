@@ -80,7 +80,7 @@
 
             <!-- Action Buttons on Each Product -->
             <div matLine>
-              <button mat-mini-fab (click)="openAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
+              <button mat-mini-fab (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
                 matTooltipPosition="left" data-test="addToPantryButton">
                 <mat-icon>add</mat-icon>
               </button>
@@ -127,8 +127,12 @@
                 </div>
                 <!-- Action Buttons on Each Product -->
                 <div matLine>
-                  <button mat-mini-fab (click)="openAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
+                  <button mat-mini-fab (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
                     matTooltipPosition="left" data-test="addToPantryButton">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
+                    matTooltipPosition="left" data-test="addToShoppinglistButton">
                     <mat-icon>add</mat-icon>
                   </button>
                   <button mat-mini-fab color="warn" matTooltip="Delete Product" matTooltipPosition="right"
