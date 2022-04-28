@@ -13,6 +13,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -372,7 +373,7 @@ public class PantryControllerSpec {
 
     String testNewEntry = "{"
         + "\"product\": \"" + bananaEntryId.toHexString() + "\","
-        + "\"purchase_date\": \"2023-01-27\","
+        + "\"purchase_date\": \"2023-01-27T21:20:34.474Z\","
         + "\"notes\": \"check on gerbils every 3 days\""
         + "}";
 
@@ -399,7 +400,12 @@ public class PantryControllerSpec {
 
     assertNotNull(addedProduct);
     assertEquals(bananaEntryId.toHexString(), addedProduct.getString("product"));
-    assertEquals("2023-01-27", addedProduct.getString("purchase_date"));
+    /**
+     * @var		mixed	assertEquals("2023-01-27"
+     *//**
+     * @var		mixed	addedProduct.get("purchase_date"))
+     */
+    assertEquals(new Date(2023 - 1900, 0, 27, 15, 20, 34), addedProduct.getDate("purchase_date"));
     assertEquals("check on gerbils every 3 days", addedProduct.getString("notes"));
   }
 

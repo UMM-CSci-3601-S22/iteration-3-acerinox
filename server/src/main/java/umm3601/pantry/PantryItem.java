@@ -1,5 +1,6 @@
 package umm3601.pantry;
 
+import java.util.Date;
 import org.mongojack.Id;
 import org.mongojack.ObjectId;
 
@@ -12,6 +13,6 @@ public class PantryItem {
   // name of the field as used by MongoDB.
   public String _id;
   public String product;
-  public String purchase_date;
+  public Date purchase_date;
   public String notes;
 }
