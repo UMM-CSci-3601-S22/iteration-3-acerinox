@@ -136,7 +136,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.pantryService.addPantryItem(result).subscribe(newPantryId => {
         if (newPantryId) {
-          this.snackBar.open(`'${givenProduct.productName} successfully added to your pantry.'`,
+          this.snackBar.open(`${givenProduct.productName} successfully added to your pantry.`,
             'OK', { duration: 5000 });
         }
         else {
@@ -154,7 +154,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
         if (newShoppinglistId) {
-          this.snackBar.open(`'${givenProduct.productName} successfully added to your shoppinglist.'`,
+          this.snackBar.open(`${givenProduct.productName} successfully added to your shoppinglist.`,
             'OK', { duration: 5000 });
         }
         else {
@@ -173,7 +173,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       result => {
         this.productService.deleteProduct(result).subscribe(returnedBoolean => {
           if (returnedBoolean) {
-            this.snackBar.open('Product successfully deleted.',
+            this.snackBar.open(`${givenProduct.productName} successfully deleted.`,
               'OK', { duration: 5000 });
           }
           else {

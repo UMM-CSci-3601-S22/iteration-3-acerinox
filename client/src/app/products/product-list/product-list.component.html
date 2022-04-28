@@ -88,6 +88,10 @@
               (click)="removeProduct(this.product)" data-test="deleteProductButton">
                 <mat-icon aria-label="Delete Product">close</mat-icon>
               </button>
+              <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
+                    matTooltipPosition="left" data-test="addToShoppinglistButton">
+                    <mat-icon>add</mat-icon>
+                  </button>
             </div>
           </mat-list-item>
           <mat-divider></mat-divider>
@@ -131,13 +135,13 @@
                     matTooltipPosition="left" data-test="addToPantryButton">
                     <mat-icon>add</mat-icon>
                   </button>
-                  <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
-                    matTooltipPosition="left" data-test="addToShoppinglistButton">
-                    <mat-icon>add</mat-icon>
-                  </button>
                   <button mat-mini-fab color="warn" matTooltip="Delete Product" matTooltipPosition="right"
                     (click)="removeProduct(this.product)" data-test="deleteProductButton">
                     <mat-icon aria-label="Delete Product">close</mat-icon>
+                  </button>
+                  <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
+                    matTooltipPosition="left" data-test="addToShoppinglistButton">
+                    <mat-icon>add</mat-icon>
                   </button>
                 </div>
               </mat-list-item>

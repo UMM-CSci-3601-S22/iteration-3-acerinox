@@ -98,12 +98,10 @@ public class ShoppingListController {
     @SuppressWarnings({ "MagicNumber" })
     public void addNewShoppingListItem(Context ctx) {
 
-      int baseCount = 1;
-
       ShoppingListItem newShoppingListItem = ctx.bodyValidator(ShoppingListItem.class)
           .check(item -> productExists(item.product), "error: product does not exist")
           .check(item -> ObjectId.isValid(item.product), "The product id is not a legal Mongo Object ID.")
-          .check(item -> item.count >= baseCount,
+          .check(item -> item.count >= 1,
               "Shopping list item count cannot be 0")
           .get();
 

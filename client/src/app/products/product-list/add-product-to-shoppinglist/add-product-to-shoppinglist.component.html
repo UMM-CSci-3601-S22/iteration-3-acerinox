@@ -1,1 +1,16 @@
-<p>add-product-to-shoppinglist works!</p>
+<h2 mat-dialog-title>Add {{data.productName | titlecase}} to your Shopping List</h2>
+
+<mat-dialog-content [formGroup]="addToShoppinglistForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Item count</mat-label>
+    <input matInput placeholder="1" data-test="countInput" formControlName="count" required>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button [mat-dialog-close]="submitForm()" mat-button type="button" color="primary" type="submit"
+    data-test="confirmAddProductToShoppinglistButton">
+    Add To Shopping List
+  </button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>
