@@ -46,7 +46,7 @@ public class ShoppingListController {
                 Aggregates.lookup("products", "product", "_id", "productData"),
                 Aggregates.unwind("$productData"),
                 Aggregates.group("$productData.store", Accumulators.addToSet("products",
-                    new Document("_id", "$productData._id")
+                    new Document("product", "$productData._id")
                         .append("productName", "$productData.productName")
                         .append("brand", "$productData.brand")
                         .append("location", "$productData.location")

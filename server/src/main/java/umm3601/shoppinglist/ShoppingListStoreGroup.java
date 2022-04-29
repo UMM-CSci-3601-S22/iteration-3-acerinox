@@ -1,6 +1,4 @@
 package umm3601.shoppinglist;
-import org.mongojack.Id;
-import org.mongojack.ObjectId;
 import java.util.ArrayList;
 
 @SuppressWarnings({ "VisibilityModifier", "MemberName" })
