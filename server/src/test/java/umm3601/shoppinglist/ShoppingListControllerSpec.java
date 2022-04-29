@@ -271,7 +271,7 @@ public class ShoppingListControllerSpec {
     Document addedShoppingListItem = db.getCollection("shoppingList").find(eq("_id", new ObjectId(id))).first();
 
     assertNotNull(addedShoppingListItem);
-    assertEquals(bananaProductId.toHexString(), addedShoppingListItem.getString("product"));
+    assertEquals(bananaProductId, addedShoppingListItem.get("product"));
     assertEquals(5, addedShoppingListItem.getInteger("count"));
   }
 }
