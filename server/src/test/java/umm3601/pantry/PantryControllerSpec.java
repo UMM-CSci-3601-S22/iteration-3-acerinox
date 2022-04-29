@@ -371,9 +371,11 @@ public class PantryControllerSpec {
   @Test
   public void addProduct() throws IOException {
 
+    Date today = new Date();
+
     String testNewEntry = "{"
         + "\"product\": \"" + bananaEntryId.toHexString() + "\","
-        + "\"purchase_date\": \"2023-01-27T21:20:34.474Z\","
+        + "\"purchase_date\": \"{: \"2022-04-28T21:20:34.474Z\"},"
         + "\"notes\": \"check on gerbils every 3 days\""
         + "}";
 
@@ -405,7 +407,7 @@ public class PantryControllerSpec {
      *//**
      * @var		mixed	addedProduct.get("purchase_date"))
      */
-    assertEquals(new Date(2023 - 1900, 0, 27, 15, 20, 34), addedProduct.getDate("purchase_date"));
+    assertEquals(today, addedProduct.getDate("purchase_date"));
     assertEquals("check on gerbils every 3 days", addedProduct.getString("notes"));
   }
 
