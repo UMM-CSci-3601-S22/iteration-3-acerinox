@@ -111,6 +111,7 @@ public class ProductController {
                             .append("brand", "$brand")
                             .append("description", "$description")
                             .append("image", "$image")
+                            .append("category", "$category")
                             .append("lifespan", "$lifespan")
                             .append("location", "$location")
                             .append("notes", "$notes")
@@ -122,7 +123,8 @@ public class ProductController {
                     Projections.fields(
                         Projections.computed("category", "$_id"),
                         Projections.include("count", "products"),
-                        Projections.excludeId()))),
+                        Projections.excludeId())),
+                Aggregates.sort(Sorts.ascending("_id"))),
             CategorySortItem.class)
         .into(new ArrayList<>());
 
@@ -204,6 +206,8 @@ public class ProductController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
+    ctx.status(HttpCode.OK);
+    ctx.json(true);
   }
 
   private Product validateProduct(Context ctx) {

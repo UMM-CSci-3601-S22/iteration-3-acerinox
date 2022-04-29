@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,14 +13,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Observable } from 'rxjs';
 import { MockProductService } from '../../../testing/product.service.mock';
 import { Product } from '../product';
 import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
+import { PantryService } from 'src/app/pantry/pantry.service';
+import { MockPantryService } from 'src/testing/pantry.service.mock';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
@@ -51,7 +51,8 @@ describe('ProductListComponent', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ProductListComponent],
-      providers: [{ provide: ProductService, useValue: new MockProductService() }]
+      providers: [{ provide: ProductService, useValue: new MockProductService() },
+         {provide: PantryService, useValue: new MockPantryService()}]
     });
   });
 
@@ -127,7 +128,9 @@ describe('Delete From ProductList', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ProductListComponent],
-      providers: [{ provide: ProductService, useValue: new MockProductService() }]
+      providers: [{ provide: ProductService, useValue: new MockProductService() },
+      {provide: PantryService, useValue: new MockPantryService()},
+      {provide: MAT_DIALOG_DATA, useValue: MockProductService.testProducts[0]}]
     });
   });
 
@@ -142,12 +145,5 @@ describe('Delete From ProductList', () => {
       fixture.detectChanges();
     });
   }));
-
-  it('should call openDeleteDialog, call removeProduct and delete the product', () => {
-    productList.openDeleteDialog('banana', 'banana_id');
-    fixture.detectChanges();
-    productList.removeProduct('banana_id');
-    expect(productList.serverFilteredProducts.length).toBe(2);
-  });
 
 });
