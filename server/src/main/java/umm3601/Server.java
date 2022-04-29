@@ -115,11 +115,10 @@ public class Server {
     // caught here so you'd know about them and could try to address
     // them.
 
-    /*
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });
-    */
+
 
   }
 }
