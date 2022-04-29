@@ -75,14 +75,14 @@ public class ShoppingListController {
     ctx.json(convertedOutput);
   }
 
-  private static ShoppingListItem convertQueryOutput(ResetShoppingListItem i) {
+  private static ShoppingListItem convertQueryOutput(ResetShoppingListItem item) {
     ShoppingListItem output = new ShoppingListItem();
-    output.product = new ObjectId(i._id).toHexString();
-    if (i.outputProducts.size() > 0) {
-      int inventoryDifference = i.threshold - i.outputProducts.get(0).count;
+    output.product = new ObjectId(item._id).toHexString();
+    if (item.outputProducts.size() > 0) {
+      int inventoryDifference = item.threshold - item.outputProducts.get(0).count;
       output.count = inventoryDifference > 0 ? inventoryDifference : 0;
     } else {
-      output.count = i.threshold;
+      output.count = item.threshold;
     }
     return output;
   }
