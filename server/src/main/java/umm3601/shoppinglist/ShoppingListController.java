@@ -67,6 +67,7 @@ public class ShoppingListController {
         ResetShoppingListItem.class).into(new ArrayList<>());
 
     List<ShoppingListItem> convertedOutput = output.stream().map(ShoppingListController::convertQueryOutput)
+        .filter(item -> item.count > 0)
         .collect(Collectors.toList());
 
     shoppingListCollection.drop();
