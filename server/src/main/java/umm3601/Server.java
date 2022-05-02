@@ -84,9 +84,6 @@ public class Server {
     // List shoppingListDisplayItems
     server.get("/api/shoppinglist", shoppingListController::getAllShoppingListDisplayItems);
 
-    // Just ShoppingListItems
-    server.get("/api/shoppinglist/base", shoppingListController::getShoppingList);
-
     //Generate the shoppingList based on the inventory and threshold
     server.put("api/shoppinglist", shoppingListController::resetShoppingList);
 

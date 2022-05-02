@@ -10,6 +10,7 @@ public class ShoppingListDisplayItem {
   // Here, though, we *have* to use the name `_id` to match the
   // name of the field as used by MongoDB.
   public String _id;
+  public String productId;
   public String productName;
   public String brand;
   public String location;
