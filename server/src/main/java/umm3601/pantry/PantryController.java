@@ -130,7 +130,7 @@ public class PantryController {
   }
 
   /**
-   * Get a JSON response with a list of all the products.
+   * Validate then add a received pantry item to the pantry collection.
    *
    * @param ctx a Javalin HTTP context
    */
@@ -170,6 +170,8 @@ public class PantryController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the pantry?");
     }
+    ctx.status(HttpCode.OK);
+    ctx.json(true);
   }
 
   /**

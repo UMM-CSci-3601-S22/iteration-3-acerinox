@@ -8,6 +8,8 @@ import { PantryItem } from '../pantryItem';
 import { PantryService } from '../pantry.service';
 import { ComboItem } from '../pantryItem';
 import { Router } from '@angular/router';
+import { DeletePantryItemComponent } from './delete-pantry-item/delete-pantry-item.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-pantry-products-list',
@@ -56,7 +58,7 @@ public categories: ProductCategory[] = [
 public categoryNameMap = new Map<ProductCategory, ComboItem[]>();
 
 // Columns displayed
-displayedColumns: string[] = ['productName', 'brand', 'purchase_date'];
+displayedColumns: string[] = ['productName', 'brand', 'purchase_date', 'remove'];
 expandedElement: PantryItem | null;
 
 /**
@@ -66,7 +68,10 @@ expandedElement: PantryItem | null;
  * @param pantryService the `PantryService` used to get products in the pantry
  * @param snackBar the `MatSnackBar` used to display feedback
  */
-constructor(private pantryService: PantryService, private snackBar: MatSnackBar, private router: Router) {
+constructor(private pantryService: PantryService,
+  private snackBar: MatSnackBar,
+  private router: Router,
+  private dialog: MatDialog) {
   // Nothing here – everything is in the injection parameters.
 }
 
@@ -158,4 +163,29 @@ constructor(private pantryService: PantryService, private snackBar: MatSnackBar,
       this.getPantrySub.unsubscribe();
     }
   }
+
+  reloadComponent() {
+    const pantryPageUrl = '';
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([pantryPageUrl]);
+  }
+
+  //Pops up a dialog to delete an item from the pantry
+  /* istanbul ignore next */
+  removePantryItem(givenItem: ComboItem): void {
+    const dialogRef = this.dialog.open(DeletePantryItemComponent, {data: givenItem});
+    dialogRef.afterClosed().subscribe(
+      result => {
+        this.pantryService.deleteItem(result).subscribe(returnedProductId => {
+          if(returnedProductId) {
+            this.snackBar.open('Item successfully removed from your pantry.');
+            this.reloadComponent();
+          }
+          else {
+            this.snackBar.open('Something went wrong.  The item was not removed from your pantry.');
+          }
+        });
+      });
+    }
 }
