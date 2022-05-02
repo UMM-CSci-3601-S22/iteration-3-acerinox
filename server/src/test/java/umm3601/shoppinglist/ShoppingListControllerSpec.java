@@ -226,7 +226,7 @@ public class ShoppingListControllerSpec {
     String path = "api/shoppinglist";
     Context ctx = mockContext(path);
 
-    shoppingListController.getAllShoppingListItems(ctx);
+    shoppingListController.getAllShoppingListDisplayItems(ctx);
     Document[] returnedShoppingListItems = returnedShoppingListItems(ctx);
 
     // The response status should be 200, i.e., our request

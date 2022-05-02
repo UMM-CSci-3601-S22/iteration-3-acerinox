@@ -39,7 +39,15 @@ public class ShoppingListController {
         UuidRepresentation.STANDARD);
   }
 
-  public void getAllShoppingListItems(Context ctx) {
+  public void getShoppingList(Context ctx) {
+    ArrayList<ShoppingListItem> shoppingList = shoppingListCollection
+      .find()
+      .into(new ArrayList<>());
+
+    ctx.json(shoppingList);
+  }
+
+  public void getAllShoppingListDisplayItems(Context ctx) {
     ArrayList<ShoppingListStoreGroup> returnedShoppingListItems = shoppingListCollection
         .aggregate(
             Arrays.asList(
