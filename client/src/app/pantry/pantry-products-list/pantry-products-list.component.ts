@@ -86,9 +86,9 @@ constructor(private pantryService: PantryService,
       this.matchingProducts = returnedPantryProducts;
       this.createComboItems();
       this.comboItems.sort((a, b) => {
-        const dateA = a.purchase_date;
-        const dateB = b.purchase_date;
-        return dateA > dateB ? 1 : -1;
+        let dateA = a.purchase_date;
+        let dateB = b.purchase_date;
+        return dateA.valueOf() > dateB.valueOf() ? 1 : -1;
       });
       this.initializeCategoryMap();
     }, err => {
@@ -179,11 +179,11 @@ constructor(private pantryService: PantryService,
       result => {
         this.pantryService.deleteItem(result).subscribe(returnedProductId => {
           if(returnedProductId) {
-            this.snackBar.open('Item successfully removed from your pantry.');
+            this.snackBar.open('Item successfully removed from your pantry.', 'OK', {duration: 5000});
             this.reloadComponent();
           }
           else {
-            this.snackBar.open('Something went wrong.  The item was not removed from your pantry.');
+            this.snackBar.open('Something went wrong.  The item was not removed from your pantry.', 'OK', {duration: 5000});
           }
         });
       });

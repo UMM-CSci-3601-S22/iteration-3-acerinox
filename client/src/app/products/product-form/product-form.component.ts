@@ -5,7 +5,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Product } from '../product';
 import { ProductService } from '../product.service';
 import { BehaviorSubject, filter, Subscription } from 'rxjs';
-
 export type FormMode = 'EDIT' | 'ADD';
 @Component({
   selector: 'app-product-form',
@@ -173,12 +172,14 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  //Right now only non-required fields can be edited.
   async submitForm(): Promise<void> {
     if (this.mode === 'ADD') {
       try {
         const newID = await this.productService.addProduct(this.productForm.value).toPromise();
         this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
-        this.router.navigate(['/products/', newID]);
+        this.router.navigate(['/products/' + newID]);
       } catch (e) {
         this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
           duration: 5000,
@@ -191,10 +192,28 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
           duration: 2000,
         });
-        this.router.navigate(['/products/', newProduct._id]);
+        this.router.navigate(['/products/' + newProduct._id]);
       } catch (e) {
         this.snackBar.open(ProductFormComponent.editMessageFail, 'OK');
       }
+    }
+  }
+
+  //Trying to do the same thing as the above method, but with subscribes instead of async
+  sendSubmit(): void {
+    if (this.mode === 'ADD') {
+      this.productService.addProduct(this.productForm.value).subscribe(returnedId => {
+        this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
+        this.router.navigate(['/products/' + returnedId]);
+      });
+    }
+    else if (this.mode === 'EDIT') {
+      this.productService.editProduct(this.id, this.productForm.value).subscribe(returnedProduct => {
+      this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
+        duration: 2000,
+      });
+      this.router.navigate(['/products/' + returnedProduct._id]);
+      });
     }
   }
 
