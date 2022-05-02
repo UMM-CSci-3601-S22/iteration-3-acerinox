@@ -11,6 +11,6 @@ public class ShoppingListItem {
   // name of the field as used by MongoDB.
   public String _id;
   @ObjectId
-  public String product;
+  public String productId;
   public int count;
 }
