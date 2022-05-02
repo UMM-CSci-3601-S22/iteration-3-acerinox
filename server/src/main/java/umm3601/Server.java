@@ -67,7 +67,7 @@ public class Server {
     // List products, filtered using query params
     server.get("/api/products", productController::getAllProducts);
 
-    server.get("/api/products/group", productController::groupProductsByCategory);
+    //server.get("/api/products/group", productController::groupProductsByCategory);
 
     // Get the specified product
     server.get("/api/products/{id}", productController::getProductByID);
@@ -102,6 +102,9 @@ public class Server {
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products/{id}", productController::addNewProduct);
 
+    // Add new shopping list item with info from JSON body of HTTP request
+    server.post("/api/shoppinglist", shoppingListController::addNewShoppingListItem);
+
     // Edit a product with a given id
     server.put("/api/products/{id}", productController::editProduct);
 
@@ -115,10 +118,10 @@ public class Server {
     // caught here so you'd know about them and could try to address
     // them.
 
-
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });
+
 
   }
 }

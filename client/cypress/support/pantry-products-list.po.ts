@@ -31,4 +31,14 @@ export class PantryProductsListPage {
     return cy.get('.' + category.replace(' ', '-') + '-expansion-panel .' + category.replace(' ', '-')
      + '-table tbody tr .cdk-column-purchase_date');
   }
+
+  clickRemoveButton(category: string) {
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel').click().get('.' + category.replace(' ', '-') +
+    '-table' + ' tbody tr .cdk-column-remove [data-test=deleteItemButton]').first().click();
+  }
+
+  clickDeleteButton() {
+    return cy.get('[data-test=dialogDelete]').click();
+  }
+
 }

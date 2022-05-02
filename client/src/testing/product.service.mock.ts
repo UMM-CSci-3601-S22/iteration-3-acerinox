@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/naming-convention */
 
@@ -60,7 +61,6 @@ export class MockProductService extends ProductService {
 
   static testID = 'test_id';
 
-  deletedProduct: Product;
 
   constructor() {
     super(null);
@@ -82,11 +82,15 @@ export class MockProductService extends ProductService {
     }
   }
 
-  override deleteProduct(id: string): Observable<Product> {
-    if (id === MockProductService.testProducts[0]._id) { this.deletedProduct = MockProductService.testProducts[0]; }
-    if (id === MockProductService.testProducts[1]._id) { this.deletedProduct = MockProductService.testProducts[1]; }
-    if (id === MockProductService.testProducts[2]._id) { this.deletedProduct = MockProductService.testProducts[2]; }
-    return of(this.deletedProduct);
+  override deleteProduct(id: string): Observable<boolean> {
+    for(let i = 0; i < MockProductService.testProducts.length; i++) {
+      if (id !== MockProductService.testProducts[i]._id) {return new Observable<false>();}
+    }
+    for(let j = 0; j < MockProductService.testProducts.length; j++) {
+      if (id === MockProductService.testProducts[j]._id) { MockProductService.testProducts.splice(j,1);}
+
+    }
+    return new Observable<true>();
   }
 
   override addProduct(newProduct: Product): Observable<string> {

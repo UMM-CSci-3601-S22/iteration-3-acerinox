@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockPantryService } from 'src/testing/pantry.service.mock';
 import { PantryService } from '../pantry.service';
+import { MatDialogModule, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 
 import { PantryProductsListComponent } from './pantry-products-list.component';
 
@@ -38,6 +40,7 @@ const COMMON_IMPORTS: any[] = [
   MatIconModule,
   BrowserAnimationsModule,
   RouterTestingModule,
+  MatDialogModule
 ];
 
 describe('PantryProductsListComponent', () => {
@@ -48,7 +51,8 @@ describe('PantryProductsListComponent', () => {
     TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [PantryProductsListComponent],
-      providers: [{ provide: PantryService, useValue: new MockPantryService() }]
+      providers: [{ provide: PantryService, useValue: new MockPantryService() },
+        {provide: MAT_DIALOG_DATA, useValue: MockPantryService.testPantryItems[0]}]
     });
   });
 

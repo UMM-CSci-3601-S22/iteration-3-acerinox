@@ -1,6 +1,5 @@
 export interface Product {
   _id: string;
-  // eslint-disable-next-line @typescript-eslint/naming-convention
   productName: string; // Client filter
   description?: string; // Client filter
   brand: string; // client filter
