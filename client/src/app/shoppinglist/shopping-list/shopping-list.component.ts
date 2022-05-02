@@ -1,4 +1,5 @@
-import { Component, OnInit, Output } from '@angular/core';
+
+import { Component, OnInit, Output, EventEmitter, } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 import { ShoppinglistService } from '../shoppinglist.service';
 import { Subscription } from 'rxjs';
@@ -9,9 +10,11 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./shopping-list.component.scss']
 })
 export class ShoppingListComponent implements OnInit {
+  // Page title, pass to top bar in app-component
+  @Output() pageTitle = new EventEmitter<string>();
 
   // Stored shoppinglist, sent to child components through input/output
-  @Output() public shoppingList: ShoppinglistStoreGroup[];
+  @Output() public list: ShoppinglistStoreGroup[];
 
   // Page view, determines DOM elements displayed
   public viewType: 'interactive' | 'print' = 'interactive';
@@ -20,11 +23,17 @@ export class ShoppingListComponent implements OnInit {
 
   constructor(private shoppinglistService: ShoppinglistService) {}
 
+
+  initPageTitle(value: string) {
+    this.pageTitle.emit(value);
+  }
+
   public getShoppinglistFromServer(): void {
     this.unsub();
     this.getShoppinglistSub = this.shoppinglistService.getShoppinglist()
       .subscribe(returnedShoppinglist => {
-        this.shoppingList = returnedShoppinglist;
+        this.list = returnedShoppinglist;
+        console.log(returnedShoppinglist);
       }, err => {
         console.log(err);
       });
@@ -38,5 +47,6 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getShoppinglistFromServer();
+    this.initPageTitle('Shopping List');
   }
 }
