@@ -10,7 +10,6 @@ import { filter } from 'rxjs';
 })
 export class AppComponent implements OnInit {
 
-  @Input()
   public title: string;
 
   constructor(private router: Router,
