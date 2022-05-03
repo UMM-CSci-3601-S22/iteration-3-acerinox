@@ -162,18 +162,18 @@ describe ('Add button on Products to Pantry List', () => {
   it('Should click the add to shoppinglist button for the first product from the filtered list and read the dialog popup', () => {
 
     // Filter products
-    page.selectCategory('frozen foods');
-    cy.get('#product-name-input').type('Kahlua');
+    page.selectCategory('baking supplies');
+    cy.get('#product-name-input').type('Almon');
 
     // Check that 'Kahlua' is the first product
     page.getFilteredProductListItems().first().within(($product) => {
-      cy.wrap($product).find('.product-list-name').should('contain.text', ' Kahlua ');
+      cy.wrap($product).find('.product-list-name').should('contain.text', ' Almon ');
     });
 
     // Grab and delete first one, 'Kahlua'
     page.clickAddShoppingButton();
     cy.get('.mat-dialog-title')
-      .should('contain.text', 'Add Kahlua to your Shopping List');
+      .should('contain.text', 'Add Almon Paste, 8 Oz to your Shopping List');
   });
 
   it('Should go to a product in an expansion tab, click add to pantry, and read the dialog', () => {
@@ -189,7 +189,7 @@ describe ('Add button on Products to Pantry List', () => {
     // Grab and click the add button for the first one, 'Aspic - Light'
     page.clickExpansionAddShoppingButton('dairy');
     cy.get('.mat-dialog-title')
-    .should('contain.text', 'Add Aspic - Light to your Shopping List');
+    .should('contain.text', 'Add Whole Milk, 1/2 Gal to your Shopping List');
   });
 });
 
@@ -204,12 +204,12 @@ describe ('Add Product to Pantry List', () => {
     page.clickExpansionAddButton('dairy');
     page.enterNotes('This is a test');
     page.clickDialogAddButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Aspic - Light successfully added to your pantry.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Whole Milk, 1/2 gal successfully added to your pantry.');
   });
 
 });
 
-describe('Add Product to Shopping List', () => {
+describe ('Add Product to Shopping List', () => {
 
   beforeEach(() => {
     page.navigateTo();
@@ -220,7 +220,7 @@ describe('Add Product to Shopping List', () => {
     page.clickExpansionAddShoppingButton('dairy');
     page.enterCount('1');
     page.clickDialogAddShoppingButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Aspic - Light x1 successfully added to your Shopping List.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Whole Milk, 1/2 gal x1 successfully added to your Shopping List.');
   });
 
 });
@@ -235,7 +235,7 @@ describe ('Delete from Product List', () => {
   it('should click the delete button on a product and confirm delete', () => {
     page.clickExpansionDeleteButton('staples');
     page.clickDialogDeleteButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Bar - Granola Trail Mix Fruit Nut successfully deleted.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Chicken Instant Buillion Cubes, 92 g successfully deleted.');
   });
 
 });
