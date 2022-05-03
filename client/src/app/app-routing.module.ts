@@ -13,10 +13,10 @@ import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-lis
 const routes: Routes = [
   {path: '', component: PantryProductsListComponent, data: {title: 'Handy Pantry'}},
   {path: 'products', component: ProductListComponent, data: {title: 'Products List'}},
-  {path: 'products/new', component: AddProductComponent, data: {title: 'Products List'}},
-  {path: 'products/edit/:id', component: EditProductComponent, data: {title: 'Products List'}},
-  {path: 'products/:id', component: SingleProductPageComponent, data: {title: 'Products List'}},
-  {path: 'shoppinglist', component: ShoppingListComponent, data: {title: 'Products List'}}
+  {path: 'products/new', component: AddProductComponent, data: {title: 'Add Product'}},
+  {path: 'products/edit/:id', component: EditProductComponent, data: {title: 'Edit Product'}},
+  {path: 'products/:id', component: SingleProductPageComponent, data: {title: 'Product Page'}},
+  {path: 'shoppinglist', component: ShoppingListComponent, data: {title: 'Shopping List'}}
 ];
 
 @NgModule({
