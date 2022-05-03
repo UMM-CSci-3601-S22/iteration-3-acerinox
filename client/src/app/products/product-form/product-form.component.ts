@@ -58,6 +58,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
       { type: 'maxlength', message: 'Product store must be at less than 100 characters' }
     ],
     location: [
+      { type: 'required', message: 'Must provide a location'},
       { type: 'minlength', message: 'Product location must be at least 1 character' },
       { type: 'maxlength', message: 'Product location must be at less than 100 characters' }
     ],
@@ -178,7 +179,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     if (this.mode === 'ADD') {
       try {
         const newID = await this.productService.addProduct(this.productForm.value).toPromise();
-        this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`);
+        this.snackBar.open(`${ProductFormComponent.addMessageSuccess}: ${this.productForm.value.productName}`, 'OK', {duration: 5000});
         this.router.navigate(['/products/' + newID]);
       } catch (e) {
         this.snackBar.open(ProductFormComponent.addMessageFail, 'OK', {
@@ -189,12 +190,12 @@ export class ProductFormComponent implements OnInit, OnDestroy {
     else if (this.mode === 'EDIT') {
       try {
         const newProduct = await this.productService.editProduct(this.id, this.productForm.value).toPromise();
-        this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, null, {
-          duration: 2000,
+        this.snackBar.open(`${ProductFormComponent.editMessageSuccess}: ${this.productForm.value.productName}`, 'OK', {
+          duration: 5000,
         });
         this.router.navigate(['/products/' + newProduct._id]);
       } catch (e) {
-        this.snackBar.open(ProductFormComponent.editMessageFail, 'OK');
+        this.snackBar.open(ProductFormComponent.editMessageFail, 'OK', {duration: 5000});
       }
     }
   }

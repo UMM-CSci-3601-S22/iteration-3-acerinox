@@ -78,7 +78,7 @@
         <mat-form-field>
           <mat-label>Product Location</mat-label>
           <input matInput placeholder="Product Location" formControlName="location"
-                  data-test="productLocationInput">
+                  required data-test="productLocationInput">
           <mat-error *ngFor="let validation of productValidationMessages.location">
             <mat-error class="error-message" data-test="locationError"
                       *ngIf="productForm.get('location').hasError(validation.type) && (productForm.get('location').dirty || productForm.get('location').touched)">
@@ -144,7 +144,7 @@
             type="button"
             color="primary"
             [disabled]="!productForm.valid"
-            (click)="this.sendSubmit()"
+            (click)="this.submitForm()"
             data-test="confirmProductButton"
           >
           {{ this.mode }} Product

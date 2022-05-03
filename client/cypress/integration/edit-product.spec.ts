@@ -32,7 +32,7 @@ const testProductEditData: Product = {
     image: 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
   };
 
-describe .only('Edit Product', () => {
+describe ('Edit Product', () => {
   const page = new ProductFormPage();
 
   beforeEach(() => {
