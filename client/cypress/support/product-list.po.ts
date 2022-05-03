@@ -93,6 +93,26 @@ export class ProductListPage {
       });
   }
 
+  clickAddShoppingButton() {
+    return this.getFilteredProductListItems()
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=addToShoppinglistButton]')
+          .click();
+      });
+  }
+
+  clickExpansionAddShoppingButton(category: string) {
+    return cy.get('.' + category.replace(' ', '-') + '-expansion-panel')
+      .click()
+      .get('.' + category.replace(' ', '-') + '-nav-list')
+      .first()
+      .within(($product) => {
+        cy.get('[data-test=addToShoppinglistButton]')
+          .click();
+      });
+  }
+
   enterPurchaseDate(purchaseDate: string) {
     return cy.get('[data-test=date-picker-button]').type(purchaseDate);
   }
@@ -101,8 +121,16 @@ export class ProductListPage {
     return cy.get('[data-test=notesInput]').type(notes);
   }
 
+  enterCount(notes: string) {
+    return cy.get('[data-test=countInput]').type(notes);
+  }
+
   clickDialogAddButton() {
     return cy.get('[data-test=confirmAddProductToPantryButton]').click();
+  }
+
+  clickDialogAddShoppingButton() {
+    return cy.get('[data-test=confirmAddProductToShoppinglistButton]').click();
   }
 
   clickDialogDeleteButton() {

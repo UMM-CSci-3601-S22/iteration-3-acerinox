@@ -81,7 +81,7 @@ export class MockProductService extends ProductService {
       return of(null);
     }
   }
-
+/*
   override deleteProduct(id: string): Observable<boolean> {
     for(let i = 0; i < MockProductService.testProducts.length; i++) {
       if (id !== MockProductService.testProducts[i]._id) {return new Observable<false>();}
@@ -92,7 +92,7 @@ export class MockProductService extends ProductService {
     }
     return new Observable<true>();
   }
-
+ */
   override addProduct(newProduct: Product): Observable<string> {
     return of(MockProductService.testID);
   }

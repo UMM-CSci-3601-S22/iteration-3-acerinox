@@ -118,7 +118,7 @@ public class PantryController {
   }
 
   /**
-   * Get a JSON response with a list of all the products.
+   * Validate then add a received pantry item to the pantry collection.
    *
    * @param ctx a Javalin HTTP context
    */

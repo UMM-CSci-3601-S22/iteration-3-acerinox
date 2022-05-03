@@ -81,8 +81,8 @@ public class Server {
     // Get the specified pantry item
     server.get("/api/pantry/{id}", pantryController::getPantryItemByID);
 
-    // List shoppingListItems
-    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
+    // List shoppingListDisplayItems
+    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListDisplayItems);
 
     //Generate the shoppingList based on the inventory and threshold
     server.put("/api/shoppinglist", shoppingListController::resetShoppingList);
@@ -102,6 +102,9 @@ public class Server {
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products/{id}", productController::addNewProduct);
 
+    // Add new shopping list item with info from JSON body of HTTP request
+    server.post("/api/shoppinglist", shoppingListController::addNewShoppingListItem);
+
     // Edit a product with a given id
     server.put("/api/products/{id}", productController::editProduct);
 
@@ -115,10 +118,10 @@ public class Server {
     // caught here so you'd know about them and could try to address
     // them.
 
-
     server.exception(Exception.class, (e, ctx) -> {
       throw new InternalServerErrorResponse(e.toString());
     });
+
 
   }
 }
