@@ -81,6 +81,13 @@ export class MockProductService extends ProductService {
       return of(null);
     }
   }
+/*
+  override deleteProduct(id: string): Observable<boolean> {
+    for(let i = 0; i < MockProductService.testProducts.length; i++) {
+      if (id !== MockProductService.testProducts[i]._id) {return new Observable<false>();}
+    }
+    for(let j = 0; j < MockProductService.testProducts.length; j++) {
+      if (id === MockProductService.testProducts[j]._id) { MockProductService.testProducts.splice(j,1);}
 
   override deleteProduct(id: string): Observable<boolean> {
     for(let i = 0; i < MockProductService.testProducts.length; i++) {
@@ -92,7 +99,7 @@ export class MockProductService extends ProductService {
     }
     return new Observable<true>();
   }
-
+ */
   override addProduct(newProduct: Product): Observable<string> {
     return of(MockProductService.testID);
   }

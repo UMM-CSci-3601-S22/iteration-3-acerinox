@@ -1,4 +1,3 @@
-import { before } from 'mocha';
 import { ShoppinglistPage } from '../support/shoppinglist.po';
 
 const page = new ShoppinglistPage();

@@ -22,6 +22,8 @@ import { ProductListComponent } from './product-list.component';
 import { ProductService } from '../product.service';
 import { PantryService } from 'src/app/pantry/pantry.service';
 import { MockPantryService } from 'src/testing/pantry.service.mock';
+import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
+import { MockShoppingListService } from 'src/testing/shopping-list.service.mock';
 
 const COMMON_IMPORTS: any[] = [
   FormsModule,
@@ -52,7 +54,8 @@ describe('ProductListComponent', () => {
       imports: [COMMON_IMPORTS],
       declarations: [ProductListComponent],
       providers: [{ provide: ProductService, useValue: new MockProductService() },
-         {provide: PantryService, useValue: new MockPantryService()}]
+         { provide: PantryService, useValue: new MockPantryService() },
+        { provide: ShoppinglistService, useValue: new MockShoppingListService() }]
     });
   });
 
@@ -145,5 +148,8 @@ describe('Delete From ProductList', () => {
       fixture.detectChanges();
     });
   }));
-
+/*
+  it('should delete an item from the products list', () => {
+  });
+ */
 });

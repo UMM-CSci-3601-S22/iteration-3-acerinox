@@ -1,15 +1,15 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, OnInit, Output, OnDestroy, } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 import { ShoppinglistService } from '../shoppinglist.service';
 import { Subscription } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, OnDestroy {
 
   // Stored shoppinglist, sent to child components through input/output
   @Output() public shoppingList: ShoppinglistStoreGroup[];
