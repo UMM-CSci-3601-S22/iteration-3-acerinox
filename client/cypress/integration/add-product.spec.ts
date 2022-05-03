@@ -56,7 +56,6 @@ describe('Add Product', () => {
     cy.get('.product-card-category').should('have.text', testProductToAdd.category);
     cy.get('.product-card-description').should('have.text', testProductToAdd.description);
     cy.get('.product-card-notes').should('have.text', testProductToAdd.notes);
-    cy.get('.product-card-lifespan').should('have.text', testProductToAdd.lifespan);
     cy.get('.product-card-threshold').should('have.text', testProductToAdd.threshold);
     });
   });
