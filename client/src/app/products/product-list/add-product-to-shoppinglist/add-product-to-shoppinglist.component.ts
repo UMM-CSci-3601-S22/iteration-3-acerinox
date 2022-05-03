@@ -16,7 +16,7 @@ export class AddProductToShoppinglistComponent implements OnInit {
   addToShoppinglistForm: FormGroup;
   newShoppinglistItem: ShoppinglistDatabaseItem;
 
-
+/* istanbul ignore next */
   addPantryValidationMessages = {
     count: [
       { type: 'required', message: 'Item count is required'},
@@ -26,12 +26,12 @@ export class AddProductToShoppinglistComponent implements OnInit {
     ]
   };
 
-
+/* istanbul ignore next */
   constructor(private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddProductToShoppinglistComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product) {
   }
-
+/* istanbul ignore next */
   createForms() {
     this.addToShoppinglistForm = this.fb.group({
       product: this.data._id,
@@ -44,15 +44,15 @@ export class AddProductToShoppinglistComponent implements OnInit {
       ])),
     });
   }
-
+/* istanbul ignore next */
   ngOnInit(): void {
     this.createForms();
   }
-
+/* istanbul ignore next */
   onNoClick(): void {
     this.dialogRef.close();
   }
-
+/* istanbul ignore next */
   submitForm() {
     return this.addToShoppinglistForm.value;
   }
