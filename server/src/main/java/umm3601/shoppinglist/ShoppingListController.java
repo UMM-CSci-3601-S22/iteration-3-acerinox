@@ -44,6 +44,7 @@ public class ShoppingListController {
         Product.class,
         UuidRepresentation.STANDARD);
   }
+
   public void getAllShoppingListDisplayItems(Context ctx) {
     ArrayList<ShoppingListStoreGroup> returnedShoppingListItems = shoppingListCollection
         .aggregate(
@@ -52,7 +53,7 @@ public class ShoppingListController {
                 Aggregates.unwind("$productData"),
                 Aggregates.group("$productData.store", Accumulators.addToSet("products",
                     new Document("_id", "$_id")
-                        .append("productId", "$productData._id")
+                        .append("product", "$productData._id")
                         .append("productName", "$productData.productName")
                         .append("brand", "$productData.brand")
                         .append("location", "$productData.location")
@@ -67,6 +68,7 @@ public class ShoppingListController {
 
     ctx.json(returnedShoppingListItems);
   }
+
   public void resetShoppingList(Context ctx) {
 
     List<Variable<String>> let = new ArrayList<>(
@@ -112,7 +114,8 @@ public class ShoppingListController {
     }
     return output;
   }
-    /**
+
+  /**
    * Checks if the given entry exists with a given id. if no such entry exists
    * returns false. Returns true for one or more entry with a matching
    * id.
@@ -128,6 +131,11 @@ public class ShoppingListController {
     } catch (IllegalArgumentException e) {
       return false;
     }
+    if (product == null) {
+      return false;
+    }
+    return true;
+  }
 
 
   /**
@@ -135,12 +143,12 @@ public class ShoppingListController {
    *
    * @param ctx a Javalin HTTP context
    */
-  @SuppressWarnings({ "MagicNumber" })
+
   public void addNewShoppingListItem(Context ctx) {
 
     ShoppingListItem newShoppingListItem = ctx.bodyValidator(ShoppingListItem.class)
-        .check(item -> productExists(item.productId), "error: product does not exist")
-        .check(item -> ObjectId.isValid(item.productId), "The product id is not a legal Mongo Object ID.")
+        .check(item -> productExists(item.product), "error: product does not exist")
+        .check(item -> ObjectId.isValid(item.product), "The product id is not a legal Mongo Object ID.")
         .check(item -> item.count >= 1,
             "Shopping list item count cannot be 0")
         .get();
