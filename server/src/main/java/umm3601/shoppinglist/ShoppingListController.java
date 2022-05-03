@@ -22,6 +22,7 @@ import org.bson.conversions.Bson;
 import org.bson.UuidRepresentation;
 import org.mongojack.JacksonMongoCollection;
 
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 import umm3601.product.Product;
@@ -161,5 +162,19 @@ public class ShoppingListController {
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newShoppingListItem._id));
+  }
+
+  public void productInShoppingList(Context ctx) {
+    Boolean exists;
+    String productId = ctx.pathParam("id");
+
+    try {
+      if (productCollection.find(eq("_id", new ObjectId(productId))).first() == null) exists = false;
+      else exists = true;
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");
+    }
+    ctx.json(Map.of("exists", exists));
+
   }
 }

@@ -84,6 +84,9 @@ public class Server {
     // List shoppingListDisplayItems
     server.get("/api/shoppinglist", shoppingListController::getAllShoppingListDisplayItems);
 
+    // See if product is in shoppinglist or not, boolean in request body
+    server.get("/api/shoppinglist/{id}", shoppingListController::productInShoppingList);
+
     //Generate the shoppingList based on the inventory and threshold
     server.put("api/shoppinglist", shoppingListController::resetShoppingList);
 
