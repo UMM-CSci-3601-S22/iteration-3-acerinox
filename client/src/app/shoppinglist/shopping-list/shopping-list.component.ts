@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class ShoppingListComponent implements OnInit, OnDestroy {
 
   // Stored shoppinglist, sent to child components through input/output
-  @Output() public list: ShoppinglistStoreGroup[];
+  @Output() public shoppingList: ShoppinglistStoreGroup[];
 
   // Page view, determines DOM elements displayed
   public viewType: 'interactive' | 'print' = 'interactive';
@@ -19,11 +19,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   getShoppinglistSub: Subscription;
 
   constructor(private shoppinglistService: ShoppinglistService) {}
-
-
-  initPageTitle(value: string) {
-    this.pageTitle.emit(value);
-  }
 
   public getShoppinglistFromServer(): void {
     this.unsub();
@@ -44,7 +39,6 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getShoppinglistFromServer();
-    this.initPageTitle('Shopping List');
   }
 
   ngOnDestroy(): void {

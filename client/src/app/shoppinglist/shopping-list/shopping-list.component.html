@@ -42,7 +42,7 @@
 
       <!-- Interactive view: Add/delete items, increment item amount etc. -->
       <div *ngSwitchCase="'interactive'">
-        <app-shoppinglist-group [list]="list"></app-shoppinglist-group>
+        <app-shoppinglist-group [list]="shoppingList"></app-shoppinglist-group>
         <div>
           <button mat-button>
             Remove Items From Shopping List
@@ -52,7 +52,7 @@
 
       <!-- Print view: Minimal style list and print button -->
       <div *ngSwitchCase="'print'">
-        <app-shoppinglist-print [list]="list"></app-shoppinglist-print>
+        <app-shoppinglist-print [list]="shoppingList"></app-shoppinglist-print>
       </div>
     </div>
 
