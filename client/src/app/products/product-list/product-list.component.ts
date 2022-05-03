@@ -154,11 +154,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe(result => {
       this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
         if (newShoppinglistId) {
-          this.snackBar.open(`${givenProduct.productName} successfully added to your shoppinglist.`,
+          this.snackBar.open(`${givenProduct.productName} x${result.count} successfully added to your Shopping List.`,
             'OK', { duration: 5000 });
         }
         else {
-          this.snackBar.open('Something went wrong.  The product was not added to the shoppinglist.',
+          this.snackBar.open('Something went wrong.  The product was not added to the Shopping List.',
             'OK', { duration: 5000 });
         }
       });
