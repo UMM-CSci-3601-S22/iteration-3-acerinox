@@ -10,7 +10,10 @@ describe('ShoppinglistService', () => {
       store: 'firstStore',
       products: [
         {
-          productName: 'firstProduct',
+          _id: 'firstId',
+          productId: 'firstProductId',
+          brand: 'firstBrand',
+          productName: 'firstProductName',
           location: 'firstAisle',
           count: 1
         }
@@ -20,7 +23,10 @@ describe('ShoppinglistService', () => {
       store: 'secondStore',
       products: [
         {
-          productName: 'secondProduct',
+          _id: 'secondId',
+          productId: 'secondProductId',
+          brand: 'secondBrand',
+          productName: 'secondProductName',
           location: 'secondAisle',
           count: 2
         }
@@ -30,7 +36,10 @@ describe('ShoppinglistService', () => {
       store: 'thirdStore',
       products: [
         {
-          productName: 'thirdProduct',
+          _id: 'thirdId',
+          productId: 'thirdProductId',
+          brand: 'thirdBrand',
+          productName: 'thirdProductName',
           location: 'thirdAisle',
           count: 3
         }

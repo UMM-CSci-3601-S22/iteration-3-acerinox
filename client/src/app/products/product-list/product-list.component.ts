@@ -9,6 +9,8 @@ import { Subscription } from 'rxjs';
 import { PantryService } from 'src/app/pantry/pantry.service';
 import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
+import { AddProductToShoppinglistComponent } from './add-product-to-shoppinglist/add-product-to-shoppinglist.component';
+import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
 
 
 @Component({
@@ -68,7 +70,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   public categoryNameMap = new Map<ProductCategory, Product[]>();
 
   constructor(private productService: ProductService, private snackBar: MatSnackBar, private pantryService: PantryService,
-    private dialog: MatDialog) { }
+    private shoppinglistService: ShoppinglistService, private dialog: MatDialog) { }
 
   getProductsFromServer(): void {
     this.unsub();
@@ -129,12 +131,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
   // Pops up a dialog to add a product to the pantry
   /* istanbul ignore next */
-  openAddDialog(givenProduct: Product) {
+  openPantryAddDialog(givenProduct: Product) {
     const dialogRef = this.dialog.open(AddProductToPantryComponent, { data: givenProduct });
     dialogRef.afterClosed().subscribe(result => {
       this.pantryService.addPantryItem(result).subscribe(newPantryId => {
         if (newPantryId) {
-          this.snackBar.open('Product successfully added to your pantry.',
+          this.snackBar.open(`${givenProduct.productName} successfully added to your pantry.`,
             'OK', { duration: 5000 });
         }
         else {
@@ -144,6 +146,25 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+    // Pops up a dialog to add a product to the shoppinglist
+  /* istanbul ignore next */
+  openShoppinglistAddDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(AddProductToShoppinglistComponent, { data: givenProduct });
+    dialogRef.afterClosed().subscribe(result => {
+      this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
+        if (newShoppinglistId) {
+          this.snackBar.open(`${givenProduct.productName} x${result.count} successfully added to your Shopping List.`,
+            'OK', { duration: 5000 });
+        }
+        else {
+          this.snackBar.open('Something went wrong.  The product was not added to the Shopping List.',
+            'OK', { duration: 5000 });
+        }
+      });
+    });
+  }
+
   //Pops up a dialog to delete a product from the product list
   /* istanbul ignore next */
   removeProduct(givenProduct: Product): void {
@@ -152,7 +173,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       result => {
         this.productService.deleteProduct(result).subscribe(returnedBoolean => {
           if (returnedBoolean) {
-            this.snackBar.open('Product successfully deleted.',
+            this.snackBar.open(`${givenProduct.productName} successfully deleted.`,
               'OK', { duration: 5000 });
           }
           else {

@@ -71,6 +71,7 @@ describe('ShoppingListComponent', () => {
 
   it('should get the shoppinglist and contain all of the StoreGroups', () => {
     shoppinglist.getShoppinglistFromServer();
+    // Three storegroups in the mock data
     expect(shoppinglist.shoppingList.length).toBe(3);
   });
 });

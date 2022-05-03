@@ -142,13 +142,13 @@ describe('Add button on Products to Pantry List', () => {
     cy.wait(1000);
   });
 
-  it('Should click the add button for the first product from the filtered list and read the dialog popup', () => {
+  it('Should click the add to pantry button for the first product from the filtered list and read the dialog popup', () => {
 
     // Filter products
     page.selectCategory('frozen foods');
     cy.get('#product-name-input').type('Kahlua');
 
-    // Check that 'Coffee - Cafe Moreno' is the first product
+    // Check that 'Kahlua' is the first product
     page.getFilteredProductListItems().first().within(($product) => {
       cy.wrap($product).find('.product-list-name').should('contain.text', ' Kahlua ');
     });
@@ -159,12 +159,37 @@ describe('Add button on Products to Pantry List', () => {
       .should('contain.text', 'Add Kahlua to your Pantry');
   });
 
-  it('Should go to a product in an expansion tab and read the dialog', () => {
+  it('Should click the add to shoppinglist button for the first product from the filtered list and read the dialog popup', () => {
+
+    // Filter products
+    page.selectCategory('frozen foods');
+    cy.get('#product-name-input').type('Kahlua');
+
+    // Check that 'Kahlua' is the first product
+    page.getFilteredProductListItems().first().within(($product) => {
+      cy.wrap($product).find('.product-list-name').should('contain.text', ' Kahlua ');
+    });
+
+    // Grab and delete first one, 'Kahlua'
+    page.clickAddShoppingButton();
+    cy.get('.mat-dialog-title')
+      .should('contain.text', 'Add Kahlua to your Shopping List');
+  });
+
+  it('Should go to a product in an expansion tab, click add to pantry, and read the dialog', () => {
 
     // Grab and click the add button for the first one, 'Aspic - Light'
     page.clickExpansionAddButton('dairy');
     cy.get('.mat-dialog-title')
       .should('contain.text', 'Add Aspic - Light to your Pantry');
+  });
+
+  it('Should go to a product in an expansion tab, click add to shopping list, and read the dialog', () => {
+
+    // Grab and click the add button for the first one, 'Aspic - Light'
+    page.clickExpansionAddShoppingButton('dairy');
+    cy.get('.mat-dialog-title')
+    .should('contain.text', 'Add Aspic - Light to your Shopping List');
   });
 });
 
@@ -180,7 +205,23 @@ describe('Add Product to Pantry List', () => {
     page.enterPurchaseDate('2022-10-10');
     page.enterNotes('This is a test');
     page.clickDialogAddButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully added to your pantry.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Aspic - Light successfully added to your pantry.');
+  });
+
+});
+
+describe('Add Product to Shopping List', () => {
+
+  beforeEach(() => {
+    page.navigateTo();
+    cy.wait(1000);
+  });
+
+  it('should enter the count of a shoppinglist item then click the button', () => {
+    page.clickExpansionAddShoppingButton('dairy');
+    page.enterCount('1');
+    page.clickDialogAddShoppingButton();
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Aspic - Light x1 successfully added to your Shopping List.');
   });
 
 });
@@ -195,7 +236,7 @@ describe('Delete from Product List', () => {
   it('should click the delete button on a product and confirm delete', () => {
     page.clickExpansionDeleteButton('baked goods');
     page.clickDialogDeleteButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully deleted.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Bar - Granola Trail Mix Fruit Nut successfully deleted.');
   });
 
 });
