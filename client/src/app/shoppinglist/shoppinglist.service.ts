@@ -16,4 +16,11 @@ export class ShoppinglistService {
       params: httpParams,
     });
   }
+
+  resetShoppingList(): Observable<void> {
+    const httpParams: HttpParams = new HttpParams();
+    return this.httpClient.put<void>(this.shoppinglistUrl, {
+      params: httpParams,
+    });
+  }
 }

@@ -46,4 +46,8 @@ export class MockShoppingListService extends ShoppinglistService {
   override getShoppinglist(): Observable<ShoppinglistStoreGroup[]> {
       return of(MockShoppingListService.testShoppinglistStoreGroups);
   }
+
+  override resetShoppingList(): Observable<void> {
+      return of(null);
+  }
 }

@@ -122,6 +122,5 @@ public class Server {
       throw new InternalServerErrorResponse(e.toString());
     });
 
-
   }
 }

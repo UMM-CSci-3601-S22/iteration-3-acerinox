@@ -2,6 +2,7 @@ import { Component, OnInit, Output } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 import { ShoppinglistService } from '../shoppinglist.service';
 import { Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-shopping-list',
@@ -18,7 +19,7 @@ export class ShoppingListComponent implements OnInit {
 
   getShoppinglistSub: Subscription;
 
-  constructor(private shoppinglistService: ShoppinglistService) {}
+  constructor(private shoppinglistService: ShoppinglistService, private snackBar: MatSnackBar) {}
 
   public getShoppinglistFromServer(): void {
     this.unsub();
@@ -26,7 +27,7 @@ export class ShoppingListComponent implements OnInit {
       .subscribe(returnedShoppinglist => {
         this.shoppingList = returnedShoppinglist;
       }, err => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -38,5 +39,19 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getShoppinglistFromServer();
+  }
+
+  public resetShoppingList() {
+    this.shoppinglistService.resetShoppingList()
+      .subscribe(result => {
+        this.snackBar.open('Shopping List Reset',
+        'OK', { duration: 5000});
+        window.location.reload();
+      },
+      err => {
+        this.snackBar.open('Failed to reset Shopping List.',
+        'OK', {duration: 5000});
+        console.error(err);
+      });
   }
 }
