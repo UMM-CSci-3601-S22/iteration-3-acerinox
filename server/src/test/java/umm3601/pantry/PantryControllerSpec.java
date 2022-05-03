@@ -370,9 +370,10 @@ public class PantryControllerSpec {
 
   @Test
   public void addProduct() throws IOException {
+
     String testNewEntry = "{"
         + "\"product\": \"" + bananaEntryId.toHexString() + "\","
-        + "\"purchase_date\": \"2022-04-28\","
+        + "\"purchase_date\": \"2023-01-27\","
         + "\"notes\": \"check on gerbils every 3 days\""
         + "}";
 
@@ -399,12 +400,7 @@ public class PantryControllerSpec {
 
     assertNotNull(addedProduct);
     assertEquals(bananaEntryId.toHexString(), addedProduct.getString("product"));
-    /**
-     * @var		mixed	assertEquals("2023-01-27"
-     *//**
-     * @var		mixed	addedProduct.get("purchase_date"))
-     */
-    assertEquals("2022-04-28", addedProduct.getDate("purchase_date"));
+    assertEquals("2023-01-27", addedProduct.getString("purchase_date"));
     assertEquals("check on gerbils every 3 days", addedProduct.getString("notes"));
   }
 
