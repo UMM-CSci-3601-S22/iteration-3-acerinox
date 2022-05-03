@@ -165,6 +165,37 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Pops up a dialog for increasing the count of an already existing product in shopping list
+  openShoppinglistIncreaseAmountDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(AddProductToShoppinglistComponent, { data: givenProduct });
+    dialogRef.afterClosed().subscribe(result => {
+      this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
+        if (newShoppinglistId) {
+          this.snackBar.open(`${givenProduct.productName} x${result.count} successfully added to your Shopping List.`,
+            'OK', { duration: 5000 });
+        }
+        else {
+          this.snackBar.open('Something went wrong.  The product was not added to the Shopping List.',
+            'OK', { duration: 5000 });
+        }
+      });
+    });
+  }
+
+  showDialogByProductInShoppingList(givenProduct): void {
+    let exists: boolean;
+    this.shoppinglistService.productInShoppinglist(givenProduct._id).subscribe(
+      data => {
+        exists = data.exists;
+        if (exists) {
+          this.openShoppinglistAddDialog(givenProduct);
+        } else {
+          this.openShoppinglistIncreaseAmountDialog(givenProduct);
+        }
+      }
+    );
+  }
+
   //Pops up a dialog to delete a product from the product list
   /* istanbul ignore next */
   removeProduct(givenProduct: Product): void {
@@ -185,4 +216,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.updateFilter();
     this.initializeCategoryMap();
   }
+
 }
