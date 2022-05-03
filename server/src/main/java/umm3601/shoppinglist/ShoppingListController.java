@@ -5,16 +5,21 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Variable;
 
 import org.bson.Document;
-import org.bson.UuidRepresentation;
 import org.bson.types.ObjectId;
+import org.bson.conversions.Bson;
+import org.bson.UuidRepresentation;
 import org.mongojack.JacksonMongoCollection;
 
 import io.javalin.http.Context;
@@ -32,13 +37,13 @@ public class ShoppingListController {
         "shoppingList",
         ShoppingListItem.class,
         UuidRepresentation.STANDARD);
+
     productCollection = JacksonMongoCollection.builder().build(
         database,
         "products",
         Product.class,
         UuidRepresentation.STANDARD);
   }
-
   public void getAllShoppingListDisplayItems(Context ctx) {
     ArrayList<ShoppingListStoreGroup> returnedShoppingListItems = shoppingListCollection
         .aggregate(
@@ -62,8 +67,52 @@ public class ShoppingListController {
 
     ctx.json(returnedShoppingListItems);
   }
+  public void resetShoppingList(Context ctx) {
 
-  /**
+    List<Variable<String>> let = new ArrayList<>(
+        Arrays.asList(
+            new Variable<String>("productId", "$_id"),
+            new Variable<String>("productThreshold", "$threshold")));
+
+    String compareCommand = " {$and: [ { $eq: [\"$_id\", \"$productId\"] },"
+        + " { $lt: [ \"$count\", \"$productThreshold\" ] } ]  } ";
+
+    ArrayList<ResetShoppingListItem> output = productCollection.aggregate(
+        Arrays.asList(
+            Aggregates.lookup("pantry",
+                let,
+                new ArrayList<Bson>(Arrays.asList(
+                    Aggregates.group("$product", Accumulators.sum("count", 1)),
+                    Aggregates.project(
+                        Projections.fields(Projections.include("count"),
+                            Projections.computed("productId", "$$productId"),
+                            Projections.computed("productThreshold", "$$productThreshold"))),
+                    Aggregates.match(Filters.expr(Document.parse(compareCommand))))),
+                "outputProducts")),
+        ResetShoppingListItem.class).into(new ArrayList<>());
+
+    List<ShoppingListItem> convertedOutput = output.stream().map(ShoppingListController::convertQueryOutput)
+        .filter(item -> item.count > 0)
+        .collect(Collectors.toList());
+
+    shoppingListCollection.drop();
+    shoppingListCollection.insertMany(convertedOutput);
+
+    ctx.json(convertedOutput);
+  }
+
+  private static ShoppingListItem convertQueryOutput(ResetShoppingListItem item) {
+    ShoppingListItem output = new ShoppingListItem();
+    output.product = new ObjectId(item._id).toHexString();
+    if (item.outputProducts.size() > 0) {
+      int inventoryDifference = item.threshold - item.outputProducts.get(0).count;
+      output.count = inventoryDifference > 0 ? inventoryDifference : 0;
+    } else {
+      output.count = item.threshold;
+    }
+    return output;
+  }
+    /**
    * Checks if the given entry exists with a given id. if no such entry exists
    * returns false. Returns true for one or more entry with a matching
    * id.
@@ -79,16 +128,7 @@ public class ShoppingListController {
     } catch (IllegalArgumentException e) {
       return false;
     }
-    if (product == null) {
-      return false;
-    }
-    return true;
-  }
 
-  public void resetShoppingList(Context ctx) {
-    // placeholder method for the shoppinglist generation
-    ctx.json(null);
-  }
 
   /**
    * Validate then add a received shoppinglist item to the shoppinglist collection
