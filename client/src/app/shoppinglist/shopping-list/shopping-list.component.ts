@@ -54,4 +54,8 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
         console.error(err);
       });
   }
+
+  ngOnDestroy(): void {
+      this.unsub();
+  }
 }

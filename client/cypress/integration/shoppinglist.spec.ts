@@ -68,6 +68,7 @@ describe('Print Shoppinglist', () => {
     });
 
     it('should repopulate the shopping list when the "RESET SHOPPING LIST" button is pressed', () => {
+      cy.wait(1000);
       page.resetShoppingListButton().click();
       // re-navigate to the page to work around the page refresh
       page.navigateTo();
