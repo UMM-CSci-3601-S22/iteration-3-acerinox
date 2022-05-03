@@ -81,8 +81,8 @@ public class Server {
     // Get the specified pantry item
     server.get("/api/pantry/{id}", pantryController::getPantryItemByID);
 
-    // List shoppingListItems
-    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListItems);
+    // List shoppingListDisplayItems
+    server.get("/api/shoppinglist", shoppingListController::getAllShoppingListDisplayItems);
 
     //Generate the shoppingList based on the inventory and threshold
     server.put("api/shoppinglist", shoppingListController::resetShoppingList);

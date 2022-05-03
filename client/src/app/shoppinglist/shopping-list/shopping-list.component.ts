@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, OnDestroy, } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 import { ShoppinglistService } from '../shoppinglist.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss']
 })
-export class ShoppingListComponent implements OnInit {
+export class ShoppingListComponent implements OnInit, OnDestroy {
 
   // Stored shoppinglist, sent to child components through input/output
   @Output() public shoppingList: ShoppinglistStoreGroup[];
@@ -25,6 +25,7 @@ export class ShoppingListComponent implements OnInit {
     this.getShoppinglistSub = this.shoppinglistService.getShoppinglist()
       .subscribe(returnedShoppinglist => {
         this.shoppingList = returnedShoppinglist;
+        console.log(returnedShoppinglist);
       }, err => {
         console.log(err);
       });
@@ -38,5 +39,9 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getShoppinglistFromServer();
+  }
+
+  ngOnDestroy(): void {
+    this.unsub();
   }
 }
