@@ -48,6 +48,7 @@ import { ShoppinglistPrintComponent } from './shoppinglist/shoppinglist-print/sh
 import { AddProductToPantryComponent } from './products/product-list/add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './products/product-list/dialog-delete/dialog-delete.component';
 import { DeletePantryItemComponent } from './pantry/pantry-products-list/delete-pantry-item/delete-pantry-item.component';
+// eslint-disable-next-line max-len
 import { AddProductToShoppinglistComponent } from './products/product-list/add-product-to-shoppinglist/add-product-to-shoppinglist.component';
 
 const MATERIAL_MODULES: any[] = [
