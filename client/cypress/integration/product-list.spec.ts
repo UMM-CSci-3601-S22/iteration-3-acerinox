@@ -180,7 +180,7 @@ describe('Add Product to Pantry List', () => {
     page.enterPurchaseDate('2022-10-10');
     page.enterNotes('This is a test');
     page.clickDialogAddButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully added to your pantry.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Aspic - Light successfully added to your pantry.');
   });
 
 });
@@ -195,7 +195,7 @@ describe('Delete from Product List', () => {
   it('should click the delete button on a product and confirm delete', () => {
     page.clickExpansionDeleteButton('baked goods');
     page.clickDialogDeleteButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Product successfully deleted.');
+    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Bar - Granola Trail Mix Fruit Nut successfully deleted.');
   });
 
 });
