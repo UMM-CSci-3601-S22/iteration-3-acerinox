@@ -142,7 +142,7 @@ public class ProductControllerValidateProductSpec {
         + "\"notes\": \"tastes like test\","
         + "\"tags\": [\"test tag\"],"
         + "\"lifespan\": 100,"
-        + "\"threshold\": 0," // Invalid threshold
+        + "\"threshold\": -1," // Invalid threshold
         + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
         + "}";
     mockReq.setBodyContent(testNewProduct);
@@ -454,56 +454,6 @@ public class ProductControllerValidateProductSpec {
         + "\"store\": \"test store\","
         + "\"location\": \"\"," // empty location
         + "\"notes\": \"tastes like test\","
-        + "\"tags\": [\"test tag\"],"
-        + "\"lifespan\": 100,"
-        + "\"threshold\": 84,"
-        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
-        + "}";
-    mockReq.setBodyContent(testNewProduct);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/products");
-
-    assertThrows(ValidationException.class, () -> {
-      productController.addNewProduct(ctx);
-    });
-  }
-
-  @Test
-  public void addNullProductNotes() throws IOException {
-    String testNewProduct = "{"
-        + "\"productName\": \"Test Product name\","
-        + "\"description\":\"A test product description\","
-        + "\"brand\": \"test brand\","
-        + "\"category\": \"test category\","
-        + "\"store\": \"test store\","
-        + "\"location\": \"test location\","
-        + "\"notes\": null," // null notes
-        + "\"tags\": [\"test tag\"],"
-        + "\"lifespan\": 100,"
-        + "\"threshold\": 84,"
-        + "\"image\": \"https://gravatar.com/avatar/8c9616d6cc5de638ea6920fb5d65fc6c?d=identicon\""
-        + "}";
-    mockReq.setBodyContent(testNewProduct);
-    mockReq.setMethod("POST");
-
-    Context ctx = mockContext("api/products");
-
-    assertThrows(ValidationException.class, () -> {
-      productController.addNewProduct(ctx);
-    });
-  }
-
-  @Test
-  public void addEmptyProductNotes() throws IOException {
-    String testNewProduct = "{"
-        + "\"productName\": \"Test Product name\","
-        + "\"description\":\"A test product description\","
-        + "\"brand\": \"test brand\","
-        + "\"category\": \"test category\","
-        + "\"store\": \"test store\","
-        + "\"location\": \"test location\","
-        + "\"notes\": \"\"," // empty notes
         + "\"tags\": [\"test tag\"],"
         + "\"lifespan\": 100,"
         + "\"threshold\": 84,"
