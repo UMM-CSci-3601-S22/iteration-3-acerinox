@@ -6,6 +6,8 @@
 
 <mat-dialog-actions>
   <button [mat-dialog-close]="" mat-button type="button" color="primary" type="submit"
+    routerLink="/shoppinglist"
+    fragment="{{storeContentPos(data.store)}}"
     data-test="goToShoppinglistButton">
     Go to Shopping List
   </button>

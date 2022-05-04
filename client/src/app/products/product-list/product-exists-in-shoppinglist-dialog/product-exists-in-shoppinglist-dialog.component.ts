@@ -20,4 +20,8 @@ export class ProductExistsInShoppinglistDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  storeContentPos(store: string) {
+    return '';
+  }
 }
