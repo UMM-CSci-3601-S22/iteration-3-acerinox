@@ -169,8 +169,11 @@ public class ShoppingListController {
     String productId = ctx.pathParam("id");
 
     try {
-      if (shoppingListCollection.find(eq("product", new ObjectId(productId))).first() == null) exists = false;
-      else exists = true;
+      if (shoppingListCollection.find(eq("product", new ObjectId(productId))).first() == null) {
+        exists = false;
+      } else {
+        exists = true;
+      }
     } catch (IllegalArgumentException e) {
       throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");
     }
