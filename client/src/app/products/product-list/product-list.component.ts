@@ -10,6 +10,8 @@ import { PantryService } from 'src/app/pantry/pantry.service';
 import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { AddProductToShoppinglistComponent } from './add-product-to-shoppinglist/add-product-to-shoppinglist.component';
+// eslint-disable-next-line max-len
+import { ProductExistsInShoppinglistDialogComponent } from './product-exists-in-shoppinglist-dialog/product-exists-in-shoppinglist-dialog.component';
 import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
 
 
@@ -166,31 +168,17 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   // Pops up a dialog for increasing the count of an already existing product in shopping list
-  openShoppinglistIncreaseAmountDialog(givenProduct: Product) {
-    const dialogRef = this.dialog.open(AddProductToShoppinglistComponent, { data: givenProduct });
-    dialogRef.afterClosed().subscribe(result => {
-      this.shoppinglistService.addShoppinglistItem(result).subscribe(newShoppinglistId => {
-        if (newShoppinglistId) {
-          this.snackBar.open(`${givenProduct.productName} x${result.count} successfully added to your Shopping List.`,
-            'OK', { duration: 5000 });
-        }
-        else {
-          this.snackBar.open('Something went wrong.  The product was not added to the Shopping List.',
-            'OK', { duration: 5000 });
-        }
-      });
-    });
+  openShoppinglistExistsDialog(givenProduct: Product) {
+    const dialogRef = this.dialog.open(ProductExistsInShoppinglistDialogComponent, { data: givenProduct });
   }
 
   showDialogByProductInShoppingList(givenProduct): void {
-    let exists: boolean;
     this.shoppinglistService.productInShoppinglist(givenProduct._id).subscribe(
       data => {
-        exists = data.exists;
-        if (exists) {
-          this.openShoppinglistAddDialog(givenProduct);
+        if (data.exists === true) {
+          this.openShoppinglistExistsDialog(givenProduct);
         } else {
-          this.openShoppinglistIncreaseAmountDialog(givenProduct);
+          this.openShoppinglistAddDialog(givenProduct);
         }
       }
     );
