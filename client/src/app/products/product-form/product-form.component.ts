@@ -121,7 +121,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
         Validators.required, Validators.minLength(1), Validators.maxLength(100),
       ])),
       location: new FormControl(this.getProductValueOrEmptyString('location'), Validators.compose([
-        Validators.minLength(1), Validators.maxLength(100),
+        Validators.required, Validators.minLength(1), Validators.maxLength(100),
       ])),
       notes: new FormControl(this.getProductValueOrEmptyString('notes'), Validators.compose([
         Validators.minLength(1), Validators.maxLength(2000),
@@ -176,6 +176,7 @@ export class ProductFormComponent implements OnInit, OnDestroy {
 
   //Right now only non-required fields can be edited.
   async submitForm(): Promise<void> {
+    /* istanbul ignore next */
     if (this.mode === 'ADD') {
       try {
         const newID = await this.productService.addProduct(this.productForm.value).toPromise();

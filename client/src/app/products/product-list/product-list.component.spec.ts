@@ -111,7 +111,7 @@ describe('ProductListComponent', () => {
       brand: 'Dole',
       category: 'produce',
       store: 'Walmart',
-      location: '',
+      location: 'c 1',
       notes: '',
       tags: [],
       lifespan: 0,
