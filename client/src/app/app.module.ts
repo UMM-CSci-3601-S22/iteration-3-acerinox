@@ -20,7 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
-import { MatNativeDateModule, MatOptionModule, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -78,17 +78,6 @@ const MATERIAL_MODULES: any[] = [
   MatNativeDateModule
 ];
 
-const MY_DATE_FORMATS = {
-  parse: {
-    dateInput: 'DD/MM/YYYY',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'MMMM YYYY',
-    dateA11Label: 'LL',
-    monthYearA11Label: 'MMMM YYYY'
-  },
-};
 @NgModule({
   declarations: [
     AppComponent,
