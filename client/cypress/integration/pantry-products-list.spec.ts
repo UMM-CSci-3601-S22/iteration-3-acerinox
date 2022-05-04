@@ -2,7 +2,7 @@ import { PantryProductsListPage } from 'cypress/support/pantry-products-list.po'
 
 const page = new PantryProductsListPage();
 
-describe('Pantry List Expansion Panels and tables', () => {
+describe ('Pantry List Expansion Panels and tables', () => {
 
   beforeEach(() => {
     page.navigateTo();
@@ -11,27 +11,27 @@ describe('Pantry List Expansion Panels and tables', () => {
 
   it('Should check that expansion panels have the correct titles and items by categories', () => {
 
-    page.getExpansionTitleByCategory('baked goods').should('have.text', ' baked goods ');
+    page.getExpansionTitleByCategory('baking supplies').should('have.text', ' baking supplies ');
 
-    page.getTableProductNameByCategory('baked goods').first().should('have.text', 'Soup Campbells Beef With Veg');
+    page.getTableProductNameByCategory('baking supplies').first().should('have.text', ' Almon Paste, 8 oz ');
 
-    page.getTablePurchaseDateByCategory('baked goods').first().should('have.text', '31-05-2022');
+    page.getTablePurchaseDateByCategory('baking supplies').first().should('have.text', ' 28/04/2022 ');
 
-    page.getTableNotesByCategory('baked goods').first().should('contains.text', 'Aenean lectus.');
+    page.getTableNotesByCategory('baking supplies').first().should('contains.text', ' Expiration / Best Before: 01/2022 ');
 
     page.getExpansionTitleByCategory('meat').should('have.text', ' meat ');
 
-    page.getTableProductNameByCategory('meat').first().should('have.text', 'Shrimp - 16/20, Iqf, Shell On');
+    page.getTableProductNameByCategory('meat').first().should('have.text', ' Herring Fillets, 100 g ');
 
-    page.getTablePurchaseDateByCategory('meat').first().should('have.text', '18-04-2002');
+    page.getTablePurchaseDateByCategory('meat').first().should('have.text', ' 28/04/2022 ');
 
-    page.getTableNotesByCategory('meat').first().should('contains.text', 'Curabitur gravida');
+    page.getTableNotesByCategory('meat').first().should('contains.text', ' Expiration / Best Before: 10/2021 ');
 
   });
 
 });
 
-describe('RemovePantryItem() deletes an item from the pantry', () => {
+describe ('RemovePantryItem() deletes an item from the pantry', () => {
 
   beforeEach(() => {
     page.navigateTo();
@@ -39,8 +39,8 @@ describe('RemovePantryItem() deletes an item from the pantry', () => {
   });
 
   it('Should click the remove button of the first element and read the dialog', () => {
-  page.clickRemoveButton('baked goods');
-  cy.get('mat-dialog-content').should('have.text', 'Remove Soup Campbells Beef With Veg from your pantry?'
+  page.clickRemoveButton('staples');
+  cy.get('mat-dialog-content').should('have.text', 'Remove Pure Maple Syrup, 16 Oz from your pantry?'
   +'Note: This action cannot be undone.');
   });
 

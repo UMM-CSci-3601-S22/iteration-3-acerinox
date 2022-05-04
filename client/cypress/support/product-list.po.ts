@@ -114,7 +114,7 @@ export class ProductListPage {
   }
 
   enterPurchaseDate(purchaseDate: string) {
-    return cy.get('[data-test=purchaseDateInput]').type(purchaseDate);
+    return cy.get('[data-test=date-picker-button]').type(purchaseDate);
   }
 
   enterNotes(notes: string) {

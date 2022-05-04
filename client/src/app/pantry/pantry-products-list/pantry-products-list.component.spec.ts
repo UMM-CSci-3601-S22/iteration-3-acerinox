@@ -78,7 +78,7 @@ describe('PantryProductsListComponent', () => {
   });
 
   it('sorts the comboItems array by date purchased', () => {
-    expect(pantryProductsList.comboItems[0].purchase_date).toBe('16-07-2020');
+    expect(pantryProductsList.comboItems[0].purchase_date).toEqual(new Date('2020-07-16'));
   });
 
   it('creates the comboItems with keyvalues from both products and pantryItems', () => {

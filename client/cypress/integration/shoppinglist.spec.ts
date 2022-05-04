@@ -2,7 +2,7 @@ import { ShoppinglistPage } from '../support/shoppinglist.po';
 
 const page = new ShoppinglistPage();
 
-describe('Shoppinglist', () => {
+describe ('Shoppinglist', () => {
   beforeEach(() => {
     cy.task('seed:database');
     page.navigateTo();
@@ -22,7 +22,7 @@ describe('Shoppinglist', () => {
   });
 });
 
-describe('Interactive Shoppinglist', () => {
+describe ('Interactive Shoppinglist', () => {
   beforeEach(() => {
     page.navigateTo();
     page.changeView('interactive');
@@ -46,7 +46,7 @@ describe('Interactive Shoppinglist', () => {
   });
 });
 
-describe('Print Shoppinglist', () => {
+describe ('Print Shoppinglist', () => {
   beforeEach(() => {
     page.navigateTo();
     page.changeView('print');
