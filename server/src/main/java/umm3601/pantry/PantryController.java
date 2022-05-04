@@ -2,8 +2,6 @@ package umm3601.pantry;
 
 import static com.mongodb.client.model.Filters.eq;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -94,18 +92,6 @@ public class PantryController {
 
   }
 
-  // Helper function to check if a string is a valid date
-  // Format of the date string: yyyy-MM-dd
-  private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-  boolean isValidDate(String input) {
-    try {
-      dateFormat.parse(input);
-      return true;
-    } catch (ParseException e) {
-      return false;
-    }
-  }
 
   /**
    * Checks if the given entry exists with a given id. if no such entry exists

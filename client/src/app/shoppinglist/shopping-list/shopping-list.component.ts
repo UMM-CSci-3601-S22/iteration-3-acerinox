@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit, Output, OnDestroy, } from '@angular/core';
 import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 import { ShoppinglistService } from '../shoppinglist.service';
@@ -18,16 +19,15 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
 
   getShoppinglistSub: Subscription;
 
-  constructor(private shoppinglistService: ShoppinglistService) {}
+  constructor(private shoppinglistService: ShoppinglistService, private snackBar: MatSnackBar) {}
 
   public getShoppinglistFromServer(): void {
     this.unsub();
     this.getShoppinglistSub = this.shoppinglistService.getShoppinglist()
       .subscribe(returnedShoppinglist => {
         this.shoppingList = returnedShoppinglist;
-        console.log(returnedShoppinglist);
       }, err => {
-        console.log(err);
+        console.error(err);
       });
   }
 
@@ -41,7 +41,21 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.getShoppinglistFromServer();
   }
 
+  public resetShoppingList() {
+    this.shoppinglistService.resetShoppingList()
+      .subscribe(result => {
+        this.snackBar.open('Shopping List Reset',
+        'OK', { duration: 5000});
+        window.location.reload();
+      },
+      err => {
+        this.snackBar.open('Failed to reset Shopping List.',
+        'OK', {duration: 5000});
+        console.error(err);
+      });
+  }
+
   ngOnDestroy(): void {
-    this.unsub();
+      this.unsub();
   }
 }

@@ -3,7 +3,11 @@
 <mat-dialog-content [formGroup]="addToPantryForm">
   <mat-form-field appearance="fill">
     <mat-label>Date Added to Pantry</mat-label>
-    <input matInput placeholder="dd-mm-yyyy" data-test="purchaseDateInput" formControlName="purchase_date" required>
+    <input matInput [matDatepicker]="picker" formControlName="purchase_date" data-test="date-picker-button"
+                  required>
+                  <mat-hint>DD/MM/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <br>
   <mat-form-field appearance="fill">
