@@ -133,6 +133,10 @@ export class ProductListPage {
     return cy.get('[data-test=confirmAddProductToShoppinglistButton]').click();
   }
 
+  clickDialogGoToShoppingButton() {
+    return cy.get('[data-test=goToShoppingListButton]').click();
+  }
+
   clickDialogDeleteButton() {
     return cy.get('[data-test=dialogDelete]').click();
   }

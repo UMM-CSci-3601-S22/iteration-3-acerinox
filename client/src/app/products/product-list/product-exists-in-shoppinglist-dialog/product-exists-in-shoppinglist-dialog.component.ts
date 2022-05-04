@@ -13,6 +13,7 @@ export class ProductExistsInShoppinglistDialogComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<ProductExistsInShoppinglistDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product) { }
 
+  /* istanbul ignore next */
   ngOnInit(): void {
   }
 
@@ -21,6 +22,7 @@ export class ProductExistsInShoppinglistDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  // Won't ignore this in code coverage since in the future it will be doing something meaningful
   storeContentPos(store: string) {
     return '';
   }
