@@ -225,7 +225,27 @@ describe ('Add Product to Shopping List', () => {
 
 });
 
-describe ('Delete from Product List', () => {
+describe('Product already in shopping list add button', () => {
+
+  beforeEach(() => {
+    page.navigateTo();
+    cy.wait(1000);
+    page.clickExpansionAddShoppingButton('miscellaneous');
+    page.enterCount('1');
+    page.clickDialogAddShoppingButton();
+    page.navigateTo();
+  });
+
+  // Product already in shopping list
+  it('should click the add button, then click the button to go to the shopping list page', () => {
+    page.clickExpansionAddShoppingButton('miscellaneous');
+    page.clickDialogGoToShoppingButton();
+    page.getUrl().should('be.equal', 'http://localhost:4200/shoppinglist#');
+  });
+
+});
+
+describe('Delete from Product List', () => {
 
   beforeEach(() => {
     page.navigateTo();
