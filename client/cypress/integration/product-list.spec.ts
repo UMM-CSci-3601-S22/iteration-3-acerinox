@@ -212,15 +212,17 @@ describe ('Add Product to Pantry List', () => {
 describe ('Add Product to Shopping List', () => {
 
   beforeEach(() => {
+    cy.task('seed:database');
     page.navigateTo();
     cy.wait(1000);
   });
 
   it('should enter the count of a shoppinglist item then click the button', () => {
-    page.clickExpansionAddShoppingButton('dairy');
+    page.clickExpansionAddShoppingButton('toiletries');
     page.enterCount('1');
     page.clickDialogAddShoppingButton();
-    cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Whole Milk, 1/2 gal x1 successfully added to your Shopping List.');
+    cy.get('.mat-simple-snack-bar-content')
+    .should('contain.text', 'Citrus Organic Hair Rinse, 8 fl oz x1 successfully added to your Shopping List.');
   });
 
 });
@@ -228,17 +230,14 @@ describe ('Add Product to Shopping List', () => {
 describe('Product already in shopping list add button', () => {
 
   beforeEach(() => {
+    cy.task('seed:database');
     page.navigateTo();
     cy.wait(1000);
-    page.clickExpansionAddShoppingButton('miscellaneous');
-    page.enterCount('1');
-    page.clickDialogAddShoppingButton();
-    page.navigateTo();
   });
 
   // Product already in shopping list
   it('should click the add button, then click the button to go to the shopping list page', () => {
-    page.clickExpansionAddShoppingButton('miscellaneous');
+    page.clickExpansionAddShoppingButton('baking supplies');
     page.clickDialogGoToShoppingButton();
     page.getUrl().should('be.equal', 'http://localhost:4200/shoppinglist#');
   });
@@ -248,6 +247,7 @@ describe('Product already in shopping list add button', () => {
 describe('Delete from Product List', () => {
 
   beforeEach(() => {
+    cy.task('seed:database');
     page.navigateTo();
     cy.wait(1000);
   });

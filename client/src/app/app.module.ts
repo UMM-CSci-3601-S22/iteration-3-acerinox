@@ -53,6 +53,7 @@ import { DeletePantryItemComponent } from './pantry/pantry-products-list/delete-
 import { AddProductToShoppinglistComponent } from './products/product-list/add-product-to-shoppinglist/add-product-to-shoppinglist.component';
 // eslint-disable-next-line max-len
 import { ProductExistsInShoppinglistDialogComponent } from './products/product-list/product-exists-in-shoppinglist-dialog/product-exists-in-shoppinglist-dialog.component';
+import { ShoppinglistDialogDeleteComponent } from './shoppinglist/shoppinglist-dialog-delete/shoppinglist-dialog-delete.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -98,6 +99,7 @@ const MATERIAL_MODULES: any[] = [
     DeletePantryItemComponent,
     AddProductToShoppinglistComponent,
     ProductExistsInShoppinglistDialogComponent,
+    ShoppinglistDialogDeleteComponent,
   ],
   imports: [
     BrowserModule,
