@@ -70,28 +70,26 @@
             class="filtered-product-list-item">
             <!-- Product Info wrapped by link to product card -->
             <div matLine [routerLink]="['/products', product._id]">
-              <h3 matLine class="product-list-name">
-                <font size="4"><b> {{product.productName | titlecase}} </b></font>
-              </h3>
-              <p matLine class="product-list-brand"> {{product.brand | titlecase}} </p>
+              <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand | titlecase}} </b></p>
+              <p matLine class="product-list-name"><font size="4"><b> {{product.productName | titlecase}} </b></font></p>
               <p matLine class="product-list-category"> {{product.category | titlecase}} </p>
-              <p matLine class="product-list-store"> {{product.store | titlecase}} </p>
+              <p matLine class="product-list-store"> {{product.store | titlecase}}, {{product.location | titlecase}} </p>
             </div>
 
             <!-- Action Buttons on Each Product -->
             <div matLine>
-              <button mat-mini-fab (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
-                matTooltipPosition="left" data-test="addToPantryButton">
-                <mat-icon>add</mat-icon>
-              </button>
-              <button mat-mini-fab color="warn" matTooltip="Delete Product" matTooltipPosition="right"
-              (click)="removeProduct(this.product)" data-test="deleteProductButton">
-                <mat-icon aria-label="Delete Product">close</mat-icon>
-              </button>
-              <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
-                    matTooltipPosition="left" data-test="addToShoppinglistButton">
-                    <mat-icon>add</mat-icon>
+                  <button mat-flat-button color="warn" matTooltip="Delete Product" matTooltipPosition="right" style="margin-right:10px"
+                  (click)="removeProduct(this.product)" data-test="deleteProductButton">
+                    <mat-icon aria-label="Delete Product">close</mat-icon>
                   </button>
+                  <button mat-flat-button (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToPantryButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_dining</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToShoppinglistButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_grocery_store</mat-icon>
+              </button>
             </div>
           </mat-list-item>
           <mat-divider></mat-divider>
@@ -122,26 +120,24 @@
                 *ngFor="let product of productCategory.value">
                 <!-- Product Info wrapped by link to product card -->
                 <div matLine [routerLink]="['/products', product._id]">
-                  <h3 matLine class="product-list-name">
-                    <font size="4"><b> {{product.productName | titlecase}} </b></font>
-                  </h3>
-                  <p matLine class="product-list-brand"> {{product.brand | titlecase}} </p>
+                  <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand | titlecase}} </b></p>
+                  <p matLine class="product-list-name"><font size="4"><b> {{product.productName | titlecase}} </b></font></p>
                   <p matLine class="product-list-category"> {{product.category | titlecase}} </p>
-                  <p matLine class="product-list-store"> {{product.store | titlecase}} </p>
+                  <p matLine class="product-list-store"> {{product.store | titlecase}}, {{product.location | titlecase}} </p>
                 </div>
                 <!-- Action Buttons on Each Product -->
                 <div matLine>
-                  <button mat-mini-fab (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry"
-                    matTooltipPosition="left" data-test="addToPantryButton">
-                    <mat-icon>add</mat-icon>
-                  </button>
-                  <button mat-mini-fab color="warn" matTooltip="Delete Product" matTooltipPosition="right"
-                    (click)="removeProduct(this.product)" data-test="deleteProductButton">
+                  <button mat-flat-button color="warn" matTooltip="Delete Product" matTooltipPosition="right" style="margin-right:10px"
+                  (click)="removeProduct(this.product)" data-test="deleteProductButton">
                     <mat-icon aria-label="Delete Product">close</mat-icon>
                   </button>
-                  <button mat-mini-fab (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List"
-                    matTooltipPosition="left" data-test="addToShoppinglistButton">
-                    <mat-icon>add</mat-icon>
+                  <button mat-flat-button (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToPantryButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_dining</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="openShoppinglistAddDialog(this.product)" color="accent" matTooltip="Add to Shopping List" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToShoppinglistButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_grocery_store</mat-icon>
                   </button>
                 </div>
               </mat-list-item>
