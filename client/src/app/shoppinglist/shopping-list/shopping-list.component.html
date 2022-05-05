@@ -44,17 +44,19 @@
       <div *ngSwitchCase="'interactive'">
         <app-shoppinglist-group [list]="shoppingList"></app-shoppinglist-group>
         <div>
-          <button mat-button>
+          <button mat-flat-button color="warn" style="margin: 16px">
+            <mat-icon>delete</mat-icon>
             Remove Items From Shopping List
           </button>
 
-          <button mat-button
+          <button mat-flat-button
             aria-label="Button that resets the Shopping List"
             data-test="resetShoppingListButton"
             (click)="resetShoppingList()"
             class="reset-button"
           >
-            Reset Shopping List
+          <mat-icon>refresh</mat-icon>
+            Reset
           </button>
         </div>
       </div>
