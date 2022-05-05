@@ -2,8 +2,9 @@ import { ShoppinglistPage } from '../support/shoppinglist.po';
 
 const page = new ShoppinglistPage();
 
-describe('Shoppinglist', () => {
+describe ('Shoppinglist', () => {
   beforeEach(() => {
+    cy.task('seed:database');
     page.navigateTo();
   });
 
@@ -21,7 +22,7 @@ describe('Shoppinglist', () => {
   });
 });
 
-describe('Interactive Shoppinglist', () => {
+describe ('Interactive Shoppinglist', () => {
   beforeEach(() => {
     page.navigateTo();
     page.changeView('interactive');
@@ -45,7 +46,7 @@ describe('Interactive Shoppinglist', () => {
   });
 });
 
-describe('Print Shoppinglist', () => {
+describe ('Print Shoppinglist', () => {
   beforeEach(() => {
     page.navigateTo();
     page.changeView('print');
@@ -54,5 +55,25 @@ describe('Print Shoppinglist', () => {
   it('Should have the correct store lists and products', () => {
     page.getPrintShoppingList();
     cy.get('h2').first().should('contain.text', 'Other Store');
+  });
+
+  describe('Reset the Shoppinglist', () => {
+    beforeEach(() => {
+      page.navigateTo();
+    });
+
+    it('should have the seed data in the store', () => {
+      // there should be 4 'Other Store' items
+      page.getStoreItems(0).should('have.length', 3);
+    });
+
+    it('should repopulate the shopping list when the "RESET SHOPPING LIST" button is pressed', () => {
+      cy.wait(1000);
+      page.resetShoppingListButton().click();
+      // re-navigate to the page to work around the page refresh
+      page.navigateTo();
+      // The shopping list should have new items
+      page.getStoreItems(0).should('have.length', 6);
+    });
   });
 });

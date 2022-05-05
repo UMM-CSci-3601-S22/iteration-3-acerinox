@@ -114,7 +114,7 @@ export class ProductListPage {
   }
 
   enterPurchaseDate(purchaseDate: string) {
-    return cy.get('[data-test=purchaseDateInput]').type(purchaseDate);
+    return cy.get('[data-test=date-picker-button]').type(purchaseDate);
   }
 
   enterNotes(notes: string) {
@@ -131,6 +131,10 @@ export class ProductListPage {
 
   clickDialogAddShoppingButton() {
     return cy.get('[data-test=confirmAddProductToShoppinglistButton]').click();
+  }
+
+  clickDialogGoToShoppingButton() {
+    return cy.get('[data-test=goToShoppingListButton]').click();
   }
 
   clickDialogDeleteButton() {

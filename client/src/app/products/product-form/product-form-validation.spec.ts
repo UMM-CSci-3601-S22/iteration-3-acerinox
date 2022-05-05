@@ -284,9 +284,9 @@ for (const mode of possibleModes) {
         locationControl = productForm.controls.location;
       });
 
-      it('should allow empty store', () => {
+      it('should not allow empty location', () => {
         locationControl.setValue('');
-        expect(locationControl.valid).toBeTruthy();
+        expect(locationControl.valid).toBeFalsy();
       });
 
       it('should be fine with "location of item"', () => {

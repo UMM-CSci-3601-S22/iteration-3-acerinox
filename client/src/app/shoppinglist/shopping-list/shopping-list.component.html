@@ -47,6 +47,15 @@
           <button mat-button>
             Remove Items From Shopping List
           </button>
+
+          <button mat-button
+            aria-label="Button that resets the Shopping List"
+            data-test="resetShoppingListButton"
+            (click)="resetShoppingList()"
+            class="reset-button"
+          >
+            Reset Shopping List
+          </button>
         </div>
       </div>
 

@@ -60,4 +60,8 @@ export class ShoppinglistPage {
   getPrintButton() {
     return cy.get('.print-button');
   }
+
+  resetShoppingListButton() {
+    return cy.get('.reset-button');
+  }
 }
