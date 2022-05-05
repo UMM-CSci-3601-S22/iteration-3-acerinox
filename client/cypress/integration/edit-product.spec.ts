@@ -75,7 +75,6 @@ describe ('Edit Product', () => {
     cy.get('.product-card-category').should('have.text', testProductEditData.category);
     cy.get('.product-card-description').should('have.text', testProductEditData.description);
     cy.get('.product-card-notes').should('have.text', testProductEditData.notes);
-    cy.get('.product-card-lifespan').should('have.text', testProductEditData.lifespan);
     cy.get('.product-card-threshold').should('have.text', testProductEditData.threshold);
 
   });

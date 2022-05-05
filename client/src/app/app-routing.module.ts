@@ -11,12 +11,12 @@ import { ShoppingListComponent } from './shoppinglist/shopping-list/shopping-lis
 // If 'users/:id' came first, it would accidentally catch requests to
 // 'users/new'; the router would just think that the string 'new' is a user ID.
 const routes: Routes = [
-  {path: '', component: PantryProductsListComponent},
-  {path: 'products', component: ProductListComponent},
-  {path: 'products/new', component: AddProductComponent},
-  {path: 'products/edit/:id', component: EditProductComponent},
-  {path: 'products/:id', component: SingleProductPageComponent},
-  {path: 'shoppinglist', component: ShoppingListComponent}
+  {path: '', component: PantryProductsListComponent, data: {title: 'Handy Pantry > My Pantry'}},
+  {path: 'products', component: ProductListComponent, data: {title: 'Handy Pantry > Products'}},
+  {path: 'products/new', component: AddProductComponent, data: {title: 'Handy Pantry > Products > Add Product'}},
+  {path: 'products/edit/:id', component: EditProductComponent, data: {title: 'Handy Pantry > Products > Edit Product'}},
+  {path: 'products/:id', component: SingleProductPageComponent, data: {title: 'Handy Pantry > Products > Product Details'}},
+  {path: 'shoppinglist', component: ShoppingListComponent, data: {title: 'Handy Pantry > Shopping List'}}
 ];
 
 @NgModule({

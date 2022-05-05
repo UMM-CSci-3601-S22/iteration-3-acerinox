@@ -2,31 +2,39 @@
   <div fxLayout="row">
     <div style="padding: 16px;">
       <mat-card-header>
+        <mat-card-subtitle class="product-card-brand"><b>{{ this.product.brand }}</b></mat-card-subtitle>
         <mat-card-title class="product-card-name">{{ this.product.productName }}</mat-card-title>
-        <mat-card-subtitle class="product-card-brand">{{ this.product.brand }}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-md-image [src]="this.product.image" class="product-image" *ngIf="this.product.image">
       <mat-card-header>
         <mat-card-subtitle class="product-card-store">{{ this.product.store }}</mat-card-subtitle>
-        <mat-card-subtitle class="product-card-location">{{ this.product.location }}</mat-card-subtitle>
+        <mat-card-content class="product-card-location">{{ this.product.location }}</mat-card-content>
       </mat-card-header>
+      <img mat-card-md-image style="margin-left: 16px" [src]="this.product.image" class="product-image" *ngIf="this.product.image">
     </div>
 
-    <mat-card-content style="margin: 16px">
-      <p> Category: <span class="product-card-category">{{ this.product.category }}</span></p>
-      <p> Description: <span class="product-card-description">{{ this.product.description }}</span></p>
-      <p> Notes: <span class="product-card-notes">{{ this.product.notes }}</span></p>
-      <p> Tags: <span class="product-card-tags">{{ this.product.tags }}</span></p>
-      <p> Lifespan: <span class="product-card-lifespan">{{ this.product.lifespan }}</span></p>
-      <p> Threshold: <span class="product-card-threshold">{{ this.product.threshold }}</span></p>
+    <mat-card-content>
+      <mat-list style="margin-top: 65px; margin-left: 23px">
+        <mat-list-item><p><b> Category: </b><span class="product-card-category" >{{ this.product.category }}</span></p></mat-list-item>
+        <mat-list-item><p><b> Description: </b><span class="product-card-description">{{ this.product.description }}</span></p></mat-list-item>
+        <mat-list-item><p><b> Notes: </b><span class="product-card-notes">{{ this.product.notes }}</span></p></mat-list-item>
+        <mat-list-item><p><b> Threshold: </b><span class="product-card-threshold"><font size="5"><b>{{ this.product.threshold }}</b></font></span></p></mat-list-item>
+      </mat-list>
+    </mat-card-content>
+
+    <mat-card-content>
+
     </mat-card-content>
   </div>
-  <mat-card-actions class="edit-product">
-    <button color="primary" mat-raised-button data-test="editProductButton" routerLink="{{this.editURL}}">Edit
-      Product</button>
+  <mat-card-actions class="edit-product" style="margin: 16px">
+    <button style="margin-inline-start: 16px" color="primary" mat-flat-button data-test="editProductButton" matTooltip="Edit Product" routerLink="{{this.editURL}}">
+      <mat-icon matListIcon>edit</mat-icon>
+      Edit
+    </button>
   </mat-card-actions>
-  <mat-card-actions class="add-to-pantry">
-    <button color="primary" mat-raised-button type="button" (click)="popup = true" data-test="addToPantryButton"> Add
-      Product To Pantry</button>
+  <mat-card-actions class="add-to-pantry" style="margin: 16px">
+    <button style="margin-inline-start: 16px" color="primary" mat-flat-button type="button" color="accent" (click)="popup = true" matTooltip="Add Product to Pantry" data-test="addToPantryButton">
+      <mat-icon matListIcon>add_circle_outline</mat-icon><mat-icon matListIcon>local_dining</mat-icon>
+      Add to Pantry
+    </button>
   </mat-card-actions>
 </mat-card>

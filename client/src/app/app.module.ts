@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -118,7 +118,8 @@ const MATERIAL_MODULES: any[] = [
     PantryService,
     ShoppinglistService,
     PantryProductsListComponent,
-    ProductListComponent
+    ProductListComponent,
+    Title
   ],
   bootstrap: [AppComponent]
 })
