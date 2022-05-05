@@ -1,3 +1,4 @@
+import * as registerCodeCoverageTasks from '@cypress/code-coverage/task';
 import {seedAll} from '@floogulinc/cypress-mongo-seeder';
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -25,6 +26,7 @@ const pluginConfig: Cypress.PluginConfig = (on, config) => {
     'seed:database': (drop = true) => seedAll(mongoUri, dbSeedDir, drop),
   });
 
+  return registerCodeCoverageTasks(on, config);
 };
 
 export default pluginConfig;
