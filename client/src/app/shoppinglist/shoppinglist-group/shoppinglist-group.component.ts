@@ -14,7 +14,9 @@ import { ShoppinglistStoreGroup } from '../shoppinglistStoreGroup';
 export class ShoppinglistGroupComponent implements OnInit {
   @Input() list: ShoppinglistStoreGroup[];
 
-  constructor(private snackBar: MatSnackBar, private shoppinglistService: ShoppinglistService, private dialog: MatDialog) {}
+  constructor(private snackBar: MatSnackBar,
+     private shoppinglistService: ShoppinglistService,
+     private dialog: MatDialog) {}
 
   ngOnInit(): void {
 
@@ -30,6 +32,7 @@ export class ShoppinglistGroupComponent implements OnInit {
           if (returnedBoolean) {
             this.snackBar.open(`${givenItem.productName} successfully removed from your shopping list.`,
               'OK', { duration: 5000 });
+              window.location.reload();
           }
           else {
             this.snackBar.open('Something went wrong.  The product was not removed from your shopping list.',
@@ -37,5 +40,6 @@ export class ShoppinglistGroupComponent implements OnInit {
           }
         });
       });
+
   }
 }

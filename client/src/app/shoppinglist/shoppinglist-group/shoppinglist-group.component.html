@@ -8,7 +8,8 @@
               <mat-list>
                 <mat-list-item *ngFor="let slItem of storeGroup.products" checkboxPosition="before" class="shopping-list-item">
                   <div style="width: max-content; justify-content: space-between;">
-                    <button mat-button color="warn">
+                    <button mat-button color="warn" matTooltip="Delete Item" matTooltipPosition="right"
+                    (click)="removeItem(this.slItem)" data-test="deleteItemButton">
                       <mat-icon>close</mat-icon>
                     </button>
                       x{{slItem.count}} {{slItem.productName}}, in {{slItem.location}}
