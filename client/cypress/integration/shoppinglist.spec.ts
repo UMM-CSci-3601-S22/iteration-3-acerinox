@@ -67,7 +67,7 @@ describe('Reset the Shoppinglist', () => {
   });
 
   it('should have the seed data in the store', () => {
-    // there should be 3 'Other Store' items
+    // there should be 4 'Other Store' items
     page.getStoreItems(0).should('have.length', 3);
   });
 
@@ -92,7 +92,7 @@ describe('Delete from Shopping List', () => {
   it('should click the delete button on an item and confirm delete', () => {
     page.clickDeleteButton(0);
     page.clickDialogDeleteButton();
-    page.getStoreItems(0).should('have.length', 2);
+    page.getStoreItems(0).should('have.length', 3);
   });
 
 });
