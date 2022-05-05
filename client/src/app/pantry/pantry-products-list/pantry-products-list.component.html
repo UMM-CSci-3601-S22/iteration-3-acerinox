@@ -30,7 +30,7 @@
 
                       <ng-container *ngIf="column === 'remove'; then removeButtonBlock"></ng-container>
                       <ng-template #removeButtonBlock>
-                        <button mat-mini-fab color="warn" matTooltip="Delete Pantry Item" matTooltipPosition="right"
+                        <button mat-icon-button color="warn" matTooltip="Delete Pantry Item" matTooltipPosition="right"
                           (click)="removePantryItem(this.element)" data-test="deleteItemButton">
                           <mat-icon aria-label="Delete Pantry Item">close</mat-icon>
                         </button>
