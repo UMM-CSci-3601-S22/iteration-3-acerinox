@@ -70,10 +70,10 @@
             class="filtered-product-list-item">
             <!-- Product Info wrapped by link to product card -->
             <div matLine [routerLink]="['/products', product._id]">
-              <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand | titlecase}} </b></p>
-              <p matLine class="product-list-name"><font size="4"><b> {{product.productName | titlecase}} </b></font></p>
-              <p matLine class="product-list-category"> {{product.category | titlecase}} </p>
-              <p matLine class="product-list-store"> {{product.store | titlecase}}, {{product.location | titlecase}} </p>
+              <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand}} </b></p>
+              <p matLine class="product-list-name"><font size="4"><b> {{product.productName}} </b></font></p>
+              <p matLine class="product-list-category"> {{product.category}} </p>
+              <p matLine class="product-list-store"> {{product.store}}, {{product.location}} </p>
             </div>
 
             <!-- Action Buttons on Each Product -->
@@ -109,8 +109,8 @@
           <mat-expansion-panel *ngFor="let productCategory of (this.categoryNameMap | keyvalue)"
             [ngClass]="productCategory.key.replace(' ', '-') + '-expansion-panel'">
             <mat-expansion-panel-header>
-              <mat-panel-title [ngClass]="productCategory.key.replace(' ', '-') + '-panel-title'">
-                {{ productCategory.key | titlecase }}
+              <mat-panel-title [ngClass]="productCategory.key.replace(' ', '-') + '-panel-title'" style="text-transform: capitalize">
+                {{ productCategory.key }}
               </mat-panel-title>
             </mat-expansion-panel-header>
 
@@ -120,10 +120,10 @@
                 *ngFor="let product of productCategory.value">
                 <!-- Product Info wrapped by link to product card -->
                 <div matLine [routerLink]="['/products', product._id]">
-                  <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand | titlecase}} </b></p>
-                  <p matLine class="product-list-name"><font size="4"><b> {{product.productName | titlecase}} </b></font></p>
-                  <p matLine class="product-list-category"> {{product.category | titlecase}} </p>
-                  <p matLine class="product-list-store"> {{product.store | titlecase}}, {{product.location | titlecase}} </p>
+                  <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand}} </b></p>
+                  <p matLine class="product-list-name"><font size="4"><b> {{product.productName}} </b></font></p>
+                  <p matLine class="product-list-category"> {{product.category}} </p>
+                  <p matLine class="product-list-store"> {{product.store}}, {{product.location}} </p>
                 </div>
                 <!-- Action Buttons on Each Product -->
                 <div matLine>
