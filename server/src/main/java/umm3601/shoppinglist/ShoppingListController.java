@@ -15,6 +15,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Variable;
+import com.mongodb.client.result.DeleteResult;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -25,6 +26,7 @@ import org.mongojack.JacksonMongoCollection;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
+import io.javalin.http.NotFoundResponse;
 import umm3601.product.Product;
 
 public class ShoppingListController {
@@ -201,5 +203,23 @@ public class ShoppingListController {
     }
     ctx.json(Map.of("exists", exists));
 
+  }
+
+  /**
+   * Remove shoppinglist item from the collection whose id matches the given id
+   *
+   * @param ctx a Javalin HTTP context
+   */
+  public void deleteShoppingListItem(Context ctx) {
+    String id = ctx.pathParam("id");
+    DeleteResult deleteResult = shoppingListCollection.deleteOne(eq("_id", new ObjectId(id)));
+    if (deleteResult.getDeletedCount() != 1) {
+      throw new NotFoundResponse(
+          "Was unable to delete ID "
+              + id
+              + "; perhaps illegal ID or an ID for an item not in the system?");
+    }
+    ctx.status(HttpCode.OK);
+    ctx.json(true);
   }
 }

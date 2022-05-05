@@ -12,6 +12,7 @@ import static java.util.Map.entry;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static io.javalin.plugin.json.JsonMapperKt.JSON_MAPPER_KEY;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -35,6 +36,7 @@ import io.javalin.core.JavalinConfig;
 import io.javalin.http.Context;
 import io.javalin.http.HandlerType;
 import io.javalin.http.HttpCode;
+import io.javalin.http.NotFoundResponse;
 import io.javalin.http.util.ContextUtil;
 import io.javalin.plugin.json.JavalinJackson;
 
@@ -273,5 +275,36 @@ public class ShoppingListControllerSpec {
     assertNotNull(addedShoppingListItem);
     assertEquals(bananaProductId, addedShoppingListItem.get("product"));
     assertEquals(5, addedShoppingListItem.getInteger("count"));
+  }
+
+  @Test
+  public void deleteShoppingListItem() throws IOException {
+    String testID = appleEntryId.toHexString();
+
+    // Item exists before deletion
+    assertEquals(1, db.getCollection("shoppingList").countDocuments(eq("_id", new ObjectId(testID))));
+
+    Context ctx = mockContext("api/shoppinglist/{id}", Map.of("id", testID));
+
+    shoppingListController.deleteShoppingListItem(ctx);
+
+    assertEquals(HttpURLConnection.HTTP_OK, mockRes.getStatus());
+
+    // Item is no longer in the database
+    assertEquals(0, db.getCollection("shoppingList").countDocuments(eq("_id", new ObjectId(testID))));
+  }
+
+  @Test
+  public void cannotDeleteNonexistentShoppingListItem() throws IOException {
+    String testID = "588935f57546a2daea44de7c";
+
+    // Product exists before deletion
+    assertEquals(0, db.getCollection("shoppingList").countDocuments(eq("_id", new ObjectId(testID))));
+
+    Context ctx = mockContext("api/products/{id}", Map.of("id", testID));
+
+    assertThrows(NotFoundResponse.class, () -> {
+      shoppingListController.deleteShoppingListItem(ctx);
+    });
   }
 }
