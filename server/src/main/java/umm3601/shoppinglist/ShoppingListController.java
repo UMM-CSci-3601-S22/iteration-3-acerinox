@@ -206,7 +206,7 @@ public class ShoppingListController {
   }
 
   /**
-   * Remove shoppinglist item from the collection whose id matches the given id
+   * Remove shoppinglist item from the collection whose id matches the given id from context query param
    *
    * @param ctx a Javalin HTTP context
    */
