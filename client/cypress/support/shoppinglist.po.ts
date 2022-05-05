@@ -41,7 +41,7 @@ export class ShoppinglistPage {
 
   getStoreItems(position: number) {
     this.getStoreProductsPanel(position);
-    return cy.get('.shopping-list-item-option');
+    return cy.get('.shopping-list-item');
   }
 
   /**
