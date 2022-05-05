@@ -48,7 +48,7 @@ describe ('Product List', () => {
 
     // All of the product list items that show should have the store we are looking for
     page.getFilteredProductListItems().each($product => {
-      cy.wrap($product).find('.product-list-store').should('have.text', ' Willies ');
+      cy.wrap($product).find('.product-list-store').should('have.text', ' Willies, Aisle 4 ');
     });
   });
 
@@ -62,7 +62,7 @@ describe ('Product List', () => {
 
     // All of the product list items that show should have the store we are looking for
     page.getFilteredProductListItems().each($product => {
-      cy.wrap($product).should('contain.text', ' Miscellaneous ');
+      cy.wrap($product).should('contain.text', ' miscellaneous ');
     });
   });
 
@@ -85,16 +85,16 @@ describe ('Product List Expansion Panels', () => {
 
   it('Should check that expansion panels have the correct titles and items by categories', () => {
 
-    page.getExpansionTitleByCategory('baking supplies').should('have.text', ' Baking Supplies ');
+    page.getExpansionTitleByCategory('baking supplies').should('have.text', ' baking supplies ');
 
     page.getExpansionItemsByCategory('baking supplies').each($product => {
-      cy.wrap($product).find('.product-list-category').should('have.text', ' Baking Supplies ');
+      cy.wrap($product).find('.product-list-category').should('have.text', ' baking supplies ');
     });
 
-    page.getExpansionTitleByCategory('miscellaneous').should('have.text', ' Miscellaneous ');
+    page.getExpansionTitleByCategory('miscellaneous').should('have.text', ' miscellaneous ');
 
     page.getExpansionItemsByCategory('miscellaneous').each($product => {
-      cy.wrap($product).find('.product-list-category').should('have.text', ' Miscellaneous ');
+      cy.wrap($product).find('.product-list-category').should('have.text', ' miscellaneous ');
     });
   });
 
@@ -122,7 +122,7 @@ describe ('Delete button on Products From Product List', () => {
     // Grab and delete first one, 'Kahlua'
     page.clickDeleteButton();
     cy.get('.mat-dialog-content')
-      .should('contain.text', 'Remove Almon Paste, 8 Oz from your products?Note: This action cannot be undone');
+      .should('contain.text', 'Remove Almon Paste, 8 Oz from your products?This action cannot be undone');
   });
 
   it('Should go to a product in an expansion tab and read the dialog', () => {
@@ -130,7 +130,7 @@ describe ('Delete button on Products From Product List', () => {
     // Grab and click the delete button for the first one, 'Aspic - Light'
     page.clickExpansionDeleteButton('dairy');
     cy.get('.mat-dialog-content')
-      .should('contain.text', 'Remove Whole Milk, 1/2 Gal from your products?Note: This action cannot be undone');
+      .should('contain.text', 'Remove Whole Milk, 1/2 Gal from your products?This action cannot be undone');
   });
 });
 

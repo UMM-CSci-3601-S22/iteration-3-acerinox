@@ -41,7 +41,7 @@ describe ('RemovePantryItem() deletes an item from the pantry', () => {
   it('Should click the remove button of the first element and read the dialog', () => {
   page.clickRemoveButton('staples');
   cy.get('mat-dialog-content').should('have.text', 'Remove Pure Maple Syrup, 16 Oz from your pantry?'
-  +'Note: This action cannot be undone.');
+  +'This action cannot be undone.');
   });
 
   it('Should delete an item from the pantry', () => {
