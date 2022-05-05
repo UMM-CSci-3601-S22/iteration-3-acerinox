@@ -34,4 +34,8 @@ export class ShoppinglistService {
   productInShoppinglist(productId: string):  Observable<ExistsObject> {
     return this.httpClient.get<ExistsObject>(`${this.shoppinglistUrl}/${productId}`);
   }
+
+  deleteItem(id: string): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.shoppinglistUrl}/${id}`);
+  }
 }
