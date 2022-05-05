@@ -168,10 +168,12 @@ export class ProductListComponent implements OnInit, OnDestroy {
   }
 
   // Pops up a dialog for increasing the count of an already existing product in shopping list
+    /* istanbul ignore next */
   openShoppinglistExistsDialog(givenProduct: Product) {
     this.dialog.open(ProductExistsInShoppinglistDialogComponent, { data: givenProduct });
   }
 
+    /* istanbul ignore next */
   showDialogByProductInShoppingList(givenProduct): void {
     this.shoppinglistService.productInShoppinglist(givenProduct._id).subscribe(
       data => {
