@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
+import { ExistsObject } from 'src/app/shoppinglist/existsObject';
 import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
+import { ShoppinglistDatabaseItem } from 'src/app/shoppinglist/shoppinglistDatabaseItem';
 import { ShoppinglistStoreGroup } from 'src/app/shoppinglist/shoppinglistStoreGroup';
 
 @Injectable()
@@ -48,6 +50,12 @@ export class MockShoppingListService extends ShoppinglistService {
     }
   ];
 
+  static testExistsObject: ExistsObject = {
+    exists: true
+  };
+
+  static testId = 'testid';
+
   constructor() {
     super(null);
   }
@@ -58,5 +66,13 @@ export class MockShoppingListService extends ShoppinglistService {
 
   override resetShoppingList(): Observable<void> {
       return of(null);
+  }
+
+  override addShoppinglistItem(newShoppinglistItem: ShoppinglistDatabaseItem): Observable<string> {
+      return of(MockShoppingListService.testId);
+  }
+
+  override productInShoppinglist(productId: string): Observable<ExistsObject> {
+      return of(MockShoppingListService.testExistsObject);
   }
 }

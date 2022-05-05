@@ -153,17 +153,20 @@ constructor(private pantryService: PantryService,
   }
 
   unsubProduct(): void {
+    /* istanbul ignore next */
     if (this.getProductsSub) {
       this.getProductsSub.unsubscribe();
     }
   }
 
   unsubPantry(): void {
+    /* istanbul ignore next */
     if (this.getPantrySub) {
       this.getPantrySub.unsubscribe();
     }
   }
 
+  /* istanbul ignore next */
   reloadComponent() {
     const pantryPageUrl = '';
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;

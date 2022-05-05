@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, } from '@angular/material/dialog';
 })
 export class ProductExistsInShoppinglistDialogComponent implements OnInit {
 
+  /* istanbul ignore next */
   constructor(public dialogRef: MatDialogRef<ProductExistsInShoppinglistDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Product) { }
 
@@ -21,7 +22,8 @@ export class ProductExistsInShoppinglistDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  // Won't ignore this in code coverage since in the future it will be doing something meaningful
+  // Won't ignore this later since it will be doing something meaningful
+  /* istanbul ignore next */
   storeContentPos(store: string) {
     return '';
   }
