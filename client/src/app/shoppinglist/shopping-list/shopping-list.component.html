@@ -7,6 +7,8 @@
       <!-- Page Title -->
       <h1 style="font-size: 40px;" class="shoppinglist-title">My Shopping List</h1>
 
+      <br>
+
       <!-- Page View Toggle -->
       <mat-button-toggle-group name="viewType"
                               aria-label="Page View"
@@ -37,6 +39,8 @@
 
     </mat-card>
 
+    <mat-divider></mat-divider>
+
     <!-- shoppinglist page contents, dependent on viewType -->
     <div [ngSwitch]="viewType">
 
@@ -44,10 +48,6 @@
       <div *ngSwitchCase="'interactive'">
         <app-shoppinglist-group [list]="shoppingList"></app-shoppinglist-group>
         <div>
-          <button mat-button>
-            Remove Items From Shopping List
-          </button>
-
           <button mat-button
             aria-label="Button that resets the Shopping List"
             data-test="resetShoppingListButton"
