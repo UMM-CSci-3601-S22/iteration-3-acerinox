@@ -44,6 +44,17 @@ export class ShoppinglistPage {
     return cy.get('.shopping-list-item');
   }
 
+  clickDeleteButton(num: number) {
+    return this.getStoreItems(num).first().within(($item) => {
+      cy.get('[data-test=deleteItemButton]')
+        .click();
+    });
+  }
+
+  clickDialogDeleteButton() {
+    return cy.get('[data-test=dialogDelete]').click();
+  }
+
   /**
    * Change the shoppinglist view.
    *

@@ -30,9 +30,9 @@ export class ShoppinglistGroupComponent implements OnInit {
       result => {
         this.shoppinglistService.deleteItem(result).subscribe(returnedBoolean => {
           if (returnedBoolean) {
+            window.location.reload();
             this.snackBar.open(`${givenItem.productName} successfully removed from your shopping list.`,
               'OK', { duration: 5000 });
-              window.location.reload();
           }
           else {
             this.snackBar.open('Something went wrong.  The product was not removed from your shopping list.',
