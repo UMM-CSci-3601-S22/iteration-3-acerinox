@@ -22,7 +22,7 @@ export class MockProductService extends ProductService {
       brand: 'Dole',
       category: 'produce',
       store: 'Walmart',
-      location: '',
+      location: 'c 1',
       notes: '',
       tags: [],
       lifespan: 0,
@@ -36,7 +36,7 @@ export class MockProductService extends ProductService {
       brand: 'Land O Lakes',
       category: 'dairy',
       store: 'SuperValu',
-      location: '',
+      location: 'aisle 2',
       notes: '',
       tags: [],
       lifespan: 0,
@@ -50,7 +50,7 @@ export class MockProductService extends ProductService {
       brand: 'Country Hearth',
       category: 'baked goods',
       store: 'Walmart',
-      location: '',
+      location: 'aisle 3f',
       notes: '',
       tags: [],
       lifespan: 0,
@@ -82,6 +82,13 @@ export class MockProductService extends ProductService {
     }
   }
 /*
+  override deleteProduct(id: string): Observable<boolean> {
+    for(let i = 0; i < MockProductService.testProducts.length; i++) {
+      if (id !== MockProductService.testProducts[i]._id) {return new Observable<false>();}
+    }
+    for(let j = 0; j < MockProductService.testProducts.length; j++) {
+      if (id === MockProductService.testProducts[j]._id) { MockProductService.testProducts.splice(j,1);}
+
   override deleteProduct(id: string): Observable<boolean> {
     for(let i = 0; i < MockProductService.testProducts.length; i++) {
       if (id !== MockProductService.testProducts[i]._id) {return new Observable<false>();}

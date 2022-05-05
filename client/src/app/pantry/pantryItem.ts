@@ -4,14 +4,14 @@ export interface PantryItem {
   _id: string;
   product: string;
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  purchase_date: string;
+  purchase_date: Date;
   notes?: string;
 }
 
 export interface ComboItem {
   _id: string; // PantryItem
   // eslint-disable-next-line @typescript-eslint/naming-convention
-  purchase_date: string; // PantryItem
+  purchase_date: Date; // PantryItem
   productName: string; // Product
   description?: string; // Product
   brand: string; // Product

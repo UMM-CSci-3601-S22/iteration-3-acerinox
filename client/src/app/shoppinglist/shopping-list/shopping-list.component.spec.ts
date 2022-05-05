@@ -20,8 +20,11 @@ import { MockShoppingListService } from 'src/testing/shopping-list.service.mock'
 import { ShoppinglistService } from '../shoppinglist.service';
 
 import { ShoppingListComponent } from './shopping-list.component';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
 
 const COMMON_IMPORTS: any[] = [
+  HttpClientTestingModule,
   FormsModule,
   MatCardModule,
   MatFormFieldModule,
@@ -42,6 +45,11 @@ const COMMON_IMPORTS: any[] = [
 ];
 
 describe('ShoppingListComponent', () => {
+
+  let httpClient: HttpClient;
+  let httpTestingController: HttpTestingController;
+
+  let shoppinglistService: ShoppinglistService;
   let shoppinglist: ShoppingListComponent;
   let fixture: ComponentFixture<ShoppingListComponent>;
 
@@ -49,8 +57,13 @@ describe('ShoppingListComponent', () => {
     await TestBed.configureTestingModule({
       imports: [COMMON_IMPORTS],
       declarations: [ ShoppingListComponent ],
-      providers: [{ provide: ShoppinglistService, useValue: new MockShoppingListService() }]
+      providers: [
+        { provide: ShoppinglistService, useValue: new MockShoppingListService() }
+      ]
     });
+    httpClient = TestBed.inject(HttpClient);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    shoppinglistService = TestBed.inject(ShoppinglistService);
   });
 
   afterEach(() => {
@@ -71,7 +84,15 @@ describe('ShoppingListComponent', () => {
 
   it('should get the shoppinglist and contain all of the StoreGroups', () => {
     shoppinglist.getShoppinglistFromServer();
-    // Three storegroups in the mock data
     expect(shoppinglist.shoppingList.length).toBe(3);
+  });
+
+  it('should have the correct shopping list when the list is reset.', () => {
+    const resetSpy = spyOn(shoppinglistService, 'resetShoppingList').and.callThrough();
+
+    shoppinglistService.resetShoppingList();
+
+    expect(resetSpy).toHaveBeenCalled();
+    expect(resetSpy.calls.mostRecent().args).toEqual([]);
   });
 });

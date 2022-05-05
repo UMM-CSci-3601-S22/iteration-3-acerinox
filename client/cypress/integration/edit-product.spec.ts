@@ -3,36 +3,36 @@ import { ProductFormPage } from 'cypress/support/product-form.po';
 import { Product } from 'src/app/products/product';
 
 const testProductToEdit: Product = {
-  _id: '624f7cbcfc13ae732800008c',
-  productName: 'Salmon - Canned',
-  description: 'In congue. Etiam justo. Etiam pretium iaculis justo.In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.',
-  brand: 'Schmidt Group',
-  category: 'produce',
-  store: 'RealFoodHub',
-  location: 'Aisle 92',
-  notes: 'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.',
+  _id: '626aebdefc13ae08180005f6',
+  productName: 'Red Sockeye Salmon, 14 3/4 oz',
+  description: '',
+  brand: 'Deming\'s',
+  category: 'meat',
+  store: 'Willies',
+  location: 'Aisle 3',
+  notes: '',
   tags: [],
-  lifespan: 879,
-  threshold: 41,
-  image: 'https://creinkmun.cn/UMM-SP22-CSCI3601-Product-Temp-Pic.png'
+  lifespan: 0,
+  threshold: 3,
+  image: 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
 };
 
 const testProductEditData: Product = {
-  _id: '6227c728fc13ae58600005d7',
-  productName: 'Salmon - Canned',
-  description: 'In congue. Etiam justo. Etiam pretium iaculis justo.In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.',
-  brand: 'Jacobson, Herman and Metz',
-  category: 'produce',
-  store: 'Willies',
-  location: 'volutpat',
-  notes: 'Slightly spicy',
-  tags: [],
-  lifespan: 879,
-  threshold: 33,
-  image: 'https://creinkmun.cn/UMM-SP22-CSCI3601-Product-Temp-Pic.png'
-};
+    _id: '626aebdefc13ae08180005f7',
+    productName: 'Red Sockeye Salmon, 6 oz',
+    description: '',
+    brand: 'Deming\'s',
+    category: 'meat',
+    store: 'Willies',
+    location: 'N/A',
+    notes: '',
+    tags: [],
+    lifespan: 69,
+    threshold: 3,
+    image: 'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg'
+  };
 
-describe('Edit Product', () => {
+describe ('Edit Product', () => {
   const page = new ProductFormPage();
 
   beforeEach(() => {

@@ -32,6 +32,7 @@ describe('Add Product', () => {
     page.getFormField('productName').type('Apples');
     page.getFormField('brand').type('Minnesotan');
     page.getFormField('store').type('Willies');
+    page.getFormField('location').type('Aisle 10');
     page.selectMatSelectValue(cy.get('[formControlName=category]'), 'produce');
 
     page.addProductButton().should('be.enabled');

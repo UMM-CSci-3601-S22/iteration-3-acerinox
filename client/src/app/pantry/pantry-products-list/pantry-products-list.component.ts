@@ -86,9 +86,9 @@ constructor(private pantryService: PantryService,
       this.matchingProducts = returnedPantryProducts;
       this.createComboItems();
       this.comboItems.sort((a, b) => {
-        const dateA = a.purchase_date.split('-').reverse().join('-');
-        const dateB = b.purchase_date.split('-').reverse().join('-');
-        return dateA > dateB ? 1 : -1;
+        let dateA = a.purchase_date;
+        let dateB = b.purchase_date;
+        return dateA.valueOf() > dateB.valueOf() ? 1 : -1;
       });
       this.initializeCategoryMap();
     }, err => {
@@ -96,7 +96,7 @@ constructor(private pantryService: PantryService,
       // the problem and display a message.
       console.error('We couldn\'t get the pantry list; the server might be down');
       this.snackBar.open(
-        'Problem contacting the server – try again',
+        'Problem contacting the server - try again',
         'OK',
         // The message will disappear after 3 seconds.
         { duration: 3000 });
@@ -114,7 +114,7 @@ constructor(private pantryService: PantryService,
       // the problem and display a message.
       console.error('We couldn\'t get the list of products; the server might be down');
       this.snackBar.open(
-        'Problem contacting the server – try again',
+        'Problem contacting the server - try again',
         'OK',
         // The message will disappear after 3 seconds.
         { duration: 3000 });
@@ -179,11 +179,11 @@ constructor(private pantryService: PantryService,
       result => {
         this.pantryService.deleteItem(result).subscribe(returnedProductId => {
           if(returnedProductId) {
-            this.snackBar.open('Item successfully removed from your pantry.');
+            this.snackBar.open('Item successfully removed from your pantry.', 'OK', {duration: 5000});
             this.reloadComponent();
           }
           else {
-            this.snackBar.open('Something went wrong.  The item was not removed from your pantry.');
+            this.snackBar.open('Something went wrong.  The item was not removed from your pantry.', 'OK', {duration: 5000});
           }
         });
       });
