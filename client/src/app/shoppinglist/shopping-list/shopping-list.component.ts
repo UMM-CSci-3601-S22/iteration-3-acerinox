@@ -41,6 +41,7 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
     this.getShoppinglistFromServer();
   }
 
+  /* istanbul ignore next */
   public resetShoppingList() {
     this.shoppinglistService.resetShoppingList()
       .subscribe(result => {

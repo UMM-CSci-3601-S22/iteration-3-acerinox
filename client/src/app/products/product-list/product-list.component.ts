@@ -10,6 +10,8 @@ import { PantryService } from 'src/app/pantry/pantry.service';
 import { AddProductToPantryComponent } from './add-product-to-pantry/add-product-to-pantry.component';
 import { DialogDeleteComponent } from './dialog-delete/dialog-delete.component';
 import { AddProductToShoppinglistComponent } from './add-product-to-shoppinglist/add-product-to-shoppinglist.component';
+// eslint-disable-next-line max-len
+import { ProductExistsInShoppinglistDialogComponent } from './product-exists-in-shoppinglist-dialog/product-exists-in-shoppinglist-dialog.component';
 import { ShoppinglistService } from 'src/app/shoppinglist/shoppinglist.service';
 
 
@@ -165,6 +167,23 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Pops up a dialog for increasing the count of an already existing product in shopping list
+  openShoppinglistExistsDialog(givenProduct: Product) {
+    this.dialog.open(ProductExistsInShoppinglistDialogComponent, { data: givenProduct });
+  }
+
+  showDialogByProductInShoppingList(givenProduct): void {
+    this.shoppinglistService.productInShoppinglist(givenProduct._id).subscribe(
+      data => {
+        if (data.exists === true) {
+          this.openShoppinglistExistsDialog(givenProduct);
+        } else {
+          this.openShoppinglistAddDialog(givenProduct);
+        }
+      }
+    );
+  }
+
   //Pops up a dialog to delete a product from the product list
   /* istanbul ignore next */
   removeProduct(givenProduct: Product): void {
@@ -185,4 +204,5 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.updateFilter();
     this.initializeCategoryMap();
   }
+
 }
