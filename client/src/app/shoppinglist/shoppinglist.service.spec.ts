@@ -3,6 +3,9 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { ShoppinglistStoreGroup } from './shoppinglistStoreGroup';
 import { ShoppinglistService } from './shoppinglist.service';
+import { ShoppinglistDatabaseItem } from './shoppinglistDatabaseItem';
+import { ExistsObject } from './existsObject';
+import { of } from 'rxjs';
 
 describe('ShoppinglistService', () => {
   const testShoppinglistStoreGroups: ShoppinglistStoreGroup[] = [
@@ -47,6 +50,16 @@ describe('ShoppinglistService', () => {
     }
   ];
 
+  const testShoppinglistItem: ShoppinglistDatabaseItem = {
+    _id: 'testid',
+    product: 'productId',
+    count: 4
+  };
+
+  const testExistsObject: ExistsObject = {
+    exists: true
+  };
+
   let shoppinglistService: ShoppinglistService;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
@@ -87,5 +100,23 @@ describe('ShoppinglistService', () => {
     // triggers the subscribe above, which leads to that check
     // actually being performed.
     req.flush(testShoppinglistStoreGroups);
+  });
+
+  it('addShoppinglistItem posts to api/shoppinglist', () => {
+
+    shoppinglistService.addShoppinglistItem(testShoppinglistItem).subscribe(
+      id => expect(id).toBe('testid')
+    );
+
+    const req = httpTestingController.expectOne(shoppinglistService.shoppinglistUrl);
+
+    expect(req.request.method).toEqual('POST');
+    expect(req.request.body).toEqual(testShoppinglistItem);
+
+    req.flush({id: 'testid'});
+  });
+
+  it('checks if product is in shoppinglist with post to api/shoppinglist', () => {
+    shoppinglistService.productInShoppinglist(testShoppinglistItem.product);
   });
 });

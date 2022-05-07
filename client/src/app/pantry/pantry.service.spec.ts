@@ -58,22 +58,22 @@ describe('PantryService', () => {
     {
      _id: 'first_banana',
      product: 'banana_id',
-     purchase_date: '30-03-2022'
+     purchase_date: new Date('2022-03-30')
     },
     {
      _id: 'sole_milk',
      product: 'milk_id',
-     purchase_date: '16-07-2020'
+     purchase_date: new Date('2020-07-16')
     },
     {
      _id: 'second_banana',
      product: 'banana_id',
-     purchase_date: '31-03-2022'
+     purchase_date: new Date('2022-03-31')
     },
     {
      _id: 'sole_bread',
      product: 'bread_id',
-     purchase_date: '27-03-2022'
+     purchase_date: new Date('2022-03-27')
     }
   ];
 

@@ -1,11 +1,13 @@
 <div layout="column">
-  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="shopping-list">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="shopping-list" style="width: 90%">
 
     <!-- Top Element of shoppinglist. Visible on all views -->
     <mat-card class="shopping-list-header">
 
       <!-- Page Title -->
-      <h1 style="font-size: 40px;" class="shoppinglist-title">My Shopping List</h1>
+      <mat-card-title class="shoppinglist-title">My Shopping List</mat-card-title>
+
+      <br>
 
       <!-- Page View Toggle -->
       <mat-button-toggle-group name="viewType"
@@ -37,6 +39,8 @@
 
     </mat-card>
 
+    <mat-divider></mat-divider>
+
     <!-- shoppinglist page contents, dependent on viewType -->
     <div [ngSwitch]="viewType">
 
@@ -44,8 +48,14 @@
       <div *ngSwitchCase="'interactive'">
         <app-shoppinglist-group [list]="shoppingList"></app-shoppinglist-group>
         <div>
-          <button mat-button>
-            Remove Items From Shopping List
+          <button mat-button
+            aria-label="Button that resets the Shopping List"
+            data-test="resetShoppingListButton"
+            (click)="resetShoppingList()"
+            class="reset-button"
+          >
+          <mat-icon>refresh</mat-icon>
+            Reset
           </button>
         </div>
       </div>

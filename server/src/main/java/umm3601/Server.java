@@ -84,14 +84,20 @@ public class Server {
     // List shoppingListDisplayItems
     server.get("/api/shoppinglist", shoppingListController::getAllShoppingListDisplayItems);
 
+    // See if product is in shoppinglist or not, boolean in request body
+    server.get("/api/shoppinglist/{id}", shoppingListController::productInShoppingList);
+
     //Generate the shoppingList based on the inventory and threshold
-    server.put("api/shoppinglist", shoppingListController::resetShoppingList);
+    server.put("/api/shoppinglist", shoppingListController::resetShoppingList);
 
     // Delete the specified product
     server.delete("/api/products/{id}", productController::deleteProduct);
 
     // Delete the specified pantry item
     server.delete("/api/pantry/{id}", pantryController::deletePantryItem);
+
+    // Delete the specified shopping list item
+    server.delete("/api/shoppinglist/{id}", shoppingListController::deleteShoppingListItem);
 
     // Add new product with info from JSON body of HTTP request
     server.post("/api/products", productController::addNewProduct);

@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +20,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule } from '@angular/material/core';
+import { MatNativeDateModule, MatOptionModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -29,6 +29,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { HttpClientModule } from '@angular/common/http';
 import { LayoutModule } from '@angular/cdk/layout';
@@ -50,6 +51,9 @@ import { DialogDeleteComponent } from './products/product-list/dialog-delete/dia
 import { DeletePantryItemComponent } from './pantry/pantry-products-list/delete-pantry-item/delete-pantry-item.component';
 // eslint-disable-next-line max-len
 import { AddProductToShoppinglistComponent } from './products/product-list/add-product-to-shoppinglist/add-product-to-shoppinglist.component';
+// eslint-disable-next-line max-len
+import { ProductExistsInShoppinglistDialogComponent } from './products/product-list/product-exists-in-shoppinglist-dialog/product-exists-in-shoppinglist-dialog.component';
+import { ShoppinglistDialogDeleteComponent } from './shoppinglist/shoppinglist-dialog-delete/shoppinglist-dialog-delete.component';
 
 const MATERIAL_MODULES: any[] = [
   MatListModule,
@@ -72,7 +76,9 @@ const MATERIAL_MODULES: any[] = [
   MatDialogModule,
   MatTableModule,
   MatTabsModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({
@@ -92,6 +98,8 @@ const MATERIAL_MODULES: any[] = [
     DialogDeleteComponent,
     DeletePantryItemComponent,
     AddProductToShoppinglistComponent,
+    ProductExistsInShoppinglistDialogComponent,
+    ShoppinglistDialogDeleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -110,7 +118,8 @@ const MATERIAL_MODULES: any[] = [
     PantryService,
     ShoppinglistService,
     PantryProductsListComponent,
-    ProductListComponent
+    ProductListComponent,
+    Title
   ],
   bootstrap: [AppComponent]
 })

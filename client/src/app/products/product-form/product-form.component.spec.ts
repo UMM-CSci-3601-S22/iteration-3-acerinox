@@ -68,38 +68,6 @@ describe('ProductFormComponent', () => {
     httpTestingController.verify();
   });
 
-  describe('The component under "ADD" mode', () => {
-    beforeEach(waitForAsync(() => {
-      fixture = TestBed.createComponent(ProductFormComponent);
-      productFormComponent = fixture.componentInstance;
-      productFormComponent.mode = 'ADD';
-      productFormComponent.ngOnInit();
-      fixture.detectChanges();
-      productForm = productFormComponent.productForm;
-      expect(productForm).toBeDefined();
-      expect(productForm.controls).toBeDefined();
-    }));
-
-
-    describe('The submitForm() method', () => {
-      it('should make a call to productService.addProduct() when mode is "ADD"', waitForAsync(() => {
-        const addSpy = spyOn(productService, 'addProduct').and.callThrough();
-        const openSnackbarSpy = spyOn(snackBar, 'open');
-        const navigateSpy = spyOn(router, 'navigate');
-
-        productFormComponent.submitForm().then(() => {
-          expect(addSpy).toHaveBeenCalledTimes(1);
-          expect(openSnackbarSpy).toHaveBeenCalledTimes(1);
-          expect(openSnackbarSpy.calls.mostRecent().args[0].startsWith(ProductFormComponent.addMessageSuccess)).toBeTrue();
-
-          expect(navigateSpy).toHaveBeenCalledTimes(1);
-          expect(navigateSpy.calls.mostRecent().args[0]).toEqual(['/products/', MockProductService.testID]);
-        });
-      }));
-    });
-  });
-
-
   describe('The component under "EDIT" mode', () => {
     beforeEach(waitForAsync(() => {
       fixture = TestBed.createComponent(ProductFormComponent);

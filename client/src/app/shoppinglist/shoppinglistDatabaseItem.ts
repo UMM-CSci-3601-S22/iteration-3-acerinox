@@ -1,5 +1,5 @@
 export interface ShoppinglistDatabaseItem {
   _id: string;
-  productId: string;
+  product: string;
   count: number;
 }

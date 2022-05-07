@@ -32,6 +32,7 @@ describe('Add Product', () => {
     page.getFormField('productName').type('Apples');
     page.getFormField('brand').type('Minnesotan');
     page.getFormField('store').type('Willies');
+    page.getFormField('location').type('Aisle 10');
     page.selectMatSelectValue(cy.get('[formControlName=category]'), 'produce');
 
     page.addProductButton().should('be.enabled');
@@ -56,7 +57,6 @@ describe('Add Product', () => {
     cy.get('.product-card-category').should('have.text', testProductToAdd.category);
     cy.get('.product-card-description').should('have.text', testProductToAdd.description);
     cy.get('.product-card-notes').should('have.text', testProductToAdd.notes);
-    cy.get('.product-card-lifespan').should('have.text', testProductToAdd.lifespan);
     cy.get('.product-card-threshold').should('have.text', testProductToAdd.threshold);
     });
   });

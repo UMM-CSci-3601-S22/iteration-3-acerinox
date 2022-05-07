@@ -41,7 +41,18 @@ export class ShoppinglistPage {
 
   getStoreItems(position: number) {
     this.getStoreProductsPanel(position);
-    return cy.get('.shopping-list-item-option');
+    return cy.get('.shopping-list-item');
+  }
+
+  clickDeleteButton(num: number) {
+    return this.getStoreItems(num).first().within(($item) => {
+      cy.get('[data-test=deleteItemButton]')
+        .click();
+    });
+  }
+
+  clickDialogDeleteButton() {
+    return cy.get('[data-test=dialogDelete]').click();
   }
 
   /**
@@ -59,5 +70,9 @@ export class ShoppinglistPage {
 
   getPrintButton() {
     return cy.get('.print-button');
+  }
+
+  resetShoppingListButton() {
+    return cy.get('.reset-button');
   }
 }

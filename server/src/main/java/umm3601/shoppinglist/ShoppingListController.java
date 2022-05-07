@@ -15,6 +15,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Variable;
+import com.mongodb.client.result.DeleteResult;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -22,8 +23,10 @@ import org.bson.conversions.Bson;
 import org.bson.UuidRepresentation;
 import org.mongojack.JacksonMongoCollection;
 
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
+import io.javalin.http.NotFoundResponse;
 import umm3601.product.Product;
 
 public class ShoppingListController {
@@ -115,6 +118,27 @@ public class ShoppingListController {
     return output;
   }
 
+  public void getAllShoppingListItems(Context ctx) {
+    ArrayList<Document> returnedShoppingListItems = shoppingListCollection
+        .aggregate(
+            Arrays.asList(
+                Aggregates.lookup("products", "product", "_id", "productData"),
+                Aggregates.unwind("$productData"),
+                Aggregates.group("$productData.store", Accumulators.addToSet("products",
+                    new Document("productName", "$productData.productName")
+                        .append("location", "$productData.location")
+                        .append("count", "$count"))),
+                Aggregates.project(Projections.fields(
+                    Projections.computed("store", "$_id"),
+                    Projections.include("products"),
+                    Projections.excludeId())),
+                Aggregates.sort(ascending("store"))),
+            Document.class)
+        .into(new ArrayList<>());
+
+    ctx.json(returnedShoppingListItems);
+  }
+
   /**
    * Checks if the given entry exists with a given id. if no such entry exists
    * returns false. Returns true for one or more entry with a matching
@@ -137,19 +161,20 @@ public class ShoppingListController {
     return true;
   }
 
-
   /**
    * Validate then add a received shoppinglist item to the shoppinglist collection
    *
    * @param ctx a Javalin HTTP context
    */
-
+  @SuppressWarnings({ "MagicNumber" })
   public void addNewShoppingListItem(Context ctx) {
+
+    int baseCount = 1;
 
     ShoppingListItem newShoppingListItem = ctx.bodyValidator(ShoppingListItem.class)
         .check(item -> productExists(item.product), "error: product does not exist")
         .check(item -> ObjectId.isValid(item.product), "The product id is not a legal Mongo Object ID.")
-        .check(item -> item.count >= 1,
+        .check(item -> item.count >= baseCount,
             "Shopping list item count cannot be 0")
         .get();
 
@@ -161,5 +186,40 @@ public class ShoppingListController {
     // for a description of the various response codes.
     ctx.status(HttpCode.CREATED);
     ctx.json(Map.of("id", newShoppingListItem._id));
+  }
+
+  public void productInShoppingList(Context ctx) {
+    Boolean exists;
+    String productId = ctx.pathParam("id");
+
+    try {
+      if (shoppingListCollection.find(eq("product", new ObjectId(productId))).first() == null) {
+        exists = false;
+      } else {
+        exists = true;
+      }
+    } catch (IllegalArgumentException e) {
+      throw new BadRequestResponse("The requested product id wasn't a legal Mongo Object ID.");
+    }
+    ctx.json(Map.of("exists", exists));
+
+  }
+
+  /**
+   * Remove shoppinglist item from the collection whose id matches the given id from context query param
+   *
+   * @param ctx a Javalin HTTP context
+   */
+  public void deleteShoppingListItem(Context ctx) {
+    String id = ctx.pathParam("id");
+    DeleteResult deleteResult = shoppingListCollection.deleteOne(eq("_id", new ObjectId(id)));
+    if (deleteResult.getDeletedCount() != 1) {
+      throw new NotFoundResponse(
+          "Was unable to delete ID "
+              + id
+              + "; perhaps illegal ID or an ID for an item not in the system?");
+    }
+    ctx.status(HttpCode.OK);
+    ctx.json(true);
   }
 }
