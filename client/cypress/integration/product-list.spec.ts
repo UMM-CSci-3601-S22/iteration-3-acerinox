@@ -270,13 +270,6 @@ describe('Delete from Product List', () => {
     cy.wait(5100);
     cy.reload();
 
-    page.clickExpansionAddShoppingButton('beverages');
-    page.enterCount('1');
-    page.clickDialogAddShoppingButton();
-
-    cy.wait(5100);
-    cy.reload();
-
     page.clickExpansionDeleteButton('beverages');
 
     cy.visit('./');
