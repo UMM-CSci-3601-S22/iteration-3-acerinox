@@ -28,6 +28,8 @@ import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import io.javalin.http.HttpCode;
 import io.javalin.http.NotFoundResponse;
+import umm3601.pantry.PantryItem;
+import umm3601.shoppinglist.ShoppingListItem;
 
 public class ProductController {
   private static final String PRODUCT_NAME_KEY = "productName";
@@ -42,12 +44,24 @@ public class ProductController {
   // private static final String THRESHOLD_KEY = "threshold";
 
   private final JacksonMongoCollection<Product> productCollection;
+  private final JacksonMongoCollection<PantryItem> pantryCollection;
+  private final JacksonMongoCollection<ShoppingListItem> shoppingListCollection;
 
   public ProductController(MongoDatabase database) {
     productCollection = JacksonMongoCollection.builder().build(
         database,
         "products",
         Product.class,
+        UuidRepresentation.STANDARD);
+    pantryCollection = JacksonMongoCollection.builder().build(
+        database,
+        "pantry",
+        PantryItem.class,
+        UuidRepresentation.STANDARD);
+    shoppingListCollection = JacksonMongoCollection.builder().build(
+        database,
+        "shoppinglist",
+        ShoppingListItem.class,
         UuidRepresentation.STANDARD);
   }
 
@@ -206,6 +220,8 @@ public class ProductController {
               + id
               + "; perhaps illegal ID or an ID for an item not in the system?");
     }
+    pantryCollection.deleteMany(eq("product", new ObjectId(id)));
+    shoppingListCollection.deleteMany(eq("product", new ObjectId(id)));
     ctx.status(HttpCode.OK);
     ctx.json(true);
   }
