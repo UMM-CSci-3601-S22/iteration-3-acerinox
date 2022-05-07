@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { ProductListPage } from '../support/product-list.po';
 
 const page = new ProductListPage();
@@ -7,6 +8,7 @@ const page = new ProductListPage();
 describe('Product List', () => {
 
   beforeEach(() => {
+    cy.task('seed:database');
     page.navigateTo();
   });
 
@@ -189,7 +191,7 @@ describe('Add button on Products to Pantry List', () => {
     // Grab and click the add button for the first one, 'Aspic - Light'
     page.clickExpansionAddShoppingButton('dairy');
     cy.get('.mat-dialog-title')
-    .should('contain.text', 'Add Aspic - Light to your Shopping List');
+      .should('contain.text', 'Add Aspic - Light to your Shopping List');
   });
 });
 
@@ -237,6 +239,32 @@ describe('Delete from Product List', () => {
     page.clickExpansionDeleteButton('baked goods');
     page.clickDialogDeleteButton();
     cy.get('.mat-simple-snack-bar-content').should('contain.text', 'Bar - Granola Trail Mix Fruit Nut successfully deleted.');
+  });
+
+  it('should remove instances from the pantry and the shopping list.', () => {
+    //add the item (Apricots - Halves) to the pantry and the shopping list so we know that they got deleted
+    page.clickExpansionAddButton('beverages');
+    page.enterPurchaseDate('1970-01-01');
+    page.enterNotes('test delete.');
+    page.clickDialogAddButton();
+    //Wait for the snackbar to close.
+    cy.wait(5100);
+    cy.reload();
+
+    page.clickExpansionAddShoppingButton('beverages');
+    page.enterCount('1');
+    page.clickDialogAddShoppingButton();
+
+    cy.wait(5100);
+    cy.reload();
+
+    page.clickExpansionDeleteButton('beverages');
+
+    cy.visit('./');
+    cy.get('body').should('not.be.empty');
+
+    cy.visit('/shoppinglist');
+    cy.get('body').should('not.be.empty');
   });
 
 });
