@@ -51,13 +51,9 @@ The Handy Pantry gives you the ability to:
 - **Frameworks:** Angular 13 and Javalin
 - **Testing software:** Karma, Cypress, and GitHub Actions
 
-## Technical Document
+### [Development](doc/DEVELOPMENT.md)
 
-
-
-### [Development](DEVELOPMENT.md)
-
-Instructions on setting up the development environment and working with the code are in [the development guide](DEVELOPMENT.md).
+Instructions on setting up the development environment and working with the code are in [the development guide](doc/DEVELOPMENT.md).
 
 #### Common commands
 
@@ -81,11 +77,11 @@ From the `database` directory:
 
 - `./mongoseed.sh` (or `.\mongoseed.bat` on Windows) to seed the database
 
-### [Deployment](DEPLOYMENT.md)
+### [Deployment](doc/DEPLOYMENT.md)
 
-> Instructions on how to create a DigitalOcean Droplet and setup your project are in [the deployment guide](DEPLOYMENT.md).
+> Instructions on how to create a DigitalOcean Droplet and setup your project are in [the deployment guide](doc/DEPLOYMENT.md).
 
-## [Resources](RESOURCES.md)
+## [Resources](doc/RESOURCES.md)
 
 Additional resources on tooling and techniques are in [the resources list](RESOURCES.md).
 
@@ -118,5 +114,3 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 
 Special thanks to:
 - <a href="https://github.com/NicMcPhee">Nic McPhee</a>
-
-The detail of contributors to this project can be seen [here](../../graphs/contributors).
