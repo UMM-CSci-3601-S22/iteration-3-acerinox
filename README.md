@@ -10,8 +10,9 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/UMM-CSci-3601-S22/iteration-3-acerinox?branch=main)](https://bettercodehub.com/)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/UMM-CSci-3601-S22/iteration-3-acerinox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/UMM-CSci-3601-S22/iteration-3-acerinox/alerts/)
 
-## Menu
+## Table of Contents
 
+  - [Live Demo](#live-demo)
   - [About Handy Pantry](#about-handy-pantry)
   - [Project Features](#project-features)
   - [Technical Specifications](#technical-specifications)
@@ -26,9 +27,12 @@
   - [User Guide](#user-guide)
   - [Contributors](#contributors)
 
+## Live Demo
+See a live demo of the handy pantry at https://159.223.190.88.nip.io/.
+
 ## About Handy Pantry
 
-Handy Pantry is a home pantry inventory management system, enabling the user to have an accurate idea of the current state of their pantry.
+Handy Pantry is a home pantry inventory management system, enabling the user to have an accurate idea of the current state of their pantry and create a personalized shopping list based off of your grocery needs.
 
 ## Project Features
 
