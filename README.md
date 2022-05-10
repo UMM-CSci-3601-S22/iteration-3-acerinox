@@ -99,7 +99,23 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 
 ## User Guide
 
-
+1. Load on to the My Pantry page
+   1. On the pantry page, click on one of the categories to open a drop down menu displaying the pantry items or products in a drop down list
+   2. On the pantry page, select the red 'x' to delete a pantry item
+   3. On the pantry page, selecting a pantry item will open another drop down menu displaying the best before date
+2. Click on the icon in top left corner next to page name to open the sidebar menu
+3. In the sidebar, select the products name to navigate to the products page
+   1. On the products page, click on one of the categories to open a drop down menu displaying the pantry items or products in a drop down list
+   2. On the products page, the filters at the top of the page enable easy searching of a specific product
+   3. On the products page, select a product to open up the card view
+      1. From there, the user can either edit the product or add it to the pantry
+   4. On the product page, the user can select to delete product, ad to pantry, or add to shopping list
+   5. On the products page, the user can add a new product to the product page
+4. On the shopping list page, the user can switch between the interactive view and the print view
+    1. In the interactive view, the user can switch between stores
+    2. In the interactive view, the user can delete items from the shopping list
+    3. In the interactive view, the user can reset the shopping list
+    4. In the print view, the user can select the orange print icon to print the page
 
 ## Contributors
 
