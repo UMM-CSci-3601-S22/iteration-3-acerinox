@@ -46,7 +46,10 @@ The Handy Pantry gives you the ability to:
 
 ## Technical Specifications
 
-
+- **Languages used:** Typescript, Java, HTML and SCSS
+- **Services used:** MongoDB, Digital Ocean, Docker
+- **Frameworks:** Angular 13 and Javalin
+- **Testing software:** Karma, Cypress, and GitHub Actions
 
 ## Technical Document
 
