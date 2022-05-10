@@ -90,7 +90,7 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 
 ### Issues
 - Products and Pantry are being categorized client side, slowing site down - change to a database query
-- Dates are being stored as strings - convert to storing as date objects
+- Dates are being stored as strings (on server) - convert to storing as date objects
 
 ### Roadmap
 - Add way to change individual item count in the shopping list
@@ -107,7 +107,7 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 - <a href="https://github.com/cole-maxwell1">Cole Maxwell</a>
 - <a href="https://github.com/jpwalbran">John Walbran</a>
 - <a href="https://github.com/NikFBail">Nik Bailey</a>
-- <a href="">Zeke Krug</a>
+- <a href="https://github.com/krug0102">Zeke Krug</a>
 - <a href="https://github.com/caidongting0823">Dongting Cai</a>
 - <a href="https://github.com/CBeane313">Collin Beane</a>
 - <a href="https://github.com/YuboMao">Yubo Mao</a>
