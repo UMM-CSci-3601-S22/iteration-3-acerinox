@@ -1,4 +1,4 @@
-![Handy Pantry](/Handy-Pantry-Main-Pic.png)
+![Handy Pantry](/res/Handy-Pantry-Main-Pic.png)
 # Handy Pantry
 #### By Team Rocinante
 
@@ -30,6 +30,16 @@ Handy Pantry is a home pantry inventory management system, enabling the user to 
 
 ## Project Features
 
+The Handy Pantry gives you the ability to:
+- Store and edit products containing information about things like brand, store, location, and product threshold amount.
+- Search through a list of your products (by name, store, brand, and category).
+- Add stored products to a digital pantry, or directly to a personal shopping list.
+- Look through categorized dropdown tables of items in your pantry, with the ability to delete individual items.
+- Choose between two shopping list views; interactive and print.
+- Look through the interactive shopping list containing items added from your products list, sorted into store tabs.
+- Regenerate your shopping list by threshold, adding products that aren't present in the pantry or that there aren't enough of.
+- Delete individual items from your shopping list while in the interactive view.
+- Click a button while in the print view to get a print-friendly shopping list.
 
 
 ## Technical Specifications
