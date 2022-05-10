@@ -10,8 +10,9 @@
 [![BCH compliance](https://bettercodehub.com/edge/badge/UMM-CSci-3601-S22/iteration-3-acerinox?branch=main)](https://bettercodehub.com/)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/UMM-CSci-3601-S22/iteration-3-acerinox.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/UMM-CSci-3601-S22/iteration-3-acerinox/alerts/)
 
-## Menu
+## Table of Contents
 
+  - [Live Demo](#live-demo)
   - [About Handy Pantry](#about-handy-pantry)
   - [Project Features](#project-features)
   - [Technical Specifications](#technical-specifications)
@@ -26,9 +27,12 @@
   - [User Guide](#user-guide)
   - [Contributors](#contributors)
 
+## Live Demo
+See a live demo of the handy pantry at https://159.223.190.88.nip.io/.
+
 ## About Handy Pantry
 
-Handy Pantry is a home pantry inventory management system, enabling the user to have an accurate idea of the current state of their pantry.
+Handy Pantry is a home pantry inventory management system, enabling the user to have an accurate idea of the current state of their pantry and create a personalized shopping list based off of your grocery needs.
 
 ## Project Features
 
@@ -46,15 +50,14 @@ The Handy Pantry gives you the ability to:
 
 ## Technical Specifications
 
+- **Languages used:** Typescript, Java, HTML and SCSS
+- **Services used:** MongoDB, Digital Ocean, Docker
+- **Frameworks:** Angular 13 and Javalin
+- **Testing software:** Karma, Cypress, and GitHub Actions
 
+### [Development](doc/DEVELOPMENT.md)
 
-## Technical Document
-
-
-
-### [Development](DEVELOPMENT.md)
-
-Instructions on setting up the development environment and working with the code are in [the development guide](DEVELOPMENT.md).
+Instructions on setting up the development environment and working with the code are in [the development guide](doc/DEVELOPMENT.md).
 
 #### Common commands
 
@@ -78,11 +81,11 @@ From the `database` directory:
 
 - `./mongoseed.sh` (or `.\mongoseed.bat` on Windows) to seed the database
 
-### [Deployment](DEPLOYMENT.md)
+### [Deployment](doc/DEPLOYMENT.md)
 
-> Instructions on how to create a DigitalOcean Droplet and setup your project are in [the deployment guide](DEPLOYMENT.md).
+> Instructions on how to create a DigitalOcean Droplet and setup your project are in [the deployment guide](doc/DEPLOYMENT.md).
 
-## [Resources](RESOURCES.md)
+## [Resources](doc/RESOURCES.md)
 
 Additional resources on tooling and techniques are in [the resources list](RESOURCES.md).
 
@@ -119,14 +122,15 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 
 ## Contributors
 
-- <a href="https://github.com/albright220">Daniel Albright</a>
+
 - <a href="https://github.com/cole-maxwell1">Cole Maxwell</a>
+- <a href="https://github.com/CBeane313">Collin Beane</a>
+- <a href="https://github.com/albright220">Daniel Albright</a>
+- <a href="https://github.com/caidongting0823">Dongting Cai</a>
 - <a href="https://github.com/jpwalbran">John Walbran</a>
 - <a href="https://github.com/NikFBail">Nik Bailey</a>
-- <a href="https://github.com/krug0102">Zeke Krug</a>
-- <a href="https://github.com/caidongting0823">Dongting Cai</a>
-- <a href="https://github.com/CBeane313">Collin Beane</a>
 - <a href="https://github.com/YuboMao">Yubo Mao</a>
-- <a href="https://github.com/NicMcPhee">Nic McPhee</a>
+- <a href="https://github.com/krug0102">Zeke Krug</a>
 
-The detail of contributors to this project can be seen [here](../../graphs/contributors).
+Special thanks to:
+- <a href="https://github.com/NicMcPhee">Nic McPhee</a>
