@@ -98,6 +98,7 @@ Additional resources on tooling and techniques are in [the resources list](RESOU
 - <a href="https://github.com/cole-maxwell1">Cole Maxwell</a>
 - <a href="https://github.com/jpwalbran">John Walbran</a>
 - <a href="https://github.com/NikFBail">Nik Bailey</a>
+- <a href="">Zeke Krug</a>
 - <a href="https://github.com/caidongting0823">Dongting Cai</a>
 - <a href="https://github.com/CBeane313">Collin Beane</a>
 - <a href="https://github.com/YuboMao">Yubo Mao</a>
