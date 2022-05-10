@@ -20,7 +20,9 @@
       - [Common commands](#common-commands)
     - [Deployment](#deployment)
   - [Resources](#resources)
-  - [Known Issues & To-Do List](#known-issues--to-do-list)
+  - [Known Issues & Roadmap](#known-issues--roadmap)
+    - [Issues](#issues)
+    - [Roadmap](#roadmap)
   - [User Guide](#user-guide)
   - [Contributors](#contributors)
 
@@ -84,8 +86,15 @@ From the `database` directory:
 
 Additional resources on tooling and techniques are in [the resources list](RESOURCES.md).
 
-## Known Issues & To-Do List
+## Known Issues & Roadmap
 
+### Issues
+- Products and Pantry are being categorized client side, slowing site down - change to a database query
+- Dates are being stored as strings - convert to storing as date objects
+
+### Roadmap
+- Add way to change individual item count in the shopping list
+- Link items in the pantry and shopping list to the product listing
 
 
 ## User Guide
