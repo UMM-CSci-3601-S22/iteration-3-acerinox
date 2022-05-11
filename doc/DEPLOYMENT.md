@@ -44,7 +44,7 @@ One for the Java server, one for hosting the client files, and one for the datab
   - Each part of the project, the client and server, have files called `Dockerfile` that instructs Docker how to create the image for each of them.
 - A Docker **container** is an instance of an **image**.
 - **Compose** is a tool for running multiple containers together and setting up storage and communication between them. We will be using the command `docker-compose` for much of the management of our containers.
-  - The project has a [`docker-compose.yml`](docker-compose.yml) file that instructs Docker Compose on how to run our server, client, and database containers together.
+  - The project has a [`docker-compose.yml`](../docker-compose.yml) file that instructs Docker Compose on how to run our server, client, and database containers together.
 
 ## Step 1: Creating an account
 

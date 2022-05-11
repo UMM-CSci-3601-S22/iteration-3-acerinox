@@ -17,7 +17,7 @@ in various ways) of your code and provide feedback on weak spots and
 opportunities for improvement. We have several of these configured to work
 with your project repository, providing you with feedback in two forms:
 
-- Badges (at the top of [README.md](README.md))
+- Badges (at the top of [README.md](../README.md))
 - Pull request checks
 
 Unfortunately these badges and checks need to be (re)configured
