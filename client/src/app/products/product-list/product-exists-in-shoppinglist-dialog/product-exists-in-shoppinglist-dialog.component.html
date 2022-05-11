@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{data.productName | titlecase}} from {{data.store | titlecase}} is already in your Shopping List</h2>
+
+<mat-dialog-content>
+  <h2>Go to your Shopping List?</h2>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button [mat-dialog-close]="" mat-button type="button" color="primary" type="submit"
+    routerLink="/shoppinglist"
+    fragment="{{storeContentPos(data.store)}}"
+    data-test="goToShoppingListButton">
+    Go to Shopping List
+  </button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add {{data.productName | titlecase}} to your Pantry</h2>
+
+<mat-dialog-content [formGroup]="addToPantryForm">
+  <mat-form-field appearance="fill">
+    <mat-label>Date Added to Pantry</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="purchase_date" data-test="date-picker-button"
+                  required>
+                  <mat-hint>DD/MM/YYYY</mat-hint>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <br>
+  <mat-form-field appearance="fill">
+    <mat-label>Pantry Item Notes</mat-label>
+    <input matInput placeholder="Pantry Item Notes" data-test="notesInput" formControlName="notes" required>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button [mat-dialog-close]="submitForm()" mat-button type="button" color="primary" type="submit"
+    data-test="confirmAddProductToPantryButton">
+    Add To Pantry
+  </button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

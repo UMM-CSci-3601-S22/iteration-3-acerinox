@@ -1,0 +1,170 @@
+<!-- Form Fields and Search Bar ('Top' Content) -->
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10">
+
+    <mat-card class="search-card">
+      <mat-card-title class="product-list-title">Products</mat-card-title>
+      <mat-card-content fxLayout="column">
+
+        <!-- Form Field Container -->
+        <div fxLayout="row wrap" fxLayoutGap="15px" style="margin-right: 15px;">
+          <mat-form-field class="input-field">
+            <mat-label>Product Name</mat-label>
+            <input matInput id="product-name-input" placeholder="Filter products by name" [(ngModel)]="name"
+              (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Brand</mat-label>
+            <input matInput id="product-brand-input" placeholder="Filter products by brand" [(ngModel)]="productBrand"
+              (input)="updateFilter()">
+            <mat-hint>Filtered on client</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <!-- Selector/Tree Container -->
+        <div fxLayout="row wrap" fxLayoutGap="15px">
+          <mat-form-field class="input-field">
+            <mat-label>Store</mat-label>
+            <mat-select (selectionChange)="getProductsFromServer()" [(ngModel)]="productStore"
+              data-test="productStoreSelect">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let store of storesList" [value]="store">{{store | titlecase }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="input-field">
+            <mat-label>Category</mat-label>
+            <mat-select (selectionChange)="getProductsFromServer()" [(ngModel)]="productCategory"
+              data-test="productCategorySelect">
+              <mat-option>--</mat-option>
+              <mat-option *ngFor="let category of categoriesList" [value]="category">{{category | titlecase }}
+              </mat-option>
+            </mat-select>
+            <mat-hint>Filtered on server</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <br>
+
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
+
+<br>
+
+<!-- Products displayed on filter search -->
+<div fxLayout="row">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" *ngIf="serverFilteredProducts; else productsError"
+    style="width: 90%;">
+    <mat-card *ngIf="activeFilters" class="conditional-product-list">
+      <mat-card-content>
+
+        <mat-action-list>
+          <mat-list-item fxLayout="row" *ngFor="let product of this.filteredProducts"
+            class="filtered-product-list-item">
+            <!-- Product Info wrapped by link to product card -->
+            <div matLine [routerLink]="['/products', product._id]">
+              <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand}} </b></p>
+              <p matLine class="product-list-name"><font size="4"><b> {{product.productName}} </b></font></p>
+              <p matLine class="product-list-category"> {{product.category}} </p>
+              <p matLine class="product-list-store"> {{product.store}}, {{product.location}} </p>
+            </div>
+
+            <!-- Action Buttons on Each Product -->
+            <div matLine>
+                  <button mat-flat-button color="warn" matTooltip="Delete Product" matTooltipPosition="right" style="margin-right:10px"
+                  (click)="removeProduct(this.product)" data-test="deleteProductButton">
+                    <mat-icon aria-label="Delete Product">close</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToPantryButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_dining</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="showDialogByProductInShoppingList(this.product)" color="accent" matTooltip="Add to Shopping List" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToShoppinglistButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_grocery_store</mat-icon>
+              </button>
+            </div>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-action-list>
+
+
+      </mat-card-content>
+    </mat-card>
+
+    <br>
+
+    <!-- All Products separated into categories and listed in dropdowns -->
+    <mat-card class="expansion-product-panels">
+      <mat-card-content>
+        <!--Display All Product Categories as Dropdowns-->
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let productCategory of (this.categoryNameMap | keyvalue)"
+            [ngClass]="productCategory.key.replace(' ', '-') + '-expansion-panel'">
+            <mat-expansion-panel-header>
+              <mat-panel-title [ngClass]="productCategory.key.replace(' ', '-') + '-panel-title'" style="text-transform: capitalize">
+                {{ productCategory.key }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <!--Display All the Products in the Category-->
+            <mat-action-list>
+              <mat-list-item [ngClass]="productCategory.key.replace(' ', '-') + '-nav-list'"
+                *ngFor="let product of productCategory.value">
+                <!-- Product Info wrapped by link to product card -->
+                <div matLine [routerLink]="['/products', product._id]">
+                  <p matLine class="product-list-brand" style="color:purple"><b> {{product.brand}} </b></p>
+                  <p matLine class="product-list-name"><font size="4"><b> {{product.productName}} </b></font></p>
+                  <p matLine class="product-list-category"> {{product.category}} </p>
+                  <p matLine class="product-list-store"> {{product.store}}, {{product.location}} </p>
+                </div>
+                <!-- Action Buttons on Each Product -->
+                <div matLine>
+                  <button mat-flat-button color="warn" matTooltip="Delete Product" matTooltipPosition="right" style="margin-right:10px"
+                  (click)="removeProduct(this.product)" data-test="deleteProductButton">
+                    <mat-icon aria-label="Delete Product">close</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="openPantryAddDialog(this.product)" color="accent" matTooltip="Add to Pantry" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToPantryButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_dining</mat-icon>
+                  </button>
+                  <button mat-flat-button (click)="showDialogByProductInShoppingList(this.product)" color="accent" matTooltip="Add to Shopping List" style="margin-right:10px"
+                  matTooltipPosition="left" data-test="addToShoppinglistButton">
+                  <mat-icon>add_circle_outline</mat-icon><mat-icon>local_grocery_store</mat-icon>
+                  </button>
+                </div>
+              </mat-list-item>
+              <mat-divider></mat-divider>
+            </mat-action-list>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Add Product Button -->
+<button mat-fab class="add-product-fab" matTooltip="Add Product" matTooltipPosition="left" routerLink="/products/new"
+  data-test="addProductButton">
+  <mat-icon class="md-24" aria-label="Add Product">add</mat-icon>
+</button>
+
+<!--Display Error waring if client cannot connect to server-->
+<ng-template #productsError>
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="product-error">
+    <mat-error>
+      There was a problem loading the products. Possibly the server is down or perhaps there are network
+      issues.
+    </mat-error>
+    <mat-error>
+      Please wait a bit and try again.
+    </mat-error>
+  </div>
+</ng-template>

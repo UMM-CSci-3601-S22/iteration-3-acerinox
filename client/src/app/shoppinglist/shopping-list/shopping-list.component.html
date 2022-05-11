@@ -1,0 +1,70 @@
+<div layout="column">
+  <div fxFlex fxFlex.gt-sm="80" fxFlexOffset.gt-sm="10" class="shopping-list" style="width: 90%">
+
+    <!-- Top Element of shoppinglist. Visible on all views -->
+    <mat-card class="shopping-list-header">
+
+      <!-- Page Title -->
+      <mat-card-title class="shoppinglist-title">My Shopping List</mat-card-title>
+
+      <br>
+
+      <!-- Page View Toggle -->
+      <mat-button-toggle-group name="viewType"
+                              aria-label="Page View"
+                              data-test="viewTypeGroup"
+                              [(ngModel)]="viewType"
+                              ngDefaultControl
+                              >
+        <mat-button-toggle value="interactive" class="shopping-list-view-interactive-button" id="interactive-view-button">
+          Interactive View
+        </mat-button-toggle>
+        <mat-button-toggle value="print" class="shopping-list-view-print-button" id="print-view-button">
+          Print View
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+
+      <!-- Button to print the shoppinglist. Only visible on print view -->
+      <button mat-button #tooltip="matTooltip"
+              matTooltip="Print Shopping List"
+              [matTooltipPosition]="'right'"
+              aria-label="Button that prints the Shopping List"
+              class="print-button"
+              printSectionId="print"
+              ngxPrint
+              *ngIf="this.viewType === 'print'"
+      >
+        <mat-icon color="accent">print</mat-icon>
+      </button>
+
+    </mat-card>
+
+    <mat-divider></mat-divider>
+
+    <!-- shoppinglist page contents, dependent on viewType -->
+    <div [ngSwitch]="viewType">
+
+      <!-- Interactive view: Add/delete items, increment item amount etc. -->
+      <div *ngSwitchCase="'interactive'">
+        <app-shoppinglist-group [list]="shoppingList"></app-shoppinglist-group>
+        <div>
+          <button mat-button
+            aria-label="Button that resets the Shopping List"
+            data-test="resetShoppingListButton"
+            (click)="resetShoppingList()"
+            class="reset-button"
+          >
+          <mat-icon>refresh</mat-icon>
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Print view: Minimal style list and print button -->
+      <div *ngSwitchCase="'print'">
+        <app-shoppinglist-print [list]="shoppingList"></app-shoppinglist-print>
+      </div>
+    </div>
+
+  </div>
+</div>

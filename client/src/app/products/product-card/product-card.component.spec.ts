@@ -1,0 +1,1 @@
+/* No tests here because ProductCardComponent has no logic*/
