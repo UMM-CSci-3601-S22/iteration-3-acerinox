@@ -93,7 +93,8 @@
         "serve-coverage": {
           "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
-            "browserTarget": "client:build:e2e"
+            "browserTarget": "client:build:e2e",
+            "proxyConfig": "proxy.conf.json"
           }
         },
         "extract-i18n": {
